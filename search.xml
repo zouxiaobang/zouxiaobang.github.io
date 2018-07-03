@@ -4,9 +4,101 @@
   
     
     <entry>
+      <title><![CDATA[知识点 -- Fragment]]></title>
+      <url>http://yoursite.com/2018/07/04/%E7%9F%A5%E8%AF%86%E7%82%B9-Fragment/</url>
+      <content type="html"><![CDATA[<hr>
+<h2 id="与Activity相比："><a href="#与Activity相比：" class="headerlink" title="与Activity相比："></a>与Activity相比：</h2><ul>
+<li>更加节省内存</li>
+<li>UI跳转效果更好</li>
+</ul>
+<h2 id="为什么被称为第5大组件？"><a href="#为什么被称为第5大组件？" class="headerlink" title="为什么被称为第5大组件？"></a>为什么被称为第5大组件？</h2><ul>
+<li><p>拥有自己的生命周期</p>
+</li>
+<li><p>可以灵活地加载到Activity中</p>
+</li>
+</ul>
+<blockquote>
+<p>但它并不是独立的，是依附在对应的Activity中</p>
+</blockquote>
+<h2 id="加载（加载到Activity中）"><a href="#加载（加载到Activity中）" class="headerlink" title="加载（加载到Activity中）"></a>加载（加载到Activity中）</h2><ul>
+<li>静态：标签加载 &lt;… android:name=”…Fragment”…/&gt;</li>
+<li><p>动态：使用FragmentManager和FragmentTransaction来加载</p>
+<p><strong>动态加载：</strong></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">FragmentManager fm = getFragmentManager();</div><div class="line">FragmentTransaction ft = fm.getTransaction();</div><div class="line">RightFragment rf = new RightFragment();</div><div class="line">ft.add(R.id.right_fragment, rf, &quot;rightFragment&quot;);</div><div class="line">ft.addToBackStack(&quot;rightFragment&quot;);</div><div class="line">ft.commit();</div></pre></td></tr></table></figure>
+<h2 id="ViewPager-Fragment"><a href="#ViewPager-Fragment" class="headerlink" title="ViewPager + Fragment"></a>ViewPager + Fragment</h2><blockquote>
+<p>FragmentPagerAdapter：适用于页面较少<br>FragmentStatePagerAdapter：适用于页面较多，节省内存</p>
+</blockquote>
+<p><strong>对比两者的destroyItem()方法：</strong></p>
+<ul>
+<li><p>mCurrentTransaction.detach((Fragment)object)：<br>并没有对内存进行回收，只是将Activity和Fragment进行解绑</p>
+</li>
+<li><p>mCurrentTransaction.remove(fragment)：<br>对内存资源进行回收，直接删除对应的Fragment。这也导致了每次回到该页面时都要重新加载该Fragment。</p>
+</li>
+</ul>
+<blockquote>
+<p>FragmentStatePagerAdapter每次都会删去Fragment，且释放其内存，所以在多个页面切换的时候，能够更好地节省资源。但其每次回到该页面时都要重建，如果页面少的话，更建议使用FragmentPagerAdapter。</p>
+</blockquote>
+<h2 id="Fragment的生命周期"><a href="#Fragment的生命周期" class="headerlink" title="Fragment的生命周期"></a>Fragment的生命周期</h2><p><img src="/img/Fragment/life3.png" alt="Fragment的生命周期"></p>
+<h2 id="Fragment与Activity相关联的生命周期"><a href="#Fragment与Activity相关联的生命周期" class="headerlink" title="Fragment与Activity相关联的生命周期"></a>Fragment与Activity相关联的生命周期</h2><p><img src="/img/Fragment/life4.png" alt="Fragment与Activity的对比"></p>
+<h2 id="Fragment的通信"><a href="#Fragment的通信" class="headerlink" title="Fragment的通信"></a>Fragment的通信</h2><ol>
+<li>Activity调用Fragment中的方法：接口调用</li>
+<li>Fragment调用Activity中的方法：getActivity()获取Activity</li>
+<li>Fragment调用其他Fragment中的方法：getActivity().findFragmentById()</li>
+</ol>
+<h2 id="FragmentTransaction：replace、add"><a href="#FragmentTransaction：replace、add" class="headerlink" title="FragmentTransaction：replace、add"></a>FragmentTransaction：replace、add</h2><p> <strong>在切换Fragment时</strong><br>add：并没有刷新界面的内容<br>replace：会进行刷新</p>
+<p>add：在切换时只是将Fragment界面隐藏<br>replace：每次都会进行销毁重建</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[知识点 -- Activity]]></title>
+      <url>http://yoursite.com/2018/07/03/%E7%9F%A5%E8%AF%86%E7%82%B9-Activity/</url>
+      <content type="html"><![CDATA[<hr>
+<h2 id="什么是Activity？"><a href="#什么是Activity？" class="headerlink" title="什么是Activity？"></a>什么是Activity？</h2><p>用户通过界面与系统进行交互。<br>例如按钮、输入框等控件。<br>而Activity正是用于对这些控件的控制。</p>
+<h2 id="4种状态"><a href="#4种状态" class="headerlink" title="4种状态"></a>4种状态</h2><ul>
+<li><p>running：界面可见且可与用户进行交互，处于Activity的栈顶</p>
+</li>
+<li><p>pause：失去焦点，界面被一个不完全或透明的界面所覆盖，此时已经不可交互</p>
+</li>
+<li><p>stop：界面不可见，被另外一个界面例如Activity完全覆盖</p>
+</li>
+<li><p>killed：内存被回收，例如内存信息、成员变量等都不存在</p>
+</li>
+</ul>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p><strong>Activity的启动：</strong><br>onCreate -&gt; onStart -&gt; onResume<br>onStart：界面可见，但还不能进行交互<br>onResume：界面可见，且处于前台，可进行交互</p>
+<p><strong>点Home返回主界面：</strong><br>onPause -&gt; onStop<br>onPause：界面可见，且不能进行交互<br>onStop：界面已经不可见，处于后台</p>
+<p><strong>再次回到Activity：</strong><br>onRestart -&gt; onStart -&gt; onResume<br>onRestart：由不可见转化为可见的过程</p>
+<p><strong>退出Activity：</strong><br>onPause -&gt; onStop -&gt; onDestroy<br>onDestroy：当前Activity正在被销毁，进行一些资源的回收和释放的工作</p>
+<h2 id="进程的优先级"><a href="#进程的优先级" class="headerlink" title="进程的优先级"></a>进程的优先级</h2><blockquote>
+<p>前台进程 -&gt; 可见进程 -&gt; 服务进程 -&gt; 后台进程 -&gt; 空进程</p>
+</blockquote>
+<p><strong>前台进程</strong>：与用户正在交互或被前台Activity绑定的Service<br><strong>可见进程</strong>：可见但不是前台进程，不可与用户进行交互，例如调用了onPause但还没调用onStop的Activity<br><strong>服务进程</strong>：在后台启动的一个服务Service<br><strong>后台进程</strong>：例如一个前台进程，按了Home键之后进入后台进行等待（不同于服务进程）<br><strong>空进程</strong>：没有活跃的组件，一般是为了缓存而存在</p>
+<h2 id="Android任务栈"><a href="#Android任务栈" class="headerlink" title="Android任务栈"></a>Android任务栈</h2><p>是一个Activity的集合，用于管理Activity。<br>退出应用时，会清除栈中所有的Activity —- 为了数据安全。</p>
+<ul>
+<li>一个应用可以拥有多个栈</li>
+<li>一个Activity可以独享一个栈</li>
+</ul>
+<h2 id="启动模式-–-luanchMode-–-为复用而生"><a href="#启动模式-–-luanchMode-–-为复用而生" class="headerlink" title="启动模式 – luanchMode – 为复用而生"></a>启动模式 – luanchMode – 为复用而生</h2><ul>
+<li>standard：默认的模式，每创建一个Activity，都会将其存入到栈中，且每次都会执行一个完整的生命周期</li>
+<li>singleTop：栈顶复用，如果栈顶Activity为要启动的Activity，则不再创建一个新的Activity</li>
+<li>singleTask：栈内复用，如果栈中有要启动的Activity，则直接使用该Activity，且把处于其上面的所有Activity清理出栈</li>
+<li>singleInstance：一个Activity单独占用一个栈</li>
+</ul>
+<h2 id="跳转协议-–-scheme"><a href="#跳转协议-–-scheme" class="headerlink" title="跳转协议 – scheme"></a>跳转协议 – scheme</h2><ol>
+<li>跳转到App的任何界面</li>
+<li>通过通知栏跳转</li>
+<li>通话H5页面进行跳转</li>
+</ol>
+<p>（例子：拨号盘上的暗码）</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[2017总结和2018计划]]></title>
-      <url>http://yoursite.com/2017/12/31/2017%E6%80%BB%E7%BB%93%E5%92%8C2018%E8%AE%A1%E5%88%92/</url>
-      <content type="html"><![CDATA[<h2 id="2017年记事"><a href="#2017年记事" class="headerlink" title="2017年记事"></a>2017年记事</h2><p>一年，过去了，很快，又觉得已经过了很久。<br>从2017年伊始，我已经没有回学校上课了，除了那挂着的英语课和一门好不容易报上名的网络通识课，我的大学算是磕磕碰碰中结束了。<br>我从2月10号开始实习，这个日子我记得是如此清楚，毕竟是第一天上班，我还是很早地，忘了起床，邋邋遢遢就来到公司。第一天确实过得很快，因为我根本就没干嘛活，一天都在装电脑。说到这个装电脑，我是惭愧的，首先我确实是计算机学院的学生，其次我也确实有学过Linux课程。但我依然不知道显卡插在哪里，要怎么装两个硬盘，还为如何安装Linux系统犯了傻。<br>知耻后勇，我便买回一本《鸟哥的Linux私房菜》，刚开始确实看了好几章，可惜后面一忙，就没有继续看下去了，这将是我2018年的一个小计划。</p>
+      <url>http://yoursite.com/2018/07/01/2017%E6%80%BB%E7%BB%93%E5%92%8C2018%E8%AE%A1%E5%88%92/</url>
+      <content type="html"><![CDATA[<h2 id="2017年记事"><a href="#2017年记事" class="headerlink" title="2017年记事"></a>2017年记事</h2><p>一年，过去了，很快，又觉得已经过了很久。<br>从2017年伊始，我已经没有回学校上课了，除了那挂着的英语课和一门好不容易报上名的网络通识课，我的大学算是磕磕碰碰中结束了。<br>我从2月10号开始实习，这个日子我记得是如此清楚，毕竟是第一天上班，我还是很早地，忘了起床，邋邋遢遢就来到公司。第一天确实过得很快，因为我根本就没干嘛活，一天都在装电脑。说到这个装电脑，我是惭愧的，首先我确实是计算机学院的学生，其次我也确实有学过Linux课程。但我依然不知道显卡插在哪里，要怎么装两个硬盘，还为如何安装Linux系统犯了傻。<br>知耻后勇，我便买回一本《鸟哥的Linux私房菜》，刚开始确实看了好几章，可惜后面一忙，就没有继续看下去了，这将是我2018后半年年的一个小计划。</p>
 <p>现在开始从头捋一捋。<br>从2月份到7月15号，我都是一名实习生，当初一起来实习的有3个人，我看着他们每天都在看书，学习(这是公司的培养方式)，我是很羡慕的，因为我每天都感觉挺忙的，都在一堆源码里查找，修改。当然，这是说好听的，其实就是很多重复性的动作，我怕我做久了就麻木了，在公司没有时间学习，那我就每天晚上回去看书，虽然时间很少，但我很享受，这段属于我自己的时间。每天花2个小时去看书，看博客，可惜的是那时我还没有一个很完善的学习机制，只是一直在看，没有记录，也没有过多的思考，感觉是浪费了，空有一个很努力的外表，其实没有收获到什么，至少到现在，我只记得我看过什么，却忘了看的内容了。<br>后来开始要修网络通识课，就每天晚上回去挂着，打会游戏，告诉自己要放松，不能被工作绑定。直到通识课结束了，就像突然一个习惯性的事件没了，有点不知所措，我才开始反思，打游戏，是在放松自己，还是自我堕落。<br>此时5个月的实习期已经结束了，公司安排要去惠州进行一个月的培训，我无法去评价这个月，也就不加评价了。最大的好处，也就是认识了几个好朋友吧。我更想称为朋友，而不是同事。<br>培训归来，我并开始进入又一段时间的浑噩生活，刚好赶上一个比较空闲的时间段，每天上班看一会书，我也不知道有没有看下去，然后就是玩会手游。直到，部长拉着去个小房间，提醒了一下游戏这种东西，在不恰当的时候去玩，总不是件好事情。说我是恍然大悟，其实也没有，只是我回家路上想了又想，对，我才23岁，我的人生还在最有活力的时候，我怎么活得像个龟。<br>于是我开始给自己制定一个模糊的计划，为什么是模糊的，因为我在后面的一段时间里，不断地去改变它，直到适合我。<br>这一小段时间里，我很认真也很高效地在学习，例如架构知识，例如多线程模式。对的，你发现了，我说的是一小段时间。并不是我没有意志力，而是后面发生的一件事，影响了我一段很长的时间。<br>入冬了，每天清晨起来不易，但我还是从未迟到，我是个守时的人，当然不是那种踏点，我会给自己预留时间。这段时间我的激情又回来了，我开始看我以前买的书，一本本慢慢啃，也手写了很多代码，也在慢慢修改自己的学习方式，虽然到现在，我也还没找到最适合我的，但总会有点进步的。</p>
 <h3 id="2017专业书籍"><a href="#2017专业书籍" class="headerlink" title="2017专业书籍"></a>2017专业书籍</h3><ul>
 <li>[x] Java编程思想</li>
@@ -18,7 +110,8 @@
 <li>[ ] 鸟哥的Linux私房菜</li>
 </ul>
 <hr>
-<h2 id="2018年计划"><a href="#2018年计划" class="headerlink" title="2018年计划"></a>2018年计划</h2><p>放了3天假，前两天睡到太阳落山，然后就来到了2018年1月1号。<br>起床后摸着头想想，是应该给自己做个计划的。我一直都是个很好的执行者，基本计划的事都会做到，当然我基本没给自己什么计划，所以才能演变到现在这样。但不可否认的是我还有点优点 – 耐心，自控，而刚好这两个优点是我现在急需要到且我认为我能加以利用的。<br>先给个大概的目标吧。</p>
+<h2 id="2018年记事"><a href="#2018年记事" class="headerlink" title="2018年记事"></a>2018年记事</h2><p>新年过完，我又开始了懒散的生活，除了看看博客，看看书，其实工作也从年前的忙碌慢慢闲下来。<br>5月2号，我又换了工作，去了一家小公司。公司人不多，所以活特别多，每天回到家都特别累。在第一个月里，又开始了我浑浑噩噩的学习生活。学习，没动力，生活，一团糟。早上挣扎着起床，晚上回来洗澡完就逼着自己赶紧睡觉。<br>是该休息一下了，冷静下来去思考一下，而不是唯唯诺诺，战战兢兢，患得患失地继续下去了。</p>
+<h2 id="2018年计划"><a href="#2018年计划" class="headerlink" title="2018年计划"></a>2018年计划</h2><p>放了3天假，前两天睡到太阳落山，然后就来到了2018年7月1号。<br>起床后摸着头想想，是应该给自己做个计划的。我一直都是个很好的执行者，基本计划的事都会做到，当然我基本没给自己什么计划，所以才能演变到现在这样。但不可否认的是我还有点优点 – 耐心，自控，而刚好这两个优点是我现在急需要到且我认为我能加以利用的。<br>先给个大概的目标吧。</p>
 <p><strong><em>成为一个中级工程师，前往高级工程师的路上。</em></strong></p>
 <h3 id="细致计划"><a href="#细致计划" class="headerlink" title="细致计划"></a>细致计划</h3><p>（可能有补充）</p>
 <table>
@@ -73,7 +166,30 @@
 </tbody>
 </table>
 <hr>
-<h4 id="初版写于2018-1-1"><a href="#初版写于2018-1-1" class="headerlink" title="初版写于2018.1.1"></a>初版写于2018.1.1</h4>]]></content>
+<h4 id="初版写于2018-1-1"><a href="#初版写于2018-1-1" class="headerlink" title="初版写于2018.1.1"></a>初版写于2018.1.1</h4><h4 id="二次修改写于2018-7-1"><a href="#二次修改写于2018-7-1" class="headerlink" title="二次修改写于2018.7.1"></a>二次修改写于2018.7.1</h4>]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[荒上鸿]]></title>
+      <url>http://yoursite.com/2018/05/01/%C2%96%E8%8D%92%E4%B8%8A%E9%B8%BF/</url>
+      <content type="html"><![CDATA[<hr>
+<p>平静，或许沉浸在这个本该纷乱的世界太久，一声马啸，便乱了山河的规划，战火如雨落满整个版图。任谁，也无法用逃避来躲过头顶上的灾难。<br>烟火四起的荒原上本就不应该出现任何一种生命，然而孤独的鹰，却偏偏在打乱本该正常的平衡，为萧索的血色，添上几分慌忙。</p>
+<p>一声马嘶，引着随后的千万铁骑，马蹄声似乎要震裂这个混沌天地。他们带着生命来，到底要带走生命。可是这片荒原，从来只接受滚烫的血液与冰冷的灵魂。<br>黑胡子长嘶，千人的军队竟在一瞬间止住了极速前行的步伐。本来的震耳惊雷，眨眼间消失无踪。<br>军队的前方是一个柔弱女子，在寒风冷冽中早已瑟瑟发抖，不属于该年纪的惨白头发如盘丝缠绕，空洞的两眼似是看不见前方。但，又好似看透了人世，再不愿用自己的双眼去仔细端详。<br>阵前将军铁甲遮面，面对一个女子，却无半点轻敌之意，更无怜悯之心。一双鹰般眼睛任铁甲再厚也挡不住它的锐利而深沉。<br>“为何，挡住我等？”<br>恐怖的安静已经持续了一个时辰，终于，一句疑问，让所有的人都吐了口气。<br>“将军此去，恐怕再无归路。”淡漠的语言从女子口中说出，莺莺之声更是令人心生怜意。<br>怎奈，将军本是无情人，又怎会领会怜字，“当我去者，杀！”<br>何等威武。<br>剑已拔，弓已张。昏黑的天色也无法掩盖将军血腥的双眼。千骑齐出，如山塌雪崩，然移动之际，也未见谁快慢半履。令六国胆寒的秦国火骑兵，不管面对的敌人是弱是强，都只有一个眼神，坚决。<br>“为何，要如此。”<br>为何？又有谁会去回答这一句刚一出口便飘逝在空中的问语。<br>女子颤抖的手摘下束发的长丝巾，任由它在寒风中飞扬。<br>曾经为你恨生白发，今日为你血流成河。<br>为何，平凡的爱要去阻挡国恨家仇？<br>为何，既然恨，还是不忍你走向绝路？</p>
+<p>丝巾在风中伸、收、折、展。柔弱处如彩蝶戏花，娇怒时如索命无常。此时的魔鬼阴爪，一颦一笑间一人命。也唯有那漫天的白发，如同水银在月色下一泻千里，冰冷的笑容定格在空中依旧沁人心脾。</p>
+<p>都说了这平原从来只收人命，偏偏有人不信。<br>也行血腥的不止是将军，还有这无奈的烟火。<br>冰冷的汗水已经渗出冰冷的面具，冰冷的冬风冻结了他冰冷的心。他，恐怕也只能用冰冷来形容了。</p>
+<p>剑已出鞘，又何须多言。<br>只有一匹发疯了的马，发疯地奔出这片又无半点生机的荒原。<br>夜晚，又归于平静。</p>
+<p>两个月，两个月的时间足以用来编织无尽的谎言。<br>秦军最强骑军的无故灭亡，至少需要一个理由来解释，或者是掩盖。而刚刚好，朝堂之上，最不缺乏的，就是落井下石。<br>两个月，几乎所有人都开始相信，将军白起，利欲熏心，坑杀所部千人，投降楚国。<br>谎言千遍，便成真理。</p>
+<p>当一个遍体鳞伤又高傲不凡的人出现在街头，昔日的无限荣光已变成肮脏不堪，刚刚的英雄已成为被人唾弃的叛徒。人性的多变才渐渐伸出头角，为以往的错误低头寻找合适的借口。只是过去的总归是过去，现在找不到的，是昔日的热血。<br>世间多情，而又无情，明明多他一个精彩，偏偏少了他也无所谓。昨日还在煮酒共烹豪言天下，今夕杯冷茶凉，剩下枯树落叶还笑谈，烟雨冷淡，问君是否心寒。</p>
+<p>执笔，忘了落下，满心的忠诚肝胆，却书写不出一段惊天动地的回肠。</p>
+<p>秦楚之战，早该发生，拖延了这么久，有多少生命得以在暴风雨前喘上一口气。谁能想明白，是什么理由，可以拥有主宰人生的权利。<br>秦军惨败，无故白起也遭祸其中。<br>秦王三日降旨，白起仕楚二月，致秦伐楚不胜，念其前功，当赐剑。</p>
+<p>兴许有人会悲痛，但喜悦的人更多。秦王屠戮四方，何时尝到如此失败的滋味。人一旦做错了事，第一反应总是去找借口，平民如此，君王亦是。<br>每个人都逃不了当棋子的命运。君要臣死，臣不得不死，臣便是棋子。天地以万物为刍狗，君，也不过是上天控制万物的棋子罢了。</p>
+<p>“你真该走。”<br>女子从帘中走出，落寞的眼神随着白起的决定更加忧愁。<br>“为何？”<br>一句为何，却等不到下文。</p>
+<p>若能一席蓑衣，垂钓河间，一生荣耀，为何舍不得？<br>只可惜，当穿上这身战甲，便已定下这胯下战马只能前进的方向。<br>若剑不能驰骋沙场，主宰在乱世之间，那么用它来完结这不属于自己的灵魂可否？<br>也许，见不到慌乱，心自安宁。</p>
+<p>秦王再赐剑。<br>剑既然不再上战场杀敌，也不能让它生锈。</p>
+<p>白起的身体缓缓落下，冰冷的眼睛现在才开始慢慢融化，直到看到了眼前这个人，不属于他的微笑，悄悄爬上唇边。<br>“早知如此，当初为何？”<br>原来世间的所有，都可以来问个为何，只是她再也得不到答案，也不需要答案，因为答案，一点也不重要。<br>但剑吻上颈间，所有的不甘也该归于平凡，是人又能如何，有时还不如一只畜生快活，来得糊涂，去也糊涂。</p>
+<p>“我固当死，长平之战，赵卒降者数十万，我诈而尽坑之，是足死矣。”<br>是，在闭上眼睛的那一刹那，我也找到了一个理由，充当可以让我安详离开的借口。</p>
+<p>一颗眼泪终于从她瘦弱的脸庞上滴下，看出她的疲倦，却看不到她的心伤。活着，你不看我一眼，死了，为何又闭上眼睛。<br>眼泪滴落到地，溅起了古远的记忆。<br>那时你方年少，我还芳龄，你我隔着浣衣的小溪相望。<br>那时你素衣长裙，我手执残卷，谈笑间时光西流。<br>到了何时的片段，明月何处，为何只照亮你独自离去的背影。<br>眼中的一滴泪水，唤起了翩翩惊鸿，为何却留不住弹指一挥间的奈何。</p>
+]]></content>
     </entry>
     
     <entry>

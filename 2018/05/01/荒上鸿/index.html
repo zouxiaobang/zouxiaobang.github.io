@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="平静，或许沉浸在这个本该纷乱的世界太久，一声马啸，便乱了山河的规划，战火如雨落满整个版图。任谁，也无法用逃避来躲过头顶上的灾难。烟火四起的荒原上本就不应该出现任何一种生命，然而孤独的鹰，却偏偏在打乱本该正常的平衡，为萧索的血色，添上几分慌忙。
+一声马嘶，引着随后的千万铁骑，马蹄声似乎要震裂这个混沌天地。他们带着生命来，到底要带走生命。可是这片荒原，从来只接受滚烫的血液与冰冷的灵魂。黑胡子长嘶，千">
+<meta property="og:type" content="article">
+<meta property="og:title" content="荒上鸿">
+<meta property="og:url" content="http://yoursite.com/2018/05/01/荒上鸿/index.html">
+<meta property="og:site_name" content="zouxiaobang">
+<meta property="og:description" content="平静，或许沉浸在这个本该纷乱的世界太久，一声马啸，便乱了山河的规划，战火如雨落满整个版图。任谁，也无法用逃避来躲过头顶上的灾难。烟火四起的荒原上本就不应该出现任何一种生命，然而孤独的鹰，却偏偏在打乱本该正常的平衡，为萧索的血色，添上几分慌忙。
+一声马嘶，引着随后的千万铁骑，马蹄声似乎要震裂这个混沌天地。他们带着生命来，到底要带走生命。可是这片荒原，从来只接受滚烫的血液与冰冷的灵魂。黑胡子长嘶，千">
+<meta property="og:updated_time" content="2018-07-03T15:54:59.743Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="荒上鸿">
+<meta name="twitter:description" content="平静，或许沉浸在这个本该纷乱的世界太久，一声马啸，便乱了山河的规划，战火如雨落满整个版图。任谁，也无法用逃避来躲过头顶上的灾难。烟火四起的荒原上本就不应该出现任何一种生命，然而孤独的鹰，却偏偏在打乱本该正常的平衡，为萧索的血色，添上几分慌忙。
+一声马嘶，引着随后的千万铁骑，马蹄声似乎要震裂这个混沌天地。他们带着生命来，到底要带走生命。可是这片荒原，从来只接受滚烫的血液与冰冷的灵魂。黑胡子长嘶，千">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/01/荒上鸿/"/>
+
+
+
+
+
+  <title>荒上鸿 | zouxiaobang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/zouxiaobang" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zouxiaobang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/01/荒上鸿/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZouxIaobANg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zouxiaobang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">荒上鸿</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-01T23:44:26+08:00">
+                2018-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/文章/" itemprop="url" rel="index">
+                    <span itemprop="name">文章</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<p>平静，或许沉浸在这个本该纷乱的世界太久，一声马啸，便乱了山河的规划，战火如雨落满整个版图。任谁，也无法用逃避来躲过头顶上的灾难。<br>烟火四起的荒原上本就不应该出现任何一种生命，然而孤独的鹰，却偏偏在打乱本该正常的平衡，为萧索的血色，添上几分慌忙。</p>
+<p>一声马嘶，引着随后的千万铁骑，马蹄声似乎要震裂这个混沌天地。他们带着生命来，到底要带走生命。可是这片荒原，从来只接受滚烫的血液与冰冷的灵魂。<br>黑胡子长嘶，千人的军队竟在一瞬间止住了极速前行的步伐。本来的震耳惊雷，眨眼间消失无踪。<br>军队的前方是一个柔弱女子，在寒风冷冽中早已瑟瑟发抖，不属于该年纪的惨白头发如盘丝缠绕，空洞的两眼似是看不见前方。但，又好似看透了人世，再不愿用自己的双眼去仔细端详。<br>阵前将军铁甲遮面，面对一个女子，却无半点轻敌之意，更无怜悯之心。一双鹰般眼睛任铁甲再厚也挡不住它的锐利而深沉。<br>“为何，挡住我等？”<br>恐怖的安静已经持续了一个时辰，终于，一句疑问，让所有的人都吐了口气。<br>“将军此去，恐怕再无归路。”淡漠的语言从女子口中说出，莺莺之声更是令人心生怜意。<br>怎奈，将军本是无情人，又怎会领会怜字，“当我去者，杀！”<br>何等威武。<br>剑已拔，弓已张。昏黑的天色也无法掩盖将军血腥的双眼。千骑齐出，如山塌雪崩，然移动之际，也未见谁快慢半履。令六国胆寒的秦国火骑兵，不管面对的敌人是弱是强，都只有一个眼神，坚决。<br>“为何，要如此。”<br>为何？又有谁会去回答这一句刚一出口便飘逝在空中的问语。<br>女子颤抖的手摘下束发的长丝巾，任由它在寒风中飞扬。<br>曾经为你恨生白发，今日为你血流成河。<br>为何，平凡的爱要去阻挡国恨家仇？<br>为何，既然恨，还是不忍你走向绝路？</p>
+<p>丝巾在风中伸、收、折、展。柔弱处如彩蝶戏花，娇怒时如索命无常。此时的魔鬼阴爪，一颦一笑间一人命。也唯有那漫天的白发，如同水银在月色下一泻千里，冰冷的笑容定格在空中依旧沁人心脾。</p>
+<p>都说了这平原从来只收人命，偏偏有人不信。<br>也行血腥的不止是将军，还有这无奈的烟火。<br>冰冷的汗水已经渗出冰冷的面具，冰冷的冬风冻结了他冰冷的心。他，恐怕也只能用冰冷来形容了。</p>
+<p>剑已出鞘，又何须多言。<br>只有一匹发疯了的马，发疯地奔出这片又无半点生机的荒原。<br>夜晚，又归于平静。</p>
+<p>两个月，两个月的时间足以用来编织无尽的谎言。<br>秦军最强骑军的无故灭亡，至少需要一个理由来解释，或者是掩盖。而刚刚好，朝堂之上，最不缺乏的，就是落井下石。<br>两个月，几乎所有人都开始相信，将军白起，利欲熏心，坑杀所部千人，投降楚国。<br>谎言千遍，便成真理。</p>
+<p>当一个遍体鳞伤又高傲不凡的人出现在街头，昔日的无限荣光已变成肮脏不堪，刚刚的英雄已成为被人唾弃的叛徒。人性的多变才渐渐伸出头角，为以往的错误低头寻找合适的借口。只是过去的总归是过去，现在找不到的，是昔日的热血。<br>世间多情，而又无情，明明多他一个精彩，偏偏少了他也无所谓。昨日还在煮酒共烹豪言天下，今夕杯冷茶凉，剩下枯树落叶还笑谈，烟雨冷淡，问君是否心寒。</p>
+<p>执笔，忘了落下，满心的忠诚肝胆，却书写不出一段惊天动地的回肠。</p>
+<p>秦楚之战，早该发生，拖延了这么久，有多少生命得以在暴风雨前喘上一口气。谁能想明白，是什么理由，可以拥有主宰人生的权利。<br>秦军惨败，无故白起也遭祸其中。<br>秦王三日降旨，白起仕楚二月，致秦伐楚不胜，念其前功，当赐剑。</p>
+<p>兴许有人会悲痛，但喜悦的人更多。秦王屠戮四方，何时尝到如此失败的滋味。人一旦做错了事，第一反应总是去找借口，平民如此，君王亦是。<br>每个人都逃不了当棋子的命运。君要臣死，臣不得不死，臣便是棋子。天地以万物为刍狗，君，也不过是上天控制万物的棋子罢了。</p>
+<p>“你真该走。”<br>女子从帘中走出，落寞的眼神随着白起的决定更加忧愁。<br>“为何？”<br>一句为何，却等不到下文。</p>
+<p>若能一席蓑衣，垂钓河间，一生荣耀，为何舍不得？<br>只可惜，当穿上这身战甲，便已定下这胯下战马只能前进的方向。<br>若剑不能驰骋沙场，主宰在乱世之间，那么用它来完结这不属于自己的灵魂可否？<br>也许，见不到慌乱，心自安宁。</p>
+<p>秦王再赐剑。<br>剑既然不再上战场杀敌，也不能让它生锈。</p>
+<p>白起的身体缓缓落下，冰冷的眼睛现在才开始慢慢融化，直到看到了眼前这个人，不属于他的微笑，悄悄爬上唇边。<br>“早知如此，当初为何？”<br>原来世间的所有，都可以来问个为何，只是她再也得不到答案，也不需要答案，因为答案，一点也不重要。<br>但剑吻上颈间，所有的不甘也该归于平凡，是人又能如何，有时还不如一只畜生快活，来得糊涂，去也糊涂。</p>
+<p>“我固当死，长平之战，赵卒降者数十万，我诈而尽坑之，是足死矣。”<br>是，在闭上眼睛的那一刹那，我也找到了一个理由，充当可以让我安详离开的借口。</p>
+<p>一颗眼泪终于从她瘦弱的脸庞上滴下，看出她的疲倦，却看不到她的心伤。活着，你不看我一眼，死了，为何又闭上眼睛。<br>眼泪滴落到地，溅起了古远的记忆。<br>那时你方年少，我还芳龄，你我隔着浣衣的小溪相望。<br>那时你素衣长裙，我手执残卷，谈笑间时光西流。<br>到了何时的片段，明月何处，为何只照亮你独自离去的背影。<br>眼中的一滴泪水，唤起了翩翩惊鸿，为何却留不住弹指一挥间的奈何。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color:#ccc;font-size:14px;">----------------本文结束 <i class="fa fa-paw"></i>感想您的阅读-----------------</div>
+  
+</div>
+      
+    </div>
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/05/Linux-2-Linux系统开机过程问题排解及关机方法/" rel="next" title="Linux(2) -- Linux系统开机过程问题排解及关机方法">
+                <i class="fa fa-chevron-left"></i> Linux(2) -- Linux系统开机过程问题排解及关机方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/01/2017总结和2018计划/" rel="prev" title="2017总结和2018计划">
+                2017总结和2018计划 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="ZouxIaobANg" />
+            
+              <p class="site-author-name" itemprop="name">ZouxIaobANg</p>
+              <p class="site-description motion-element" itemprop="description">若无烟雨任平生，不做龙首，游在九州，凭他归去落愁</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZouxIaobANg</span>
+
+  
+</div>
+
+<div class="powered-by">
+<span id="busuanzi_container_page_pv">
+  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</span>
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
