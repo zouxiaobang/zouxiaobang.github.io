@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1 正确的关机方法Linux的关机不像Windows那般随意，可以直接按电源键几秒就关掉算了。Linux如果不正常关机，有可能造成文件系统的损毁 – 因为在关机时如果不是按照正常的服务关闭流程的话，有些数据可能来不及写入到文件中，从而这些服务文件可能会出现问题。
+几个关机的命令：（只有root账号才能进行例如shutdown、reboot等命令）
+
+sync: 同步数据到磁盘
+shutdown:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux(2) -- Linux系统开机过程问题排解及关机方法">
+<meta property="og:url" content="http://yoursite.com/2016/11/05/Linux-2-Linux系统开机过程问题排解及关机方法/index.html">
+<meta property="og:site_name" content="zouxiaobang">
+<meta property="og:description" content="1 正确的关机方法Linux的关机不像Windows那般随意，可以直接按电源键几秒就关掉算了。Linux如果不正常关机，有可能造成文件系统的损毁 – 因为在关机时如果不是按照正常的服务关闭流程的话，有些数据可能来不及写入到文件中，从而这些服务文件可能会出现问题。
+几个关机的命令：（只有root账号才能进行例如shutdown、reboot等命令）
+
+sync: 同步数据到磁盘
+shutdown:">
+<meta property="og:updated_time" content="2018-07-03T14:42:26.097Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux(2) -- Linux系统开机过程问题排解及关机方法">
+<meta name="twitter:description" content="1 正确的关机方法Linux的关机不像Windows那般随意，可以直接按电源键几秒就关掉算了。Linux如果不正常关机，有可能造成文件系统的损毁 – 因为在关机时如果不是按照正常的服务关闭流程的话，有些数据可能来不及写入到文件中，从而这些服务文件可能会出现问题。
+几个关机的命令：（只有root账号才能进行例如shutdown、reboot等命令）
+
+sync: 同步数据到磁盘
+shutdown:">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/05/Linux-2-Linux系统开机过程问题排解及关机方法/"/>
+
+
+
+
+
+  <title>Linux(2) -- Linux系统开机过程问题排解及关机方法 | zouxiaobang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/zouxiaobang" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zouxiaobang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/05/Linux-2-Linux系统开机过程问题排解及关机方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZouxIaobANg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zouxiaobang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux(2) -- Linux系统开机过程问题排解及关机方法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-05T22:43:45+08:00">
+                2016-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<h2 id="1-正确的关机方法"><a href="#1-正确的关机方法" class="headerlink" title="1 正确的关机方法"></a>1 正确的关机方法</h2><p>Linux的关机不像Windows那般随意，可以直接按电源键几秒就关掉算了。<br>Linux如果不正常关机，有可能造成文件系统的损毁 – 因为在关机时如果不是按照正常的服务关闭流程的话，有些数据可能来不及写入到文件中，从而这些服务文件可能会出现问题。</p>
+<p>几个关机的命令：<br><strong>（只有root账号才能进行例如shutdown、reboot等命令）</strong></p>
+<ul>
+<li>sync: 同步数据到磁盘</li>
+<li>shutdown: 常用的关机命令 </li>
+<li>reboot/halt/poweroff: 重启、关机命令</li>
+</ul>
+<h3 id="1-1-数据同步到磁盘：sync"><a href="#1-1-数据同步到磁盘：sync" class="headerlink" title="1.1 数据同步到磁盘：sync"></a>1.1 数据同步到磁盘：sync</h3><p>计算机在运行的时候，所有的数据都要被读取到内存中，才能被CPU处理。处理完后又会被存回磁盘中。在内存和磁盘中，磁盘的读写速度显然是比较慢的，如果一直都在磁盘上进行读写操作，那么计算机的性能肯定是没有那么优秀的。<br>Linux为了解决这个问题，在默认的情况下，某些已经加载到内存中的数据就不会被写回磁盘中，通过暂存在内存中的方式，让你在重新操作该数据的时候，能直接从内存中取出，在速度上就能提升不少。<br>但是，问题也就出在这里，如果因为不正常关机而未在关机之前把内存中的数据写回磁盘中，就有可能造成数据的丢失。<br>所以，在关机之前多执行几次sync命令肯定没错的。</p>
+<h3 id="1-2-常用关机命令：shutdown"><a href="#1-2-常用关机命令：shutdown" class="headerlink" title="1.2 常用关机命令：shutdown"></a>1.2 常用关机命令：shutdown</h3><p>shutdown这个命令会通知系统中的所有进程，并通知关闭系统中的run level内的一些服务。<br>shutdown可完成的工作：</p>
+<ul>
+<li>可以自由选择关机模式：关机、重启或进入单用户操作模式</li>
+<li>可以设置关机时间</li>
+<li>可以自定义关机的通知信息</li>
+<li>可以仅仅发出警告信息</li>
+<li>可以选择是否使用fsck检查文件系统</li>
+</ul>
+<p>shutdown的option参数参考：<br>root@www ~: shutdown [OPTION]… TIME [MESSAGE]<br>-r     系统服务停止之后重启。<br>-h     将系统服务停掉之后关机。<br>-H     将系统服务停掉之后关机。（使用halt命令关机）<br>-P     将系统服务停掉之后关机。（使用power off命令关机）<br>-c     取消正在进行的关机操作。这个选项没有option参数。<br>-k     只传递警告信息给所有用户，并不执行关机操作。</p>
+<p>例子：<br>root@www ~:shutdown -h now<br>    现在就关机<br>root@www ~:shutdown -h 20:25<br>    在20:25这个时间点关机<br>root@www ~:shutdown -h +10<br>    10分钟后关机<br>root@www ~:shutdown -r now<br>    立即重启<br>root@www ~:shutdown -r +30 “the system will reboot after 30 min”<br>    系统在30分钟后重启并提供警告信息<br>root@www ~:shutdown -k now “the is the message with shutdown”<br>    发出警告信息，但并不关机</p>
+<p>（注意：时间参数比较加入，不然shutdown命令会自动跳到run-level 1的模式下（单用户维护的登录情况））</p>
+<h3 id="1-3-重启、关机：reboot、halt、poweroff"><a href="#1-3-重启、关机：reboot、halt、poweroff" class="headerlink" title="1.3 重启、关机：reboot、halt、poweroff"></a>1.3 重启、关机：reboot、halt、poweroff</h3><p>shutdown实际上是调用init 0, init 0会清理一些服务，然后再调用halt或者poweroff。<br>halt和poweroff的主要区别，在没有没有acpi的系统上，halt只是关闭了系统，而没有关闭电源，必须手动关闭电源，而poweroff会发送一个关闭电源的信号给acpi。<br>而在现在的系统中，这些命令基本就都一样了。<br>更建议使用init 0来关机。</p>
+<h3 id="1-4-切换执行等级：init"><a href="#1-4-切换执行等级：init" class="headerlink" title="1.4 切换执行等级：init"></a>1.4 切换执行等级：init</h3><p>init改变的就是run-level，主要有7中等级模式<br>| Run Level      | 描述   |<br>| ——–   | —–:  |<br>|  0     | 关机 |<br>|  1     | 单用户模式 |<br>|  2     | 多用户模式，但无网络连接 |<br>|  3     | 多用户模式，纯命令行模式 |<br>|  4     | 用户自定义 |<br>|  5     | 多用户模式，图形界面模式 |<br>|  6     | 重启 |<br>如何来切换模式呢？<br>可以使用init这个命令，例如，关机可以使用init 0来替代。</p>
+<h2 id="2-开机过程的问题排解"><a href="#2-开机过程的问题排解" class="headerlink" title="2 开机过程的问题排解"></a>2 开机过程的问题排解</h2><h3 id="2-1-文件系统出现错误"><a href="#2-1-文件系统出现错误" class="headerlink" title="2.1 文件系统出现错误"></a>2.1 文件系统出现错误</h3><p>文件系统损坏的原因一般有以下两个：</p>
+<ul>
+<li>因为断电或不正常关机所导致的文件系统发生错误。</li>
+<li>硬盘使用率过高，或使用时的环境不良</li>
+</ul>
+<p>解决文件系统出现的错误一般要根据出错的扇区来排查。</p>
+<h4 id="2-1-1-如果根目录没有损坏"><a href="#2-1-1-如果根目录没有损坏" class="headerlink" title="2.1.1 如果根目录没有损坏"></a>2.1.1 如果根目录没有损坏</h4><p>假如坏的分区是/dev/sda7，那么操作步骤如下：</p>
+<ul>
+<li>在开机时，屏幕显示“press root password or ctrl+D”，此时输入root密码，进行单用户模式维护工作。</li>
+<li>输入“fsck /dev/sda7”，此时开始检测sda7分区的错误，并在屏幕上显示正在修复硬盘的信息，如果发现错误，就会显示“clear [Y/N]?”，直接输入Y。</li>
+<li>修复完成后，直接重启。<h4 id="2-1-2-如果根目录坏了"><a href="#2-1-2-如果根目录坏了" class="headerlink" title="2.1.2 如果根目录坏了"></a>2.1.2 如果根目录坏了</h4>只能将该硬盘拔出，接到另一台Linux系统的计算机上，并且不要挂载该硬盘。然后以root身份进入并执行“fsck /dev/sdb1”。<br>为什么是/dev/sdb1？<br>因为这个损坏的硬盘接入到其他计算机中，就充当了第二个硬盘，所以编号是sdb，而其根目录是在第一个分区中的，所以为sdb1。<h4 id="2-1-3-如果硬盘坏了"><a href="#2-1-3-如果硬盘坏了" class="headerlink" title="2.1.3 如果硬盘坏了"></a>2.1.3 如果硬盘坏了</h4>那就只能换硬盘了。</li>
+</ul>
+<h3 id="2-2-修改root密码"><a href="#2-2-修改root密码" class="headerlink" title="2.2 修改root密码"></a>2.2 修改root密码</h3><p>如果忘记了root的密码，其实不用重载系统，只需要使用单用户模式进入更改密码即可。具体步骤:<br>系统重启，读秒的时候按下任意键，按e进入grub编辑模式：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">root (hd0, <span class="number">0</span>)</div><div class="line">kernel /vmlinuz-<span class="number">2.6</span>.18-<span class="number">128</span>.e15 ro root=LABEL=/ rhgb quiet</div><div class="line">initrd /initrd-<span class="number">2.6</span>.18-<span class="number">128</span>.e15.img</div></pre></td></tr></table></figure></p>
+<p>在kernel那一行后面按下e，添加“single”：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">kernel /vmlinuz-<span class="number">2.6</span>.18-<span class="number">128</span>.e15 ro root=LABEL=/ rhgb quiet single</div></pre></td></tr></table></figure></p>
+<p>按下【Enter】键，再按下b就可以开机进入单用户模式。此时只需要输入“passed”来修改密码即可：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@www ~]# passwd</div></pre></td></tr></table></figure></p>
+<p>按enter后系统提示要输入两次密码，即可修改成功。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color:#ccc;font-size:14px;">----------------本文结束 <i class="fa fa-paw"></i>感想您的阅读-----------------</div>
+  
+</div>
+      
+    </div>
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/03/Linux-1-磁盘分区/" rel="next" title="Linux（1）-- 磁盘分区">
+                <i class="fa fa-chevron-left"></i> Linux（1）-- 磁盘分区
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/31/2017总结和2018计划/" rel="prev" title="2017总结和2018计划">
+                2017总结和2018计划 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="ZouxIaobANg" />
+            
+              <p class="site-author-name" itemprop="name">ZouxIaobANg</p>
+              <p class="site-description motion-element" itemprop="description">若无烟雨任平生，不做龙首，游在九州，凭他归去落愁</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-正确的关机方法"><span class="nav-number">1.</span> <span class="nav-text">1 正确的关机方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-数据同步到磁盘：sync"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 数据同步到磁盘：sync</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-常用关机命令：shutdown"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 常用关机命令：shutdown</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-重启、关机：reboot、halt、poweroff"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 重启、关机：reboot、halt、poweroff</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-切换执行等级：init"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 切换执行等级：init</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-开机过程的问题排解"><span class="nav-number">2.</span> <span class="nav-text">2 开机过程的问题排解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-文件系统出现错误"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 文件系统出现错误</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-如果根目录没有损坏"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 如果根目录没有损坏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-如果根目录坏了"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 如果根目录坏了</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-如果硬盘坏了"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3 如果硬盘坏了</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-修改root密码"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 修改root密码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZouxIaobANg</span>
+
+  
+</div>
+
+<div class="powered-by">
+<span id="busuanzi_container_page_pv">
+  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</span>
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

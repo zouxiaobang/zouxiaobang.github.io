@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="AIDL介绍Android Interface Definition Language，android接口定义语言。
+你可以定义能够让Client和Service之间建立起通信的程序接口。在Android里面，进程与进程间是不能通信和访问各自的内存。而AIDL的存在，则是为了解决这个问题。
+
+什么时候需要AIDL，这是个问题，因为AIDL的编写比较复杂，所以你应该在需要的时候才去使用它，例如当其他">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AIDL学习">
+<meta property="og:url" content="http://yoursite.com/2016/09/24/AIDL学习/index.html">
+<meta property="og:site_name" content="zouxiaobang">
+<meta property="og:description" content="AIDL介绍Android Interface Definition Language，android接口定义语言。
+你可以定义能够让Client和Service之间建立起通信的程序接口。在Android里面，进程与进程间是不能通信和访问各自的内存。而AIDL的存在，则是为了解决这个问题。
+
+什么时候需要AIDL，这是个问题，因为AIDL的编写比较复杂，所以你应该在需要的时候才去使用它，例如当其他">
+<meta property="og:image" content="http://yoursite.com/img/aidl/aidl1.png">
+<meta property="og:updated_time" content="2018-07-03T14:38:01.822Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AIDL学习">
+<meta name="twitter:description" content="AIDL介绍Android Interface Definition Language，android接口定义语言。
+你可以定义能够让Client和Service之间建立起通信的程序接口。在Android里面，进程与进程间是不能通信和访问各自的内存。而AIDL的存在，则是为了解决这个问题。
+
+什么时候需要AIDL，这是个问题，因为AIDL的编写比较复杂，所以你应该在需要的时候才去使用它，例如当其他">
+<meta name="twitter:image" content="http://yoursite.com/img/aidl/aidl1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/24/AIDL学习/"/>
+
+
+
+
+
+  <title>AIDL学习 | zouxiaobang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/zouxiaobang" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zouxiaobang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/24/AIDL学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZouxIaobANg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zouxiaobang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AIDL学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-24T13:15:50+08:00">
+                2016-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-beginner/" itemprop="url" rel="index">
+                    <span itemprop="name">Android beginner</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="AIDL介绍"><a href="#AIDL介绍" class="headerlink" title="AIDL介绍"></a>AIDL介绍</h2><p>Android Interface Definition Language，android接口定义语言。</p>
+<p>你可以定义能够让Client和Service之间建立起通信的程序接口。在Android里面，进程与进程间是不能通信和访问各自的内存。而AIDL的存在，则是为了解决这个问题。</p>
+<p><img src="/img/aidl/aidl1.png" alt="官方文档"></p>
+<p>什么时候需要AIDL，这是个问题，因为AIDL的编写比较复杂，所以你应该在需要的时候才去使用它，例如当其他的App通过跨进程通信来访问你的Service而且你的Service需要处理多个线程。不然的话你就使用继承Binder或使用Messenger的方法。</p>
+<h2 id="AIDL的使用"><a href="#AIDL的使用" class="headerlink" title="AIDL的使用"></a>AIDL的使用</h2><h3 id="1、创建bean类"><a href="#1、创建bean类" class="headerlink" title="1、创建bean类"></a>1、创建bean类</h3><p>首先我们要创建一个实现了Parcelable的Javabean类</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">public class Book implements Parcelable&#123;</div><div class="line">	private String name;</div><div class="line">	private int price;</div><div class="line"></div><div class="line">	public <span class="function"><span class="title">Book</span></span>()&#123;&#125;</div><div class="line"></div><div class="line">	protected Book(Parcel <span class="keyword">in</span>)&#123;</div><div class="line">		name = in.readString();</div><div class="line">		price = in.readInt();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public static final Creator&lt;Book&gt; CREATOR = new Creator&lt;Book&gt;()&#123;</div><div class="line">		public Book createFromParcel(Parcel <span class="keyword">in</span>)&#123;</div><div class="line">			<span class="built_in">return</span> new Book(<span class="keyword">in</span>);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		public Book[] newArray(int size)&#123;</div><div class="line">			<span class="built_in">return</span> new Book[size];</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public int <span class="function"><span class="title">getPrice</span></span>() &#123;</div><div class="line">        <span class="built_in">return</span> price;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void <span class="built_in">set</span>Price(int price) &#123;</div><div class="line">        this.price = price;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String <span class="function"><span class="title">getName</span></span>() &#123;</div><div class="line">        <span class="built_in">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void <span class="built_in">set</span>Name(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int <span class="function"><span class="title">describeContents</span></span>()&#123;</div><div class="line">    	<span class="built_in">return</span> 0;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void writeToParcel(Parcel parcel, int i)&#123;</div><div class="line">    	parcel.writeString(name);</div><div class="line">    	parcel.writeInt(price);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">    * 自己写的</div><div class="line">    */</div><div class="line">    public void <span class="built_in">read</span>FromParcel(Parcel dest)&#123;</div><div class="line">    	//这里的顺序需要和writeToParce()中的顺序一致</div><div class="line">    	name = dest.readString();</div><div class="line">    	price = dest.readInt();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中需要注意的是readFromParce()这个方法是自己写上去的，是为了在.aidl文件中可以使用out或inout来定向tag。</p>
+<h3 id="2、创建-aidl文件"><a href="#2、创建-aidl文件" class="headerlink" title="2、创建.aidl文件"></a>2、创建.aidl文件</h3><p>怎么新建AIDL文件呢？当然，AndroidStudio已经帮你领到家门口了。直接右键new –&gt; AIDL –&gt; AIDL File</p>
+<p>这里如果你填写的AIDL名字和上面的javabean类名相同的会是不行的，你需要先写一个其他的名字，然后再reName一下，改为javabean的类名。</p>
+<p>OK，然后我们再来看看AIDL文件的内容：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">package com.example.zouxiaobang.aidlex.aidl;</div><div class="line"></div><div class="line">parcelabel Book;</div></pre></td></tr></table></figure></p>
+<p>这个文件的作用就是为了引入一个序列化对象Book，只有这样Book对象才能被其他的AIDL文件所使用。<br>这里的包名应该和Book.java的包名一致。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">package com.example.zouxiaobang.aidlex.aidl;</div><div class="line"></div><div class="line">import com.example.zouxiaobang.aidlex.aidl.Book;</div><div class="line"></div><div class="line">interface BookManager &#123;</div><div class="line">    List&lt;Book&gt; getBooks();</div><div class="line"></div><div class="line">    void addBook(<span class="keyword">in</span> Book book);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果需要使用到非默认的类型的时候，就需要import了，例如上面的Book。而在传入参数的时候，需要使用到定向tag。需要记住的是aidl文件其实就是一个接口类，所以你的那些方法也就是将来使用与进程间通信所需要的方法。<br>写完之后clean一下project，如果没有错就对了。这时系统会默认给我们生成对应的.java文件，所以我们才可以使用该接口里的方法。</p>
+<h3 id="3、服务端的代码"><a href="#3、服务端的代码" class="headerlink" title="3、服务端的代码"></a>3、服务端的代码</h3><p>我们刚刚所做的只是建立了接口，我们都知道，接口的方法是不能调用，这就需要我们去实现这些方法了。这个步骤就在我们的服务端来完成。(这里我们的服务端就是Service)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">public class AIDLService extends Service &#123;</div><div class="line">    private List&lt;Book&gt; mBooks = new ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    private final BookManager.Stub mBookManager = new BookManager.<span class="function"><span class="title">Stub</span></span>() &#123;</div><div class="line">        @Override</div><div class="line">        public List&lt;Book&gt; getBooks() throws RemoteException &#123;</div><div class="line">            <span class="keyword">if</span> (mBooks == null)&#123;</div><div class="line">                <span class="built_in">return</span> new ArrayList&lt;Book&gt;();</div><div class="line">            &#125;</div><div class="line">            <span class="built_in">return</span> mBooks;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void addBook(Book book) throws RemoteException &#123;</div><div class="line">            synchronized (AIDLService.class)&#123;</div><div class="line">                <span class="keyword">if</span> (mBooks == null)&#123;</div><div class="line">                    mBooks = new ArrayList&lt;&gt;();</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (book == null)&#123;</div><div class="line">                    book = new Book();</div><div class="line">                    book.setPrice(12);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (!mBooks.contains(book))&#123;</div><div class="line">                    mBooks.add(book);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void <span class="function"><span class="title">onCreate</span></span>() &#123;</div><div class="line">        super.onCreate();</div><div class="line">        Book book = new Book();</div><div class="line">        book.setName(<span class="string">"Android"</span>);</div><div class="line">        book.setPrice(75);</div><div class="line">        mBooks.add(book);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public IBinder onBind(Intent intent) &#123;</div><div class="line">        <span class="built_in">return</span> mBookManager;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里最重要的就是对BookManager这个aidl接口的实现，注意它的实现并不是普通interface那样直接使用接口名，而是BookManger.Stub。我们在Stub实现类中将方法进行逻辑实现。而我们以前说过onBind()方法返回的IBinder对象也是一个AIDL接口，所以我们可以直接让onBind()方法返回AIDL的实现类，即mBookManager。</p>
+<p>好了，我们服务端的代码写完了，就先开启它。可以在Activity中使用startService()来启动。</p>
+<h3 id="4、客户端的代码"><a href="#4、客户端的代码" class="headerlink" title="4、客户端的代码"></a>4、客户端的代码</h3><p>新建一个App作为客户端，这才能够体现出AIDL的跨进程通信的功能。将服务端的aidl文件都复制到客户端中，记得包名也得是相同的，而且Book这个bean也要复制过去，包名一样得相同。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">public class MainActivity extends Activity &#123;</div><div class="line">    private List&lt;Book&gt; mBooks;</div><div class="line">    private BookManager mBookManager;</div><div class="line">    private boolean isBound;</div><div class="line"></div><div class="line">    private ServiceConnection mConnection = new <span class="function"><span class="title">ServiceConnection</span></span>() &#123;</div><div class="line">        @Override</div><div class="line">        public void onServiceConnected(ComponentName componentName, IBinder service) &#123;</div><div class="line">            mBookManager = BookManager.Stub.asInterface(service);</div><div class="line">            isBound = <span class="literal">true</span>;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (mBookManager != null)&#123;</div><div class="line">                try &#123;</div><div class="line">                    mBooks = mBookManager.getBooks();</div><div class="line">                    Log.i(<span class="string">"books"</span>, mBooks.toString());</div><div class="line">                &#125; catch (RemoteException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void onServiceDisconnected(ComponentName componentName) &#123;</div><div class="line">            isBound = <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        <span class="built_in">set</span>ContentView(R.layout.activity_main);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 点击事件:点击添加</div><div class="line">     * @param view</div><div class="line">     */</div><div class="line">    public void addBook(View view)&#123;</div><div class="line">        <span class="keyword">if</span> (!isBound)&#123;</div><div class="line">            Intent intent = new Intent();</div><div class="line">            intent.setAction(<span class="string">"com.example.zouxiaobang.aidlex.service"</span>);</div><div class="line">            intent.setPackage(<span class="string">"com.example.zouxiaobang.aidlex"</span>);</div><div class="line">            <span class="built_in">bind</span>Service(intent, mConnection, Context.BIND_AUTO_CREATE);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (mBookManager == null)</div><div class="line">            <span class="built_in">return</span>;</div><div class="line"></div><div class="line">        Book book = new Book();</div><div class="line">        book.setName(<span class="string">"App"</span>);</div><div class="line">        book.setPrice(12);</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            mBookManager.addBook(book);</div><div class="line">        &#125; catch (RemoteException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void <span class="function"><span class="title">onDestroy</span></span>() &#123;</div><div class="line">        super.onDestroy();</div><div class="line">        unbindService(mConnection);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>此时同时打开两个APP，点击客户端的按钮时，即可看到通信的内容。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color:#ccc;font-size:14px;">----------------本文结束 <i class="fa fa-paw"></i>感想您的阅读-----------------</div>
+  
+</div>
+      
+    </div>
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/22/Service中onBind的返回对象/" rel="next" title="Service中onBind的返回对象">
+                <i class="fa fa-chevron-left"></i> Service中onBind的返回对象
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/26/Binder详解/" rel="prev" title="Binder理解">
+                Binder理解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="ZouxIaobANg" />
+            
+              <p class="site-author-name" itemprop="name">ZouxIaobANg</p>
+              <p class="site-description motion-element" itemprop="description">若无烟雨任平生，不做龙首，游在九州，凭他归去落愁</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#AIDL介绍"><span class="nav-number">1.</span> <span class="nav-text">AIDL介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AIDL的使用"><span class="nav-number">2.</span> <span class="nav-text">AIDL的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、创建bean类"><span class="nav-number">2.1.</span> <span class="nav-text">1、创建bean类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、创建-aidl文件"><span class="nav-number">2.2.</span> <span class="nav-text">2、创建.aidl文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、服务端的代码"><span class="nav-number">2.3.</span> <span class="nav-text">3、服务端的代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、客户端的代码"><span class="nav-number">2.4.</span> <span class="nav-text">4、客户端的代码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZouxIaobANg</span>
+
+  
+</div>
+
+<div class="powered-by">
+<span id="busuanzi_container_page_pv">
+  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</span>
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

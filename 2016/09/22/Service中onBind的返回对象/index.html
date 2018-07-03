@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="onBind(Intent intent)我们都知道这个方法返回一个IBinder对象，该对象是用于与客户端进行通信的。但是IBinder是一个抽象类，它的本质是一个AIDL对象，那么我们应该怎么去创建它呢？
+Android给我们提供了三个方法
+
+继承Binder类
+使用Messager类
+使用AIDL
+
+1、继承Binder类我在介绍Service的bindService()开启Service的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Service中onBind的返回对象">
+<meta property="og:url" content="http://yoursite.com/2016/09/22/Service中onBind的返回对象/index.html">
+<meta property="og:site_name" content="zouxiaobang">
+<meta property="og:description" content="onBind(Intent intent)我们都知道这个方法返回一个IBinder对象，该对象是用于与客户端进行通信的。但是IBinder是一个抽象类，它的本质是一个AIDL对象，那么我们应该怎么去创建它呢？
+Android给我们提供了三个方法
+
+继承Binder类
+使用Messager类
+使用AIDL
+
+1、继承Binder类我在介绍Service的bindService()开启Service的">
+<meta property="og:updated_time" content="2018-07-03T14:37:46.988Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Service中onBind的返回对象">
+<meta name="twitter:description" content="onBind(Intent intent)我们都知道这个方法返回一个IBinder对象，该对象是用于与客户端进行通信的。但是IBinder是一个抽象类，它的本质是一个AIDL对象，那么我们应该怎么去创建它呢？
+Android给我们提供了三个方法
+
+继承Binder类
+使用Messager类
+使用AIDL
+
+1、继承Binder类我在介绍Service的bindService()开启Service的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/22/Service中onBind的返回对象/"/>
+
+
+
+
+
+  <title>Service中onBind的返回对象 | zouxiaobang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/zouxiaobang" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zouxiaobang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/22/Service中onBind的返回对象/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZouxIaobANg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zouxiaobang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Service中onBind的返回对象</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-22T09:47:43+08:00">
+                2016-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-beginner/" itemprop="url" rel="index">
+                    <span itemprop="name">Android beginner</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="onBind-Intent-intent"><a href="#onBind-Intent-intent" class="headerlink" title="onBind(Intent intent)"></a>onBind(Intent intent)</h2><p>我们都知道这个方法返回一个IBinder对象，该对象是用于与客户端进行通信的。但是IBinder是一个抽象类，它的本质是一个AIDL对象，那么我们应该怎么去创建它呢？</p>
+<p>Android给我们提供了三个方法</p>
+<ul>
+<li>继承Binder类</li>
+<li>使用Messager类</li>
+<li>使用AIDL</li>
+</ul>
+<h3 id="1、继承Binder类"><a href="#1、继承Binder类" class="headerlink" title="1、继承Binder类"></a>1、继承Binder类</h3><p>我在介绍Service的bindService()开启Service的时候都是使用继承Binder这个方法来与Client取得联系的，因为这个方法是最简单的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//Service code</div><div class="line">private int mCount;</div><div class="line">private MyBinder mBinder = new MyBinder();</div><div class="line"></div><div class="line">public class MyBinder extends Binder&#123;</div><div class="line">	public int <span class="function"><span class="title">getCount</span></span>()&#123;</div><div class="line">		<span class="built_in">return</span> mCount;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">public IBinder onBind(Intent intent)&#123;</div><div class="line">	<span class="built_in">return</span> mBinder;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>client通过bindService()与Service连接时产生的ServiceConnection对象来获取这个MyBinder对象，然后通过操作MyBinder的方法可以与Service取得通信。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">//Client code</div><div class="line">private MyService.MyBinder mBinder;</div><div class="line"></div><div class="line">ServiceConnection mConnection = new <span class="function"><span class="title">ServiceConnection</span></span>()&#123;</div><div class="line">	@Override</div><div class="line">	public void onServiceConnected(ComponentName className, IBinder service)&#123;</div><div class="line">		mBinder = (MyService.MyBinder) service;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void onServiceDisconnected(ComponentName className)&#123;</div><div class="line"></div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void <span class="function"><span class="title">doConnect</span></span>()&#123;</div><div class="line">	<span class="built_in">bind</span>Service(new Intent(this, MyService.class), mConnection, Context.BIND_AUTH_CREATE);</div><div class="line">&#125;</div><div class="line"></div><div class="line">int <span class="function"><span class="title">getCount</span></span>()&#123;</div><div class="line">	<span class="built_in">return</span> mBinder.getCount();</div><div class="line">&#125;</div><div class="line"></div><div class="line">void <span class="function"><span class="title">doUnconnect</span></span>()&#123;</div><div class="line">	unbindService(mConnection);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2、使用Messenger类"><a href="#2、使用Messenger类" class="headerlink" title="2、使用Messenger类"></a>2、使用Messenger类</h3><p>当我们提到IPC(跨进程通信)的时候，总会想起一个很高端的名称–AIDL，但是AIDL是一门很深很难的技术，既然太难，就会有替代品。Android使用了一个更为简单的类来代替编写整个AIDL—-Messager。</p>
+<p>Messenger的核心是有Message和Handler来进行线程间通信的。那么在Service中使用Messenger，就必须有Message和Handler的存在。即使用它的步骤如下：</p>
+<ul>
+<li>在Service中创建一个Handler对象</li>
+<li>通过Handler对象创建一个Messager对象–Messenger mMessenger = new Messenger(mHandler);</li>
+<li>在onBind()中返回一个IBinder–return mMessenger.getBinder();</li>
+<li>在Client中对Service进行连接</li>
+<li>在ServiceConnection对象中获取来自Service的Messenger–Messenger rMessenger = new Messenger(service);</li>
+<li>使用Messenger来发送数据</li>
+</ul>
+<p>下面的例子是客户端和后台之间的数据传输<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">public class MessengerService extends Servcie&#123;</div><div class="line">	private static final int MSG_SAY_HELLO = 0;</div><div class="line"></div><div class="line">	//本地的Messenger对象</div><div class="line">	private Messenger mMessenger;</div><div class="line">	//来自Client的Messenger对象</div><div class="line">	private Messenger cMessenger;</div><div class="line"></div><div class="line">	//获取来自Client的信息并进行处理</div><div class="line">	private Handler mHandler = new <span class="function"><span class="title">Handler</span></span>()&#123;</div><div class="line">		public void handleMessage(Message msg)&#123;</div><div class="line">			switch(msg.what)&#123;</div><div class="line">				<span class="keyword">case</span> MSG_SAY_HELLO:</div><div class="line">					cMessenger = msg.replyTo;</div><div class="line">					<span class="built_in">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public IBinder onBind(Intent intent)&#123;</div><div class="line">		<span class="built_in">return</span> mMessenger.getBinder();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void <span class="function"><span class="title">onCreate</span></span>()&#123;</div><div class="line">		mMessenger = new Messenger(mHandler);</div><div class="line">		int num = 0;</div><div class="line"></div><div class="line">		new <span class="function"><span class="title">Thread</span></span>()&#123;</div><div class="line">			public void <span class="function"><span class="title">run</span></span>()&#123;</div><div class="line">				<span class="keyword">while</span>(num &lt; 100)&#123;</div><div class="line">					SystemClock.sleep(100);</div><div class="line">					num ++;</div><div class="line">					Message msg = new Message();</div><div class="line">					msg.what = 1;</div><div class="line">					Bundle data = new Bundle();</div><div class="line">					data.putExtra(<span class="string">"num"</span>, num);</div><div class="line">					msg.setData(data);</div><div class="line">					cMessenger.send(msg);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;.start();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">public class MainActivity extends Activity&#123;</div><div class="line">	private Messenger mMessenger;</div><div class="line">	//来自Service的Messenger对象</div><div class="line">	private Messenger rMessenger;</div><div class="line"></div><div class="line">	private Handler mHandler = new <span class="function"><span class="title">Handler</span></span>()&#123;</div><div class="line">		public void handleMessage(Message msg)&#123;</div><div class="line">			switch(msg.what)&#123;</div><div class="line">				<span class="keyword">case</span> 1:</div><div class="line">					Log.i(<span class="string">"tag"</span>, msg.getData().getIntExtra(<span class="string">"num"</span>) + <span class="string">""</span>);</div><div class="line">					<span class="built_in">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;;</div><div class="line"></div><div class="line">	private ServiceConnection mConnection = new <span class="function"><span class="title">ServiceConnection</span></span>()&#123;</div><div class="line">		public void onServiceConnected(ComponentName className, Intent service)&#123;</div><div class="line">			rMessenger = new Messenger(service);</div><div class="line">			mMessenger = new Messenger(mHandler);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		public void onServiceDisconnected(ComponentName className)&#123;</div><div class="line"></div><div class="line">		&#125;</div><div class="line">	&#125;;</div><div class="line"></div><div class="line">	protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        <span class="built_in">set</span>ContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">        <span class="built_in">bind</span>Service(new Intent(this, MessengerService.class), mConnection, Context.BIND_AUTO_CREATE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    void <span class="function"><span class="title">getCount</span></span>()&#123;</div><div class="line">    	Message msg = new Message();</div><div class="line">    	msg.what = 0;</div><div class="line">    	msg.replyTo = mMessenger;</div><div class="line">    	try&#123;</div><div class="line">    		rMessage.send(msg);</div><div class="line">    	&#125; catch(Exception ex)&#123;</div><div class="line"></div><div class="line">    	&#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void <span class="function"><span class="title">onDestroy</span></span>()&#123;</div><div class="line">    	super.onDestroy();</div><div class="line">    	unbindService(mConnection);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3、使用AIDL"><a href="#3、使用AIDL" class="headerlink" title="3、使用AIDL"></a>3、使用AIDL</h3><p>由于AIDL比较复杂，所以请看下一篇博文</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color:#ccc;font-size:14px;">----------------本文结束 <i class="fa fa-paw"></i>感想您的阅读-----------------</div>
+  
+</div>
+      
+    </div>
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/21/IntentService-拥有独立线程的后台/" rel="next" title="IntentService--拥有独立线程的后台">
+                <i class="fa fa-chevron-left"></i> IntentService--拥有独立线程的后台
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/24/AIDL学习/" rel="prev" title="AIDL学习">
+                AIDL学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="ZouxIaobANg" />
+            
+              <p class="site-author-name" itemprop="name">ZouxIaobANg</p>
+              <p class="site-description motion-element" itemprop="description">若无烟雨任平生，不做龙首，游在九州，凭他归去落愁</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#onBind-Intent-intent"><span class="nav-number">1.</span> <span class="nav-text">onBind(Intent intent)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、继承Binder类"><span class="nav-number">1.1.</span> <span class="nav-text">1、继承Binder类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、使用Messenger类"><span class="nav-number">1.2.</span> <span class="nav-text">2、使用Messenger类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、使用AIDL"><span class="nav-number">1.3.</span> <span class="nav-text">3、使用AIDL</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZouxIaobANg</span>
+
+  
+</div>
+
+<div class="powered-by">
+<span id="busuanzi_container_page_pv">
+  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</span>
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

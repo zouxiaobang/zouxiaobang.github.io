@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="github项目波浪形圆形进度条
+画图先上图
+现在开始使用代码来画图1、自定义属性在value文件夹中新建一个attrs.xml配置文件（注意value文件夹不是什么value21什么的，曾被坑得找不着北）12345678910&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&amp;gt;&amp;lt;resources&amp;gt;    &amp;lt;declare-styleable">
+<meta property="og:type" content="article">
+<meta property="og:title" content="圆形进度条CircleProgress(上)">
+<meta property="og:url" content="http://yoursite.com/2016/09/04/圆形进度条CircleProgress-上/index.html">
+<meta property="og:site_name" content="zouxiaobang">
+<meta property="og:description" content="github项目波浪形圆形进度条
+画图先上图
+现在开始使用代码来画图1、自定义属性在value文件夹中新建一个attrs.xml配置文件（注意value文件夹不是什么value21什么的，曾被坑得找不着北）12345678910&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&amp;gt;&amp;lt;resources&amp;gt;    &amp;lt;declare-styleable">
+<meta property="og:image" content="http://yoursite.com/img/circleProgress1/circleProgress1.png">
+<meta property="og:updated_time" content="2018-07-03T14:35:01.122Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="圆形进度条CircleProgress(上)">
+<meta name="twitter:description" content="github项目波浪形圆形进度条
+画图先上图
+现在开始使用代码来画图1、自定义属性在value文件夹中新建一个attrs.xml配置文件（注意value文件夹不是什么value21什么的，曾被坑得找不着北）12345678910&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&amp;gt;&amp;lt;resources&amp;gt;    &amp;lt;declare-styleable">
+<meta name="twitter:image" content="http://yoursite.com/img/circleProgress1/circleProgress1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/04/圆形进度条CircleProgress-上/"/>
+
+
+
+
+
+  <title>圆形进度条CircleProgress(上) | zouxiaobang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/zouxiaobang" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zouxiaobang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/04/圆形进度条CircleProgress-上/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZouxIaobANg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zouxiaobang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">圆形进度条CircleProgress(上)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-04T19:17:26+08:00">
+                2016-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-beginner/" itemprop="url" rel="index">
+                    <span itemprop="name">Android beginner</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="github项目"><a href="#github项目" class="headerlink" title="github项目"></a>github项目</h2><p><a href="https://github.com/zouxiaobang/CircleProgress" target="_blank" rel="external">波浪形圆形进度条</a></p>
+<h2 id="画图"><a href="#画图" class="headerlink" title="画图"></a>画图</h2><h3 id="先上图"><a href="#先上图" class="headerlink" title="先上图"></a>先上图</h3><p><img src="/img/circleProgress1/circleProgress1.png" alt="圆形与文字"></p>
+<h3 id="现在开始使用代码来画图"><a href="#现在开始使用代码来画图" class="headerlink" title="现在开始使用代码来画图"></a>现在开始使用代码来画图</h3><h4 id="1、自定义属性"><a href="#1、自定义属性" class="headerlink" title="1、自定义属性"></a>1、自定义属性</h4><p>在value文件夹中新建一个attrs.xml配置文件<br>（注意value文件夹不是什么value21什么的，曾被坑得找不着北）<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line">&lt;resources&gt;</div><div class="line">    &lt;declare-styleable name="CircleProgress"&gt;</div><div class="line">        &lt;attr name="ballRadius" format="dimension"/&gt;</div><div class="line">        &lt;attr name="ballColor" format="color"/&gt;</div><div class="line">        &lt;attr name="centerText" format="string"/&gt;</div><div class="line">        &lt;attr name="centerTextColor" format="color"/&gt;</div><div class="line">        &lt;attr name="centerTextSize" format="dimension"/&gt;</div><div class="line">    &lt;/declare-styleable&gt;</div><div class="line">&lt;/resources&gt;</div></pre></td></tr></table></figure></p>
+<p>此处介绍一下：<br>圆形</p>
+<ul>
+<li>半径：ballRadius</li>
+<li>颜色：ballColor</li>
+</ul>
+<p>文字</p>
+<ul>
+<li>文本：centerText</li>
+<li>颜色：centerTextColor</li>
+<li>大小：centerTextSize</li>
+</ul>
+<h4 id="2、继承View"><a href="#2、继承View" class="headerlink" title="2、继承View"></a>2、继承View</h4><p>继承并重新它的前三个构造方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public CircleProgress(Context context) &#123;</div><div class="line">       this(context, null);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   public CircleProgress(Context context, AttributeSet attrs) &#123;</div><div class="line">       this(context, attrs, 0);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   public CircleProgress(Context context, AttributeSet attrs, int defStyleAttr) &#123;</div><div class="line">       super(context, attrs, defStyleAttr);</div><div class="line"></div><div class="line">       TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CircleProgress);</div><div class="line">       mBallRadius = typedArray.getDimension(R.styleable.CircleProgress_ballRadius, 260f);</div><div class="line">       mBallColor = typedArray.getColor(R.styleable.CircleProgress_ballColor, Color.argb(255, 33, 150, 243));</div><div class="line">       mCenterText = typedArray.getString(R.styleable.CircleProgress_centerText);</div><div class="line">       mCenterTextSize = typedArray.getDimension(R.styleable.CircleProgress_centerTextSize, 20f);</div><div class="line">       mCenterTextColor = typedArray.getColor(R.styleable.CircleProgress_centerTextColor, Color.argb(255, 48, 63, 159));</div><div class="line">       typedArray.recycle();</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>通过TypedArray对象获取xml文件中的设置参数<br>记得最后要recycle()回收</p>
+<h4 id="3、初始化画笔"><a href="#3、初始化画笔" class="headerlink" title="3、初始化画笔"></a>3、初始化画笔</h4><p>这里需要画两种东西，即圆形和文本，所以需要使用到两种画笔<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">mRoundPaint = new Paint();</div><div class="line">mRoundPaint.setColor(mBallColor);</div><div class="line">mRoundPaint.setAntiAlias(<span class="literal">true</span>);</div><div class="line"></div><div class="line">mFontPaint = new Paint();</div><div class="line">mFontPaint.setColor(mCenterTextColor);</div><div class="line">mFontPaint.setAntiAlias(<span class="literal">true</span>);</div><div class="line">mFontPaint.setTextSize(mCenterTextSize);</div><div class="line">mFontPaint.setFakeBoldText(<span class="literal">true</span>);</div></pre></td></tr></table></figure></p>
+<h4 id="4、对view的测量"><a href="#4、对view的测量" class="headerlink" title="4、对view的测量"></a>4、对view的测量</h4><p>必须测量，不然默认的话就只有match_parent这个尺寸了，不管怎么设置都是这个尺寸<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</div><div class="line">       <span class="built_in">set</span>MeasuredDimension(measure(widthMeasureSpec), measure(heightMeasureSpec));</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * 对宽高进行测量</div><div class="line">    * @param measureSpec</div><div class="line">    * @<span class="built_in">return</span></div><div class="line">    */</div><div class="line">   private int measure(int measureSpec) &#123;</div><div class="line">       int result = 0;</div><div class="line">       int specMode = MeasureSpec.getMode(measureSpec);</div><div class="line">       int specSize = MeasureSpec.getSize(measureSpec);</div><div class="line"></div><div class="line">       <span class="keyword">if</span> (specMode == MeasureSpec.EXACTLY)&#123;</div><div class="line">           result = specSize;</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           result = (int) mBallRadius * 2;</div><div class="line">           <span class="keyword">if</span> (specMode == MeasureSpec.AT_MOST)&#123;</div><div class="line">               result = result&lt;specSize?result:specSize;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="built_in">return</span> result;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>这时，当我们使用wrap_content的时候宽高是这个圆形的直径<br>（注意：result = (int) mBallRadius * 2; 乘以2才是直径）</p>
+<h4 id="5、开始画画"><a href="#5、开始画画" class="headerlink" title="5、开始画画"></a>5、开始画画</h4><p>画个圆之前需要先获得大小<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int width = getMeasuredWidth();</div><div class="line">int height = getMeasuredHeight();</div></pre></td></tr></table></figure></p>
+<p>先画个圆<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">canvas.drawCircle(width/2, height/2, mBallRadius, mRoundPaint);</div></pre></td></tr></table></figure></p>
+<h4 id="6、写字"><a href="#6、写字" class="headerlink" title="6、写字"></a>6、写字</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">float</span> textWidth = mFontPaint.measureText(mCenterText);</div><div class="line">Paint.FontMetrics fontMetrics = new Paint.FontMetrics();</div><div class="line"><span class="built_in">float</span> dy = -(fontMetrics.descent + fontMetrics.ascent)/2;</div><div class="line"><span class="built_in">float</span> x = width/2 - textWidth/2;</div><div class="line"><span class="built_in">float</span> y = height/2 + dy;</div><div class="line">canvas.drawText(mCenterText, x, y, mFontPaint);</div></pre></td></tr></table></figure>
+<p>其中，使用到FontMetrics对象，通过该对象可以测量字体粗体时的大小</p>
+<h3 id="画图结束"><a href="#画图结束" class="headerlink" title="画图结束"></a>画图结束</h3><p>先在layout的xml文件中使用看看有没有该效果<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;com.example.zouxiaobang.circleprogress.userdefinedview.CircleProgress</div><div class="line">       android:layout_width=<span class="string">"wrap_content"</span></div><div class="line">       android:layout_height=<span class="string">"wrap_content"</span></div><div class="line">       app:centerText=<span class="string">"进度"</span></div><div class="line">       app:ballRadius=<span class="string">"100dp"</span></div><div class="line">       app:ballColor=<span class="string">"#00bcd4"</span></div><div class="line">       app:centerTextColor=<span class="string">"#000000"</span></div><div class="line">       app:centerTextSize=<span class="string">"16sp"</span>/&gt;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color:#ccc;font-size:14px;">----------------本文结束 <i class="fa fa-paw"></i>感想您的阅读-----------------</div>
+  
+</div>
+      
+    </div>
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/26/hexo命令及markdown语法/" rel="next" title="hexo命令及markdown语法">
+                <i class="fa fa-chevron-left"></i> hexo命令及markdown语法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/05/圆形进度条CircleProgress-下/" rel="prev" title="圆形进度条CircleProgress(下)">
+                圆形进度条CircleProgress(下) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="ZouxIaobANg" />
+            
+              <p class="site-author-name" itemprop="name">ZouxIaobANg</p>
+              <p class="site-description motion-element" itemprop="description">若无烟雨任平生，不做龙首，游在九州，凭他归去落愁</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#github项目"><span class="nav-number">1.</span> <span class="nav-text">github项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#画图"><span class="nav-number">2.</span> <span class="nav-text">画图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先上图"><span class="nav-number">2.1.</span> <span class="nav-text">先上图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现在开始使用代码来画图"><span class="nav-number">2.2.</span> <span class="nav-text">现在开始使用代码来画图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、自定义属性"><span class="nav-number">2.2.1.</span> <span class="nav-text">1、自定义属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、继承View"><span class="nav-number">2.2.2.</span> <span class="nav-text">2、继承View</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、初始化画笔"><span class="nav-number">2.2.3.</span> <span class="nav-text">3、初始化画笔</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、对view的测量"><span class="nav-number">2.2.4.</span> <span class="nav-text">4、对view的测量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、开始画画"><span class="nav-number">2.2.5.</span> <span class="nav-text">5、开始画画</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6、写字"><span class="nav-number">2.2.6.</span> <span class="nav-text">6、写字</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#画图结束"><span class="nav-number">2.3.</span> <span class="nav-text">画图结束</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZouxIaobANg</span>
+
+  
+</div>
+
+<div class="powered-by">
+<span id="busuanzi_container_page_pv">
+  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</span>
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
