@@ -94,71 +94,49 @@
 
 
 
-<meta name="description" content="在linux系统，所有的设备都是文件。
+<meta name="description" content="什么是Service
+是一种可以在后台长时间运行，没有用户交互界面的引用组件。
 
-磁盘的种类现在磁盘接口的种类主要有IDE接口和SATA接口，其中SATA接口比较主流，而IDE接口依然还会存在于较多的老主机上。
-1 IDE接口通常主机上有两个IDE接口，而每个IDE接口都可以连接两个IDE设备，所以一台主机总共可以连接4个IDE设备。
+由于Service和BroadcastReceiver都是在主线程中运行，所以不能执行一些耗时操作。如果要执行耗时操作，则要新启一个子线程。
+Service和Thread的区别
+定义
 
+Thread是相对独立的，是程序执行的最小单位。Service是依附在其所在的主线程上，是由程序进程托管的。
 
+功能：
 
-接口
-主设备Master
-从设备Slave
-
-
-
-
-IDE1
-/dev/hda
-/dev/hd">
+Thre">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux（1）-- 磁盘分区">
-<meta property="og:url" content="http://yoursite.com/2016/11/03/Linux-1-磁盘分区/index.html">
+<meta property="og:title" content="知识点 -- Service">
+<meta property="og:url" content="http://yoursite.com/2018/07/04/知识点-Service/index.html">
 <meta property="og:site_name" content="zouxiaobang">
-<meta property="og:description" content="在linux系统，所有的设备都是文件。
+<meta property="og:description" content="什么是Service
+是一种可以在后台长时间运行，没有用户交互界面的引用组件。
 
-磁盘的种类现在磁盘接口的种类主要有IDE接口和SATA接口，其中SATA接口比较主流，而IDE接口依然还会存在于较多的老主机上。
-1 IDE接口通常主机上有两个IDE接口，而每个IDE接口都可以连接两个IDE设备，所以一台主机总共可以连接4个IDE设备。
+由于Service和BroadcastReceiver都是在主线程中运行，所以不能执行一些耗时操作。如果要执行耗时操作，则要新启一个子线程。
+Service和Thread的区别
+定义
 
+Thread是相对独立的，是程序执行的最小单位。Service是依附在其所在的主线程上，是由程序进程托管的。
 
+功能：
 
-接口
-主设备Master
-从设备Slave
-
-
-
-
-IDE1
-/dev/hda
-/dev/hd">
-<meta property="og:image" content="http://yoursite.com/img/linux_1/p1.png">
-<meta property="og:image" content="http://yoursite.com/img/linux_1/p2.png">
-<meta property="og:image" content="http://yoursite.com/img/linux_1/PPPE.gif">
-<meta property="og:image" content="http://yoursite.com/img/linux_1/PE.gif">
-<meta property="og:image" content="http://yoursite.com/img/linux_1/p3.gif">
-<meta property="og:image" content="http://yoursite.com/img/linux_1/p4.png">
-<meta property="og:updated_time" content="2018-07-03T14:42:06.788Z">
+Thre">
+<meta property="og:updated_time" content="2018-07-04T14:22:37.844Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux（1）-- 磁盘分区">
-<meta name="twitter:description" content="在linux系统，所有的设备都是文件。
+<meta name="twitter:title" content="知识点 -- Service">
+<meta name="twitter:description" content="什么是Service
+是一种可以在后台长时间运行，没有用户交互界面的引用组件。
 
-磁盘的种类现在磁盘接口的种类主要有IDE接口和SATA接口，其中SATA接口比较主流，而IDE接口依然还会存在于较多的老主机上。
-1 IDE接口通常主机上有两个IDE接口，而每个IDE接口都可以连接两个IDE设备，所以一台主机总共可以连接4个IDE设备。
+由于Service和BroadcastReceiver都是在主线程中运行，所以不能执行一些耗时操作。如果要执行耗时操作，则要新启一个子线程。
+Service和Thread的区别
+定义
 
+Thread是相对独立的，是程序执行的最小单位。Service是依附在其所在的主线程上，是由程序进程托管的。
 
+功能：
 
-接口
-主设备Master
-从设备Slave
-
-
-
-
-IDE1
-/dev/hda
-/dev/hd">
-<meta name="twitter:image" content="http://yoursite.com/img/linux_1/p1.png">
+Thre">
 
 
 
@@ -188,13 +166,13 @@ IDE1
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/03/Linux-1-磁盘分区/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/04/知识点-Service/"/>
 
 
 
 
 
-  <title>Linux（1）-- 磁盘分区 | zouxiaobang</title>
+  <title>知识点 -- Service | zouxiaobang</title>
   
 
 
@@ -312,7 +290,7 @@ IDE1
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/03/Linux-1-磁盘分区/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/04/知识点-Service/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZouxIaobANg">
@@ -329,7 +307,7 @@ IDE1
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux（1）-- 磁盘分区</h1>
+          <h1 class="post-title" itemprop="name headline">知识点 -- Service</h1>
         
 
         <div class="post-meta">
@@ -341,8 +319,8 @@ IDE1
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-03T18:23:25+08:00">
-                2016-11-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-04T22:21:50+08:00">
+                2018-07-04
               </time>
             
 
@@ -364,8 +342,8 @@ IDE1
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/Android知识点/" itemprop="url" rel="index">
+                    <span itemprop="name">Android知识点</span>
                   </a>
                 </span>
 
@@ -402,90 +380,33 @@ IDE1
 
       
         <hr>
-<p><strong>在linux系统，所有的设备都是文件。</strong></p>
-<hr>
-<h2 id="磁盘的种类"><a href="#磁盘的种类" class="headerlink" title="磁盘的种类"></a>磁盘的种类</h2><p>现在磁盘接口的种类主要有IDE接口和SATA接口，其中SATA接口比较主流，而IDE接口依然还会存在于较多的老主机上。</p>
-<h3 id="1-IDE接口"><a href="#1-IDE接口" class="headerlink" title="1 IDE接口"></a>1 IDE接口</h3><p>通常主机上有两个IDE接口，而每个IDE接口都可以连接两个IDE设备，所以一台主机总共可以连接4个IDE设备。</p>
-<table>
-<thead>
-<tr>
-<th>接口</th>
-<th style="text-align:right">主设备Master</th>
-<th style="text-align:center">从设备Slave</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>IDE1</td>
-<td style="text-align:right">/dev/hda</td>
-<td style="text-align:center">/dev/hdb</td>
-</tr>
-<tr>
-<td>IDE2</td>
-<td style="text-align:right">/dev/hdc</td>
-<td style="text-align:center">/dev/hdd</td>
-</tr>
-</tbody>
-</table>
-<h3 id="2-SATA接口"><a href="#2-SATA接口" class="headerlink" title="2 SATA接口"></a>2 SATA接口</h3><p>SATA接口对设备的文件名和IDE接口的命名方式不同，并不是顺序命名，而是根据Linux内核检测的磁盘的顺序。<br>也就是说，如果我们将两个SATA设备插入SATA1和SATA5接口，一个USB插入SATA2接口，那么：</p>
-<ul>
-<li>SATA1上设备的名称：/dev/sda</li>
-<li>SATA5上设备的名称：/dev/sdb</li>
-<li>SATA2上设备的名称：/dev/sdc</li>
+<h2 id="什么是Service"><a href="#什么是Service" class="headerlink" title="什么是Service"></a>什么是Service</h2><blockquote>
+<p>是一种可以在后台长时间运行，没有用户交互界面的引用组件。</p>
+</blockquote>
+<p>由于Service和BroadcastReceiver都是在主线程中运行，所以不能执行一些耗时操作。如果要执行耗时操作，则要新启一个子线程。</p>
+<h2 id="Service和Thread的区别"><a href="#Service和Thread的区别" class="headerlink" title="Service和Thread的区别"></a>Service和Thread的区别</h2><ul>
+<li><strong>定义</strong></li>
 </ul>
-<h3 id="3-磁盘分区表"><a href="#3-磁盘分区表" class="headerlink" title="3 磁盘分区表"></a>3 磁盘分区表</h3><p><strong>磁盘的第一个扇面主要记录了两个重要的信息：主引导分区(MBR)和分区表。</strong><br>主引导分区：安装引导加载程序的地方<br>分区表：记录整个磁盘分区的信息</p>
-<p>这里我们先讲磁盘分区表。<br>磁盘分区表由64bytes来表示，也就是8个字，可以分为4组，用来记录4个区段的开始和结束的柱面号码。<br><img src="/img/linux_1/p1.png" alt="磁盘分区表的作用示意图"><br>例如我们把该磁盘的大小假设为只有400个柱面，如上图所示。<br>黑色块表示磁盘分区表，只有64bytes，里面记录着后面4个分区的柱面号码。<br>这4个分区名字如下：<br>/dev/hda1<br>/dev/hda2<br>/dev/hda3<br>/dev/hda4</p>
-<p><strong>重点：</strong></p>
+<p>Thread是相对独立的，是程序执行的最小单位。<br>Service是依附在其所在的主线程上，是由程序进程托管的。</p>
 <ul>
-<li>分区就是根据磁盘分区表中的记录来设置的</li>
-<li>磁盘默认只能写入4个分区的信息</li>
-<li>这4个分区信息称为主分区(Primary)和扩展分区(Extended)</li>
-<li>分区的最小单位为柱面</li>
+<li><strong>功能：</strong></li>
 </ul>
-<h3 id="4-扩展分区与逻辑分区"><a href="#4-扩展分区与逻辑分区" class="headerlink" title="4 扩展分区与逻辑分区"></a>4 扩展分区与逻辑分区</h3><p>由上面的知识我们知道，第一个扇区的磁盘分区表只能记录4个分区信息，所以我们只能分出4个分区出来。<br>但有时我们希望能分出更多的分区，该怎么办？<br>这时就要用到扩展分区，使用额外的扇区来记录分区信息，从而将扩展分区切出多个逻辑分区。<br><img src="/img/linux_1/p2.png" alt="扩展分区和逻辑分区示意图"><br>如上图所示，第一个扇区的分区记录表只分出两个分区：主分区和扩展分区。<br>而扩展分区的额外扇区里又拥有一个分区记录表，这个记录表不只64bytes那么大了，其中记录了5个分区的信息，这些分区称为逻辑分区，是由扩展分区切出来的。<br>所以上图的各个分区的设备名称如下：</p>
-<ul>
-<li>/dev/hda1</li>
-<li>/dev/hda2</li>
-<li>/dev/hda5</li>
-<li>/dev/hda6</li>
-<li>/dev/hda7</li>
-<li>/dev/hda8</li>
-<li>/dev/hda9</li>
-</ul>
-<p>可以看出，其中没有hda3、hda4，那是因为hda3、hda4默认留给Primary或Extended分区使用，如果没有分出那么多的Primary或Extended分区，这留空等待有的时候可以使用。也就是说，逻辑分区的名称都是从5开始的。(以上内容适用于SATA类型磁盘)</p>
-<p><strong>重点：</strong></p>
-<ul>
-<li>主分区和扩展分区总共只能有4个</li>
-<li>扩展分区只能有一个，主分区可以有多个(最多3个)</li>
-<li>逻辑分区是由扩展分区切割出来的</li>
-<li>主分区和逻辑分区都可以格式化，而扩展分区不能格式化</li>
-<li>IDE磁盘最多可以切出59个逻辑分区(5 - 63)，而SATA磁盘最大只能切出11个逻辑分区(5 - 15)</li>
-</ul>
-<h3 id="5-磁盘分区模式"><a href="#5-磁盘分区模式" class="headerlink" title="5 磁盘分区模式"></a>5 磁盘分区模式</h3><p>磁盘分区最常见的有两种模式：</p>
-<ul>
-<li>P-P-P-E</li>
-<li>P-E</li>
-</ul>
-<p>这两种模式的环境如图：<br><img src="/img/linux_1/PPPE.gif" alt="PPPE"><br><img src="/img/linux_1/PE.gif" alt="PE"></p>
-<h3 id="6-主引导分区-开机流程"><a href="#6-主引导分区-开机流程" class="headerlink" title="6 主引导分区(开机流程)"></a>6 主引导分区(开机流程)</h3><p>先说两个知识点：<br>BIOS：是一个写入到主板上的一个韧体，也就是写入到硬件上的一个软件程序，在开机的时候计算机系统会主动执行它。<br>COMS：记录各项硬件参数且嵌入到主板上面的存储器。</p>
-<p>开机流程：</p>
-<ol>
-<li>BIOS：开机主动执行的韧体，会去认识第一个可开机的设备(MBR)</li>
-<li>MBR：第一个可开机设备的第一个扇区内记录的主引导分区，里面包含引导加载程序</li>
-<li>引导加载程序(Boot loader)：一个可读取内核文件来执行的软件</li>
-<li>内核文件：开始操作系统的功能</li>
-</ol>
-<p>MBR只有446bytes这么大，所以其中的引导加载程序非常小，也近乎完美。<br>Boot loader的主要任务如下：</p>
-<ul>
-<li>提供菜单：用户可以选择不同的开机选项</li>
-<li>载入内核文件：直接指向可开机的程序区段</li>
-<li><p>转交给其他Boot loader：交给其他分区的引导加载程序去执行</p>
-<p>了解上面的3个任务后再来理解。<br><img src="/img/linux_1/p3.gif" alt="引导程序的工作示意图"><br>举个例子，如上面的图所示，MBR的引导加载程序启动后，会提供两个菜单项给我们选择，分别为M1,M2，其中M1指向Windows系统，而M2指向Linux系统。<br>如果我们选择M1，则直接加载Windows的内核文件，就可以进行开机。而如果选择的是M2，引导加载程序会转交给第二个分区的引导加载程序(第二个分区是Linux系统)，第二个引导加载程序启动后，里面只有一个开机菜单项，就是Linux系统，因此使用Linux的内核文件来开机。</p>
-</li>
-</ul>
-<h3 id="7-挂载"><a href="#7-挂载" class="headerlink" title="7 挂载"></a>7 挂载</h3><p>Linux的所有数据都是以文件的形式存在，所以Liux系统以目录树结构的形式来规范这些文件。<br><strong>根目录(“/“)</strong>：所有的文件都和根目录相关。<br>例如：<br>/dev<br>/etc<br>/home/dmtsai</p>
-<p>我们都知道，数据实际是放置到磁盘中的，但我们需要以更可观的形式来看到这些数据，也就需要处理一个问题：目录树的架构与磁盘内的数据如何关联起来。<br>这就引入了一个概念 – <strong>挂载</strong></p>
-<p><strong>挂载就是利用一个目录为进入点，将磁盘分区放置到该目录下面。<br>此时进入该目录，就是在读取该磁盘中的数据。</strong><br>整个放置过程我们称为挂载，而这个目录，我们称为挂载点。<br><img src="/img/linux_1/p4.png" alt="目录树与磁盘分区之间的关系"><br>如上图所示，分区1挂载到根目录“/”下面，而分区2挂载到”/home”目录下，那么如果我们要把数据存放到/home目录下时，如上图，创建一个test文件，则该数据会写入到分区2中去。</p>
+<p>Thread可用于做一些耗时的操作。<br>Service不能执行耗时操作。</p>
+<h3 id="为什么要在Service中去创建子线程去执行耗时操作，而不直接在Activity中创建？"><a href="#为什么要在Service中去创建子线程去执行耗时操作，而不直接在Activity中创建？" class="headerlink" title="为什么要在Service中去创建子线程去执行耗时操作，而不直接在Activity中创建？"></a>为什么要在Service中去创建子线程去执行耗时操作，而不直接在Activity中创建？</h3><p>Activity的生命周期所限制，在Activity销毁之后，很难再去对子线程进行管理。<br>而Service可以长时间存活在后台中，即使其Activity销毁了，也能在后台继续执行，所以它能更好地管理子线程。</p>
+<h3 id="Thread和Service是使用场景区别"><a href="#Thread和Service是使用场景区别" class="headerlink" title="Thread和Service是使用场景区别"></a>Thread和Service是使用场景区别</h3><p>如果是读取数据库数据，连接网络等耗时操作，则应该要开启一个新线程来执行。<br>而Service一般使用在与用户交互无关的逻辑操作，例如在后台播放音乐，时间的更新等。</p>
+<h2 id="Service的启动过程"><a href="#Service的启动过程" class="headerlink" title="Service的启动过程"></a>Service的启动过程</h2><h3 id="1、startService"><a href="#1、startService" class="headerlink" title="1、startService"></a>1、startService</h3><blockquote>
+<p>通过该方式启动的Service，并不依赖于Activity的生命周期。<br>当开启它的Activity销毁后，该Service依然能存活在后台中。</p>
+</blockquote>
+<p><strong>Service的回调方法onStartCommand()，返回一个int类型的sticky值。</strong><br>源码：</p>
+<pre><code>return mStartCommpatibility ? START_STICKY_COMMPATIBILITY : START_STICKY;
+</code></pre><p>如果返回的是START_STICKY，那如果该Service因内存不够被杀死后，当系统内存又充足了，会重新启动该Service，并且调用其onStartCommand()方法，但该方法中的参数Intent为空。</p>
+<h3 id="2、bindService"><a href="#2、bindService" class="headerlink" title="2、bindService"></a>2、bindService</h3><blockquote>
+<p>绑定Activity，这样可以在Activity和Service之间通过Binder来进行通信。（不管是否在同一个进程）</p>
+</blockquote>
+<p>Service中要实现一个Binder继承类，其中返回该Service的对象。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBinder</span> <span class="keyword">extends</span> <span class="title">Binder</span></span>&#123;</div><div class="line">    <span class="function">MyService <span class="title">getService</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> MyService.<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MyBinder();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这时Activity就可以调用Service中的方法。</p>
+<p>在Activity中，要去实现一个ServiceConnection对象。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">ServiceConnection conn = <span class="keyword">new</span> ServiceConnection()&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName name, IBinder service)</span></span>&#123;</div><div class="line">        MyService.MyBinder binder = (MyService.MyBinder) service;</div><div class="line">        mService = service.getService();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="详细的Service介绍及使用"><a href="#详细的Service介绍及使用" class="headerlink" title="详细的Service介绍及使用"></a>详细的Service介绍及使用</h2><p>请前往“<a href="https://zouxiaobang.github.io/2016/09/21/Service%E7%9A%84%E7%90%86%E8%A7%A3/" target="_blank" rel="external">Service的理解</a>”。</p>
 
       
     </div>
@@ -520,8 +441,8 @@ IDE1
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/17/对象的创建与销毁注意事项（二）/" rel="next" title="对象的创建与销毁注意事项（二）">
-                <i class="fa fa-chevron-left"></i> 对象的创建与销毁注意事项（二）
+              <a href="/2018/07/04/知识点-Fragment/" rel="next" title="知识点 -- Fragment">
+                <i class="fa fa-chevron-left"></i> 知识点 -- Fragment
               </a>
             
           </div>
@@ -529,10 +450,6 @@ IDE1
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/05/Linux-2-Linux系统开机过程问题排解及关机方法/" rel="prev" title="Linux(2) -- Linux系统开机过程问题排解及关机方法">
-                Linux(2) -- Linux系统开机过程问题排解及关机方法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -661,7 +578,7 @@ IDE1
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#磁盘的种类"><span class="nav-number">1.</span> <span class="nav-text">磁盘的种类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-IDE接口"><span class="nav-number">1.1.</span> <span class="nav-text">1 IDE接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SATA接口"><span class="nav-number">1.2.</span> <span class="nav-text">2 SATA接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-磁盘分区表"><span class="nav-number">1.3.</span> <span class="nav-text">3 磁盘分区表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-扩展分区与逻辑分区"><span class="nav-number">1.4.</span> <span class="nav-text">4 扩展分区与逻辑分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-磁盘分区模式"><span class="nav-number">1.5.</span> <span class="nav-text">5 磁盘分区模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-主引导分区-开机流程"><span class="nav-number">1.6.</span> <span class="nav-text">6 主引导分区(开机流程)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-挂载"><span class="nav-number">1.7.</span> <span class="nav-text">7 挂载</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Service"><span class="nav-number">1.</span> <span class="nav-text">什么是Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service和Thread的区别"><span class="nav-number">2.</span> <span class="nav-text">Service和Thread的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要在Service中去创建子线程去执行耗时操作，而不直接在Activity中创建？"><span class="nav-number">2.1.</span> <span class="nav-text">为什么要在Service中去创建子线程去执行耗时操作，而不直接在Activity中创建？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread和Service是使用场景区别"><span class="nav-number">2.2.</span> <span class="nav-text">Thread和Service是使用场景区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service的启动过程"><span class="nav-number">3.</span> <span class="nav-text">Service的启动过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、startService"><span class="nav-number">3.1.</span> <span class="nav-text">1、startService</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、bindService"><span class="nav-number">3.2.</span> <span class="nav-text">2、bindService</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#详细的Service介绍及使用"><span class="nav-number">4.</span> <span class="nav-text">详细的Service介绍及使用</span></a></li></ol></div>
             
 
           </div>
