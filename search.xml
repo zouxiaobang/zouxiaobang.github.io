@@ -4,6 +4,66 @@
   
     
     <entry>
+      <title><![CDATA[知识点 -- Handler]]></title>
+      <url>http://yoursite.com/2018/07/12/%E7%9F%A5%E8%AF%86%E7%82%B9-Handler/</url>
+      <content type="html"><![CDATA[<hr>
+<h2 id="什么是Handler"><a href="#什么是Handler" class="headerlink" title="什么是Handler"></a>什么是Handler</h2><blockquote>
+<p>Handler是Android消息传递机制的上层接口。</p>
+</blockquote>
+<p>Handler通过发送和处理Message和Runnable对象来关联相对应线程的MessageQueue。</p>
+<h2 id="Handler的功能"><a href="#Handler的功能" class="headerlink" title="Handler的功能"></a>Handler的功能</h2><ul>
+<li>可以让Message或Runnable在某个时间段执行</li>
+<li>可以将耗时操作放在子线程中，而将UI的更新放在主线程中，通过Handler来传递信息</li>
+</ul>
+<p>Handler的发送方法：</p>
+<ol>
+<li>post(Runnable)</li>
+<li>sendMessage(Message)<br>post方法最后还是会调用sendMessage方法。</li>
+</ol>
+<h2 id="Handler的机制"><a href="#Handler的机制" class="headerlink" title="Handler的机制"></a>Handler的机制</h2><blockquote>
+<p>Looper – MessageQueue – Message – Handler</p>
+</blockquote>
+<ul>
+<li>Looper中有一个MessageQueue，用来保存消息Message</li>
+<li>在当前线程中使用Looper.myLooper()来获取属于当前线程的Looper对象</li>
+<li>Handler构造传入该Looper对象</li>
+<li>则Handler中的MessageQueue和Looper的MessageQueue相关联</li>
+<li>Handler发送消息，会存入到Looper中的MessageQueue</li>
+<li>Looper.loop()开始消息轮询，从MessageQueue中获取Message</li>
+<li>Message会调用其target（也就是Handler）的方法，最终调用Handler的handleMessage()方法</li>
+</ul>
+<h2 id="Handler源码分析"><a href="#Handler源码分析" class="headerlink" title="Handler源码分析"></a>Handler源码分析</h2><h3 id="myLooper-是怎么和线程挂钩"><a href="#myLooper-是怎么和线程挂钩" class="headerlink" title="myLooper()是怎么和线程挂钩"></a>myLooper()是怎么和线程挂钩</h3><p>Looper.myLooper();<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">myLooper() --&gt; </div><div class="line"><span class="keyword">return</span> sThreadLocal.get();</div></pre></td></tr></table></figure></p>
+<p>这里的sThreadLocal能够控制其get()/set()方法都是发生在当前线程中。<br>在Looper创建时，会将该Looper放入到sThreadLocal中：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sThreadLocal.set(<span class="keyword">new</span> Looper(...));</div></pre></td></tr></table></figure></p>
+<p>Handler通过使用sThreadLocal来存放Looper，正是因为其能保证，<strong>一个线程只拥有一个Looper</strong>。</p>
+<h3 id="Handler中的MessageQueue和Looper中的MessageQueue怎么关联的"><a href="#Handler中的MessageQueue和Looper中的MessageQueue怎么关联的" class="headerlink" title="Handler中的MessageQueue和Looper中的MessageQueue怎么关联的"></a>Handler中的MessageQueue和Looper中的MessageQueue怎么关联的</h3><p>Handler中有一个MessageQueue对象 – mQueue<br>在Handler的构造方法中，会将Looper的MessageQueue赋值过来。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mQueue = mLooper.mQueue;</div></pre></td></tr></table></figure></p>
+<p>在Handler发送消息的时候会将消息入队：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">enqueueMessage(... msg) -&gt; mQueue.enqueueMessage(...)</div></pre></td></tr></table></figure></p>
+<h3 id="消息轮询"><a href="#消息轮询" class="headerlink" title="消息轮询"></a>消息轮询</h3><p>消息轮询是指调用了Looper.loop()方法。<br>主线程中是Activity类中已经打开了Looper消息轮询，而在子线程中执行，则需要自己手动打开。<br>在loop()方法中，会执行：</p>
+<ul>
+<li>for(;;) – 无限循环，来不停地获取消息</li>
+<li>从队列中获取消息：Message message = queue.next();</li>
+<li>向Handler发送处理通知：message.target.dispatchMessage(message);<br>而Message中携带的target就是一个Handler，而Handler的dispatchMessage方法最后会调用到handleMessage方法。</li>
+</ul>
+<p><img src="/img/handler/Handler.png" alt="Handler流程图"></p>
+<h3 id="Handler消息轮询的文字表述"><a href="#Handler消息轮询的文字表述" class="headerlink" title="Handler消息轮询的文字表述"></a>Handler消息轮询的文字表述</h3><ul>
+<li>线程创建时会创建一个专属的Looper对象</li>
+<li>创建Handler对象，以该线程中的Looper作为参数</li>
+<li>当Handler发送消息的时候，会将消息存入到Looper中的消息队列</li>
+<li>开启消息轮询Looper.loop()</li>
+<li>消息轮询会从消息队列中不断获取消息，并调用消息自带的target的dispatchMessage方法分发消息</li>
+<li>分发方法最后会调用到Handler的handleMessage方法，我们就可以在Handler所在的线程中处理消息</li>
+</ul>
+<h3 id="Handler部分源码分析"><a href="#Handler部分源码分析" class="headerlink" title="Handler部分源码分析"></a>Handler部分源码分析</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(Looper looper)</span></span>&#123;</div><div class="line">    <span class="keyword">this</span>(looper, <span class="keyword">null</span>, <span class="keyword">false</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(Looper looper, Callback callbackm, <span class="keyword">boolean</span> async)</span></span>&#123;</div><div class="line">    mLooper = looper;</div><div class="line">    mCallback = callback;</div><div class="line">    mQueue = mLooper.mQueue;</div><div class="line">    mAsynchonous = async;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里的Handler构造的时候会将其MessageQueue和Looper中的MessageQueue相关联</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">post</span><span class="params">(Runnable r)</span></span>&#123;</div><div class="line">    <span class="comment">//使用post发送消息，最终还是调用了sendMessageDelayed()方法</span></div><div class="line">    <span class="keyword">return</span> sendMessageDelayed(getPostMessage(r), <span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里的post方法发送消息，最终还是会调用到sendMessage方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">enqueueMessage</span><span class="params">(MessageQueue queue, Message msg, <span class="keyword">long</span> uptimeMillis)</span></span>&#123;</div><div class="line">    msg.target = <span class="keyword">this</span>;</div><div class="line">    <span class="keyword">if</span>(mAysnchronous)&#123;</div><div class="line">        msg.setAsynchronous(<span class="keyword">true</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> queue.enqueueMessage(msg, uptimeMillis);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>先将Message的target设置为本Handler，<br>再调用队列的enqueueMessage方法将消息入队。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dispatchMessage</span><span class="params">(Message msg)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(msg.callback != <span class="keyword">null</span>)&#123;</div><div class="line">        handleCallback(msg);</div><div class="line">    &#125; <span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">if</span>(mCallback != <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(mCallback.handleMessage(msg))&#123;</div><div class="line">                <span class="keyword">return</span> ;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        handleMessage(msg);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在消息轮询的时候会通过Message的target去分发，而在这个分发方法中，会去调用一个空实现的方法handleMessage()。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[EventBus3.0 源码解析]]></title>
       <url>http://yoursite.com/2018/07/06/EventBus3-0-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</url>
       <content type="html"><![CDATA[<hr>
