@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="今天，我来侃这个已经被很多大牛讲解到看你问起就会翻白眼的框架 – OkHttp。作为一个菜鸟，我完完整整地看了一遍OkHttp的源码，在一边感叹一边佩服一边认识到自己后面的路还漫漫。
+好啦，废话不多说了。首先，我这篇博文是从头特别详细地来表述我对OkHttp的理解，如有不当之处，欢迎留言。谢谢。
+我是网络专业出身的，那么对于一个Http应该有哪些部分组成，Http协议等，我就不多说了，这个百度就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OkHttp源码解析 -- Request">
+<meta property="og:url" content="http://yoursite.com/2018/07/13/OkHttp源码解析-Request/index.html">
+<meta property="og:site_name" content="zouxiaobang">
+<meta property="og:description" content="今天，我来侃这个已经被很多大牛讲解到看你问起就会翻白眼的框架 – OkHttp。作为一个菜鸟，我完完整整地看了一遍OkHttp的源码，在一边感叹一边佩服一边认识到自己后面的路还漫漫。
+好啦，废话不多说了。首先，我这篇博文是从头特别详细地来表述我对OkHttp的理解，如有不当之处，欢迎留言。谢谢。
+我是网络专业出身的，那么对于一个Http应该有哪些部分组成，Http协议等，我就不多说了，这个百度就">
+<meta property="og:updated_time" content="2018-07-13T15:51:34.224Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OkHttp源码解析 -- Request">
+<meta name="twitter:description" content="今天，我来侃这个已经被很多大牛讲解到看你问起就会翻白眼的框架 – OkHttp。作为一个菜鸟，我完完整整地看了一遍OkHttp的源码，在一边感叹一边佩服一边认识到自己后面的路还漫漫。
+好啦，废话不多说了。首先，我这篇博文是从头特别详细地来表述我对OkHttp的理解，如有不当之处，欢迎留言。谢谢。
+我是网络专业出身的，那么对于一个Http应该有哪些部分组成，Http协议等，我就不多说了，这个百度就">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/13/OkHttp源码解析-Request/"/>
+
+
+
+
+
+  <title>OkHttp源码解析 -- Request | zouxiaobang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/zouxiaobang" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zouxiaobang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/13/OkHttp源码解析-Request/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZouxIaobANg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zouxiaobang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OkHttp源码解析 -- Request</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-13T23:50:54+08:00">
+                2018-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-beginner/" itemprop="url" rel="index">
+                    <span itemprop="name">Android beginner</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<p>今天，我来侃这个已经被很多大牛讲解到看你问起就会翻白眼的框架 – OkHttp。<br>作为一个菜鸟，我完完整整地看了一遍OkHttp的源码，在一边感叹一边佩服一边认识到自己后面的路还漫漫。</p>
+<p>好啦，废话不多说了。首先，我这篇博文是从头特别详细地来表述我对OkHttp的理解，如有不当之处，欢迎留言。谢谢。</p>
+<p>我是网络专业出身的，那么对于一个Http应该有哪些部分组成，Http协议等，我就不多说了，这个百度就可以。<br>我们先从Http的请求开始，慢慢深入。</p>
+<h2 id="Request请求类"><a href="#Request请求类" class="headerlink" title="Request请求类"></a><strong>Request请求类</strong></h2><p>Request使用了Android式的建造者模式–Request.Builder来构建请求对象Request。<br>我们先看看一般的请求对象是如何创建的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Request request = <span class="keyword">new</span> Request.Builder()</div><div class="line">            .url(<span class="string">"..."</span>)</div><div class="line">            .build();</div></pre></td></tr></table></figure></p>
+<p>根据Builder的逻辑，我们先来看看Builder的外部类Request中的变量和方法。</p>
+<h3 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h3><p>首先来看看变量：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> HttpUrl url;</div><div class="line"><span class="keyword">final</span> String method;</div><div class="line"><span class="keyword">final</span> Header headers;</div><div class="line"><span class="keyword">final</span> RequestBody body;</div><div class="line"><span class="keyword">final</span> Object tag;</div></pre></td></tr></table></figure></p>
+<p>以上就是Request中必须要的4个属性和1个tag标记。<br>（以上变量的类型下面会继续见解：HttpUrl、Header、RequestBody）</p>
+<p>我们可以看到这些其实都是常量，常量是需要先初始化的，但常量还能另外一种初始化，就是在构造器中为它们赋值：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Request(Builder builder)&#123;</div><div class="line">    <span class="keyword">this</span>.url = builder.url;</div><div class="line">    <span class="keyword">this</span>.method = builder.method;</div><div class="line">    <span class="keyword">this</span>.headers = builder.headers;</div><div class="line">    <span class="keyword">this</span>.body = builder.body;</div><div class="line">    <span class="keyword">this</span>.tag = builder.tag != <span class="keyword">null</span> ? builder.tag:<span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们可以看出，这里使用Builder来作为参数，说明了Request中的属性是由其内部类Builder来赋予的。<br>而tag如果在Builder中没有进行赋值的话，那就指向自身，也就是说，这个tag是用于标记请求对象的，那么tag的作用就是用于在多个请求对象时识别某一个特定的Request。</p>
+<p>接下来就是一系列的获取方法：<br>url()、method()、headers()、body()、tag()<br>我们可能会有所疑惑，为什么Builder中有这一模一样的方法，这里还会有呢？<br>但是我们看清楚了，Request中的方法，是获取方法，而Builder中的方法，是赋值方法，是带参数的。<br>在获取方法中，其逻辑是比较简单的，例如url():<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> HttpUrl <span class="title">url</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> url;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当然，获取方法中也有几个方法是要注意的，先说说tag()的重载方法，而我们一般较多使用到的也是它的重载方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="meta">@Nullable</span> &lt;T&gt; <span class="function">T <span class="title">tag</span><span class="params">(Class&lt;? extends T&gt; type)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> type.cast(tags.get(type));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个方法通过类对象，我们可以找到设置的那个标记tag。</p>
+<p>接下来看看重要的header(String)和headers()的重载方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public @Nullable String header(String name) &#123;</div><div class="line">    return headers.get(name);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个方法返回的是某个header值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public List&lt;String&gt; headers(String name) &#123;</div><div class="line">    return headers.values(name);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>而这个方法返回的是一个key对应的某一系列值。</p>
+<p>而Request还给我们提供了一个用于判断url是否是加密协议的方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public boolean isHttps() &#123;</div><div class="line">  return url.isHttps();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里的HttpUrl类我们等下再继续看。</p>
+<p>接下来我们来看看Request的内部类Builder</p>
+<h3 id="Builder"><a href="#Builder" class="headerlink" title="Builder"></a>Builder</h3><p>首先，理所当然的，Builder中肯定要包含Request中必备的所有属性变量。<br>我们都知道，建造者模式的Builder就是用于传入参数，并使用这些参数来构造一个对象Request。<br>那么两种方法是必须有的：</p>
+<ul>
+<li>赋值方法Setter</li>
+<li>建造方法build</li>
+</ul>
+<p>我们先一个一个来剖析赋值方法</p>
+<h4 id="url"><a href="#url" class="headerlink" title="url()"></a>url()</h4><p>既然OkHttp自己写了一个HttpUrl类，那么最后肯定是要使用这个类作为参数的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public Builder url(HttpUrl url) &#123;</div><div class="line">      if (url == null) throw new NullPointerException(&quot;url == null&quot;);</div><div class="line">      this.url = url;</div><div class="line">      return this;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个类其实也是比较简单，就是判断url是否为空不为空就赋值。<br>而我们其实在使用的时候，先去实例化一个HttpUrl是比较麻烦，而且我们一般关注的也只是Url中的网址，即使用一个字符串是最为直观的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public Builder url(String url) &#123;</div><div class="line">      if (url == null) throw new NullPointerException(&quot;url == null&quot;);</div><div class="line"></div><div class="line">      // Silently replace web socket URLs with HTTP URLs.</div><div class="line">      if (url.regionMatches(true, 0, &quot;ws:&quot;, 0, 3)) &#123;</div><div class="line">        url = &quot;http:&quot; + url.substring(3);</div><div class="line">      &#125; else if (url.regionMatches(true, 0, &quot;wss:&quot;, 0, 4)) &#123;</div><div class="line">        url = &quot;https:&quot; + url.substring(4);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      return url(HttpUrl.get(url));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里会去判断这个字符串是加密网址还是普通网址，加密网址会使用https来进行重新赋值给url这个字符串，并使用HttpUrl的get()方法来返回一个HttpUrl对象。<br>而有时我们并不是自己手动去敲一个Url，而是从其他地方获取到的一个URL对象（系统定义）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public Builder url(URL url) &#123;</div><div class="line">      if (url == null) throw new NullPointerException(&quot;url == null&quot;);</div><div class="line">      return url(HttpUrl.get(url.toString()));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>那么更加容易，因为URL类有着直接转化为String类型的方法toString()，而再见String类型的url转化为HttpUrl对象。<br>这两个重载方法也为我们的调用提供了相当大的便携性。</p>
+<h4 id="header"><a href="#header" class="headerlink" title="header()"></a>header()</h4><p>这里的对请求头的赋值处理有两个方法，这里对这两个方法的使用就需要十分小心了。我们先来看看这两个方法的代码，再聊聊他们的区别：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public Builder header(String name, String value) &#123;</div><div class="line">      headers.set(name, value);</div><div class="line">      return this;</div><div class="line">&#125;</div><div class="line">public Builder addHeader(String name, String value) &#123;</div><div class="line">      headers.add(name, value);</div><div class="line">      return this;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>很明显可以看到的是一个调用了set，一个调用了add。<br>而这个headers对象也就是Headers对象，我们稍后解析这个类。<br>在这里，我们只要知道，set和add，没错，他们的区别就如你所想的那样，set是将整个请求头都更换掉，而add是在原有的请求头中再添加新的属性。</p>
+<h4 id="method"><a href="#method" class="headerlink" title="method()"></a>method()</h4><p>接下来就一系列的请求方法了，如GET/POST/DELETE等等。<br>先来看看这个最简单的get()方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public Builder get() &#123;</div><div class="line">      return method(&quot;GET&quot;, null);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>OK,它就是调用了method()方法，我们再来看看这个方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public Builder method(String method, @Nullable RequestBody body) &#123;</div><div class="line">      if (method == null) throw new NullPointerException(&quot;method == null&quot;);</div><div class="line">      if (method.length() == 0) throw new IllegalArgumentException(&quot;method.length() == 0&quot;);</div><div class="line">      if (body != null &amp;&amp; !HttpMethod.permitsRequestBody(method)) &#123;</div><div class="line">        throw new IllegalArgumentException(&quot;method &quot; + method + &quot; must not have a request body.&quot;);</div><div class="line">      &#125;</div><div class="line">      if (body == null &amp;&amp; HttpMethod.requiresRequestBody(method)) &#123;</div><div class="line">        throw new IllegalArgumentException(&quot;method &quot; + method + &quot; must have a request body.&quot;);</div><div class="line">      &#125;</div><div class="line">      this.method = method;</div><div class="line">      this.body = body;</div><div class="line">      return this;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们可以看到，前面就是一堆判断，注意在判断传入的method是否为空，这个方法是否能够携带请求体等等，最后就是惯例 – 为请求方法和请求体进行赋值。</p>
+<p>看了这个method()方法之后，我们也能想象到，post、delete等方法是如何来操作的吧：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public Builder post(RequestBody body) &#123;</div><div class="line">      return method(&quot;POST&quot;, body);</div><div class="line">&#125;</div><div class="line">public Builder delete(@Nullable RequestBody body) &#123;</div><div class="line">      return method(&quot;DELETE&quot;, body);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>十分简单，那么put、patch等方法也如此，我就不贴出来了。</p>
+<h4 id="builder"><a href="#builder" class="headerlink" title="builder()"></a>builder()</h4><p>属性都设置完了，最后就构造了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public Request build() &#123;</div><div class="line">      if (url == null) throw new IllegalStateException(&quot;url == null&quot;);</div><div class="line">      return new Request(this);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里直接new一个Request对象，将自己作为参数，OK,我们返回最上面的Request的构造方法。<br>是吧，就是将我们在Builder中传入的属性，作为Reuqest的构造方法的参数，就这么实例化出了Request对象。</p>
+<p>到了这里，我们就讲完了Request的整个构建过程。<br>那么上面说的，其中还有一些类我们需要分析的，那就来吧。</p>
+<h2 id="参数类分析"><a href="#参数类分析" class="headerlink" title="参数类分析"></a>参数类分析</h2><h3 id="HttpUrl"><a href="#HttpUrl" class="headerlink" title="HttpUrl"></a>HttpUrl</h3><p>这个类相当庞大，当然，网络并没有那么简单，对于一个url的解析当然需要很长很长的代码了，这里我分析几个会经常使用到的方法即可：</p>
+<h4 id="isHttps"><a href="#isHttps" class="headerlink" title="isHttps()"></a>isHttps()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public boolean isHttps() &#123;</div><div class="line">    return scheme.equals(&quot;https&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>一个URL会拆分为protocol（协议）、hostname（主机名）、port（端口号）、path（路径）以及一系列的参数。<br>scheme在网络中我们可以理解为协议。这里我们通过比较这个协议是否为https，来判断这个网址是否是加密的。</p>
+<h4 id="get-String"><a href="#get-String" class="headerlink" title="get(String)"></a>get(String)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public static HttpUrl get(String url) &#123;</div><div class="line">    return new Builder().parse(null, url).build();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里可以看出，HttpUrl同样是使用了构造者模式，那么我们来看看Builder中的parse方法(部分代码)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line">Builder parse(@Nullable HttpUrl base, String input) &#123;</div><div class="line">      ...</div><div class="line">      // Scheme.</div><div class="line">      if (schemeDelimiterOffset != -1) &#123;</div><div class="line">        if (input.regionMatches(true, pos, &quot;https:&quot;, 0, 6)) &#123;</div><div class="line">          this.scheme = &quot;https&quot;;</div><div class="line">          pos += &quot;https:&quot;.length();</div><div class="line">        &#125; else if (input.regionMatches(true, pos, &quot;http:&quot;, 0, 5)) &#123;</div><div class="line">          this.scheme = &quot;http&quot;;</div><div class="line">          pos += &quot;http:&quot;.length();</div><div class="line">        &#125;</div><div class="line">      &#125; else if (base != null) &#123;</div><div class="line">        this.scheme = base.scheme;</div><div class="line">      &#125;</div><div class="line">      ...</div><div class="line">          switch (c) &#123;</div><div class="line">            case &apos;@&apos;:</div><div class="line">              // User info precedes.</div><div class="line">              if (!hasPassword) &#123;</div><div class="line">                int passwordColonOffset = delimiterOffset(</div><div class="line">                    input, pos, componentDelimiterOffset, &apos;:&apos;);</div><div class="line">                String canonicalUsername = canonicalize(</div><div class="line">                    input, pos, passwordColonOffset, USERNAME_ENCODE_SET, true, false, false, true,</div><div class="line">                    null);</div><div class="line">                this.encodedUsername = hasUsername</div><div class="line">                    ? this.encodedUsername + &quot;%40&quot; + canonicalUsername</div><div class="line">                    : canonicalUsername;</div><div class="line">                if (passwordColonOffset != componentDelimiterOffset) &#123;</div><div class="line">                  hasPassword = true;</div><div class="line">                  this.encodedPassword = canonicalize(input, passwordColonOffset + 1,</div><div class="line">                      componentDelimiterOffset, PASSWORD_ENCODE_SET, true, false, false, true,</div><div class="line">                      null);</div><div class="line">                &#125;</div><div class="line">                hasUsername = true;</div><div class="line">              &#125; else &#123;</div><div class="line">                this.encodedPassword = this.encodedPassword + &quot;%40&quot; + canonicalize(input, pos,</div><div class="line">                    componentDelimiterOffset, PASSWORD_ENCODE_SET, true, false, false, true,</div><div class="line">                    null);</div><div class="line">              &#125;</div><div class="line">              pos = componentDelimiterOffset + 1;</div><div class="line">              break;</div><div class="line"></div><div class="line">            case -1:</div><div class="line">            case &apos;/&apos;:</div><div class="line">            case &apos;\\&apos;:</div><div class="line">            case &apos;?&apos;:</div><div class="line">            case &apos;#&apos;:</div><div class="line">              // Host info precedes.</div><div class="line">              int portColonOffset = portColonOffset(input, pos, componentDelimiterOffset);</div><div class="line">              if (portColonOffset + 1 &lt; componentDelimiterOffset) &#123;</div><div class="line">                host = canonicalizeHost(input, pos, portColonOffset);</div><div class="line">                port = parsePort(input, portColonOffset + 1, componentDelimiterOffset);</div><div class="line">                if (port == -1) &#123;</div><div class="line">                  throw new IllegalArgumentException(&quot;Invalid URL port: \&quot;&quot;</div><div class="line">                      + input.substring(portColonOffset + 1, componentDelimiterOffset) + &apos;&quot;&apos;);</div><div class="line">                &#125;</div><div class="line">              &#125; else &#123;</div><div class="line">                host = canonicalizeHost(input, pos, portColonOffset);</div><div class="line">                port = defaultPort(scheme);</div><div class="line">              &#125;</div><div class="line">              if (host == null) &#123;</div><div class="line">                throw new IllegalArgumentException(</div><div class="line">                    INVALID_HOST + &quot;: \&quot;&quot; + input.substring(pos, portColonOffset) + &apos;&quot;&apos;);</div><div class="line">              &#125;</div><div class="line">              pos = componentDelimiterOffset;</div><div class="line">              break authority;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      &#125; </div><div class="line">      ...</div><div class="line">      // Resolve the relative path.</div><div class="line">      int pathDelimiterOffset = delimiterOffset(input, pos, limit, &quot;?#&quot;);</div><div class="line">      resolvePath(input, pos, pathDelimiterOffset);</div><div class="line">      pos = pathDelimiterOffset;</div><div class="line"></div><div class="line">      // Query.</div><div class="line">      if (pos &lt; limit &amp;&amp; input.charAt(pos) == &apos;?&apos;) &#123;</div><div class="line">        int queryDelimiterOffset = delimiterOffset(input, pos, limit, &apos;#&apos;);</div><div class="line">        this.encodedQueryNamesAndValues = queryStringToNamesAndValues(canonicalize(</div><div class="line">            input, pos + 1, queryDelimiterOffset, QUERY_ENCODE_SET, true, false, true, true, null));</div><div class="line">        pos = queryDelimiterOffset;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      // Fragment.</div><div class="line">      if (pos &lt; limit &amp;&amp; input.charAt(pos) == &apos;#&apos;) &#123;</div><div class="line">        this.encodedFragment = canonicalize(</div><div class="line">            input, pos + 1, limit, FRAGMENT_ENCODE_SET, true, false, false, false, null);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      return this;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其实就是根据我们传入的String字符串，分解识别并赋值给URL的各个属性（如scheme、host、port等等）。</p>
+<h4 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString()"></a>toString()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@Override public String toString() &#123;</div><div class="line">    return url;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个挺简单的，就是返回一个url，而这个url的值是在Builder中的toString()方法，Builder中的toString()方法就将上面所说的URL的组成部分按照URL的规则组装成一个字符串。</p>
+<h3 id="Headers"><a href="#Headers" class="headerlink" title="Headers"></a>Headers</h3><p>Headers相对来说比较简单，其实就是在存储一些数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">private final String[] namesAndValues;</div></pre></td></tr></table></figure></p>
+<p>我们可能会困惑，为什么这是一个String数组，而不是一个List或Set等的容器呢。<br>这是为了性能考虑的，别忘了，数组的一个优点，就是读取相当快。</p>
+<p>那么，它是存取规则又是什么呢，怎么做到既存入key，又存入value呢。这我们就需要来看它的存入逻辑了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public Builder set(String name, String value) &#123;</div><div class="line">      checkNameAndValue(name, value);</div><div class="line">      removeAll(name);</div><div class="line">      addLenient(name, value);</div><div class="line">      return this;</div><div class="line">&#125;</div><div class="line">public Builder add(String name, String value) &#123;</div><div class="line">      checkNameAndValue(name, value);</div><div class="line">      return addLenient(name, value);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里我们可以看到，set()方法会先删除所有name对应的所有信息（name和value）。<br>这里看一下addLenient()方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Builder addLenient(String name, String value) &#123;</div><div class="line">      namesAndValues.add(name);</div><div class="line">      namesAndValues.add(value.trim());</div><div class="line">      return this;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>也就是说，每存入一个键值对，要用两个位置来存储。<br>所以，在读取的时候，直接使用name去比较，知道找到了和name一样的key，就会去获取这个元素的下一个元素，即name对应的value。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">private static String get(String[] namesAndValues, String name) &#123;</div><div class="line">    for (int i = namesAndValues.length - 2; i &gt;= 0; i -= 2) &#123;</div><div class="line">      if (name.equalsIgnoreCase(namesAndValues[i])) &#123;</div><div class="line">        return namesAndValues[i + 1];</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    return null;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里我们注意到，在对比name的时候，使用的是equalsIgnoreCase()方法，也就是忽略大小写的。<br>所以，这个Header在传入的时候，我们要注意，这里是不区分大小写的。</p>
+<h3 id="ReqeustBody"><a href="#ReqeustBody" class="headerlink" title="ReqeustBody"></a>ReqeustBody</h3><p>这个RequestBody是一个抽象类，涉及的内容也比较多，且比较重要，我们就留着下一篇再继续分析，毕竟这个篇幅已经很长，而我也需要睡觉了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color:#ccc;font-size:14px;">----------------本文结束 <i class="fa fa-paw"></i>感想您的阅读-----------------</div>
+  
+</div>
+      
+    </div>
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/12/知识点-Handler/" rel="next" title="知识点 -- Handler">
+                <i class="fa fa-chevron-left"></i> 知识点 -- Handler
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODAzNi8xNDU2Ng=="></div>
+    </div>
+
+  
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="ZouxIaobANg" />
+            
+              <p class="site-author-name" itemprop="name">ZouxIaobANg</p>
+              <p class="site-description motion-element" itemprop="description">若无烟雨任平生，不做龙首，游在九州，凭他归去落愁</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Request请求类"><span class="nav-number">1.</span> <span class="nav-text">Request请求类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Request"><span class="nav-number">1.1.</span> <span class="nav-text">Request</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Builder"><span class="nav-number">1.2.</span> <span class="nav-text">Builder</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#url"><span class="nav-number">1.2.1.</span> <span class="nav-text">url()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#header"><span class="nav-number">1.2.2.</span> <span class="nav-text">header()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#method"><span class="nav-number">1.2.3.</span> <span class="nav-text">method()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#builder"><span class="nav-number">1.2.4.</span> <span class="nav-text">builder()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数类分析"><span class="nav-number">2.</span> <span class="nav-text">参数类分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HttpUrl"><span class="nav-number">2.1.</span> <span class="nav-text">HttpUrl</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#isHttps"><span class="nav-number">2.1.1.</span> <span class="nav-text">isHttps()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get-String"><span class="nav-number">2.1.2.</span> <span class="nav-text">get(String)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#toString-NaN"><span class="nav-number">2.1.3.</span> <span class="nav-text">toString()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Headers"><span class="nav-number">2.2.</span> <span class="nav-text">Headers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReqeustBody"><span class="nav-number">2.3.</span> <span class="nav-text">ReqeustBody</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZouxIaobANg</span>
+
+  
+</div>
+
+<div class="powered-by">
+<span id="busuanzi_container_page_pv">
+  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</span>
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
