@@ -94,16 +94,34 @@
 
 
 
-<meta name="description" content="2017年记事一年，过去了，很快，又觉得已经过了很久。从2017年伊始，我已经没有回学校上课了，除了那挂着的英语课和一门好不容易报上名的网络通识课，我的大学算是磕磕碰碰中结束了。我从2月10号开始实习，这个日子我记得是如此清楚，毕竟是第一天上班，我还是很早地，忘了起床，邋邋遢遢就来到公司。第一天确实过得很快，因为我根本就没干嘛活，一天都在装电脑。说到这个装电脑，我是惭愧的，首先我确实是计算机学院的">
+<meta name="description" content="接下来我们来解释Response类，这是OkHttp网络架构中的响应类，是我们在发送请求后得到回馈的载体。
+首先，我们来看看Response中的内容
+Response属性变量：
+
+int code：响应码，对应网络的每一种状态，都会对应这一个响应码，我们可以通过响应码去查询响应出现的问题等。
+String message：对响应状态的描述，例如响应成功了，message会返回ok
+Respons">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2017总结和2018计划">
-<meta property="og:url" content="http://yoursite.com/2018/07/01/2017总结和2018计划/index.html">
+<meta property="og:title" content="OkHttp源码解析--Response">
+<meta property="og:url" content="http://yoursite.com/2018/07/16/OkHttp源码解析-Response/index.html">
 <meta property="og:site_name" content="zouxiaobang">
-<meta property="og:description" content="2017年记事一年，过去了，很快，又觉得已经过了很久。从2017年伊始，我已经没有回学校上课了，除了那挂着的英语课和一门好不容易报上名的网络通识课，我的大学算是磕磕碰碰中结束了。我从2月10号开始实习，这个日子我记得是如此清楚，毕竟是第一天上班，我还是很早地，忘了起床，邋邋遢遢就来到公司。第一天确实过得很快，因为我根本就没干嘛活，一天都在装电脑。说到这个装电脑，我是惭愧的，首先我确实是计算机学院的">
-<meta property="og:updated_time" content="2018-07-03T15:14:14.135Z">
+<meta property="og:description" content="接下来我们来解释Response类，这是OkHttp网络架构中的响应类，是我们在发送请求后得到回馈的载体。
+首先，我们来看看Response中的内容
+Response属性变量：
+
+int code：响应码，对应网络的每一种状态，都会对应这一个响应码，我们可以通过响应码去查询响应出现的问题等。
+String message：对响应状态的描述，例如响应成功了，message会返回ok
+Respons">
+<meta property="og:updated_time" content="2018-07-16T14:40:54.994Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2017总结和2018计划">
-<meta name="twitter:description" content="2017年记事一年，过去了，很快，又觉得已经过了很久。从2017年伊始，我已经没有回学校上课了，除了那挂着的英语课和一门好不容易报上名的网络通识课，我的大学算是磕磕碰碰中结束了。我从2月10号开始实习，这个日子我记得是如此清楚，毕竟是第一天上班，我还是很早地，忘了起床，邋邋遢遢就来到公司。第一天确实过得很快，因为我根本就没干嘛活，一天都在装电脑。说到这个装电脑，我是惭愧的，首先我确实是计算机学院的">
+<meta name="twitter:title" content="OkHttp源码解析--Response">
+<meta name="twitter:description" content="接下来我们来解释Response类，这是OkHttp网络架构中的响应类，是我们在发送请求后得到回馈的载体。
+首先，我们来看看Response中的内容
+Response属性变量：
+
+int code：响应码，对应网络的每一种状态，都会对应这一个响应码，我们可以通过响应码去查询响应出现的问题等。
+String message：对响应状态的描述，例如响应成功了，message会返回ok
+Respons">
 
 
 
@@ -133,13 +151,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/01/2017总结和2018计划/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/16/OkHttp源码解析-Response/"/>
 
 
 
 
 
-  <title>2017总结和2018计划 | zouxiaobang</title>
+  <title>OkHttp源码解析--Response | zouxiaobang</title>
   
 
 
@@ -257,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/01/2017总结和2018计划/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/16/OkHttp源码解析-Response/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZouxIaobANg">
@@ -274,7 +292,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">2017总结和2018计划</h1>
+          <h1 class="post-title" itemprop="name headline">OkHttp源码解析--Response</h1>
         
 
         <div class="post-meta">
@@ -286,8 +304,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-01T18:23:25+08:00">
-                2018-07-01
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T22:39:59+08:00">
+                2018-07-16
               </time>
             
 
@@ -296,6 +314,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-beginner/" itemprop="url" rel="index">
+                    <span itemprop="name">Android beginner</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -324,75 +364,37 @@
       
 
       
-        <h2 id="2017年记事"><a href="#2017年记事" class="headerlink" title="2017年记事"></a>2017年记事</h2><p>一年，过去了，很快，又觉得已经过了很久。<br>从2017年伊始，我已经没有回学校上课了，除了那挂着的英语课和一门好不容易报上名的网络通识课，我的大学算是磕磕碰碰中结束了。<br>我从2月10号开始实习，这个日子我记得是如此清楚，毕竟是第一天上班，我还是很早地，忘了起床，邋邋遢遢就来到公司。第一天确实过得很快，因为我根本就没干嘛活，一天都在装电脑。说到这个装电脑，我是惭愧的，首先我确实是计算机学院的学生，其次我也确实有学过Linux课程。但我依然不知道显卡插在哪里，要怎么装两个硬盘，还为如何安装Linux系统犯了傻。<br>知耻后勇，我便买回一本《鸟哥的Linux私房菜》，刚开始确实看了好几章，可惜后面一忙，就没有继续看下去了，这将是我2018后半年年的一个小计划。</p>
-<p>现在开始从头捋一捋。<br>从2月份到7月15号，我都是一名实习生，当初一起来实习的有3个人，我看着他们每天都在看书，学习(这是公司的培养方式)，我是很羡慕的，因为我每天都感觉挺忙的，都在一堆源码里查找，修改。当然，这是说好听的，其实就是很多重复性的动作，我怕我做久了就麻木了，在公司没有时间学习，那我就每天晚上回去看书，虽然时间很少，但我很享受，这段属于我自己的时间。每天花2个小时去看书，看博客，可惜的是那时我还没有一个很完善的学习机制，只是一直在看，没有记录，也没有过多的思考，感觉是浪费了，空有一个很努力的外表，其实没有收获到什么，至少到现在，我只记得我看过什么，却忘了看的内容了。<br>后来开始要修网络通识课，就每天晚上回去挂着，打会游戏，告诉自己要放松，不能被工作绑定。直到通识课结束了，就像突然一个习惯性的事件没了，有点不知所措，我才开始反思，打游戏，是在放松自己，还是自我堕落。<br>此时5个月的实习期已经结束了，公司安排要去惠州进行一个月的培训，我无法去评价这个月，也就不加评价了。最大的好处，也就是认识了几个好朋友吧。我更想称为朋友，而不是同事。<br>培训归来，我并开始进入又一段时间的浑噩生活，刚好赶上一个比较空闲的时间段，每天上班看一会书，我也不知道有没有看下去，然后就是玩会手游。直到，部长拉着去个小房间，提醒了一下游戏这种东西，在不恰当的时候去玩，总不是件好事情。说我是恍然大悟，其实也没有，只是我回家路上想了又想，对，我才23岁，我的人生还在最有活力的时候，我怎么活得像个龟。<br>于是我开始给自己制定一个模糊的计划，为什么是模糊的，因为我在后面的一段时间里，不断地去改变它，直到适合我。<br>这一小段时间里，我很认真也很高效地在学习，例如架构知识，例如多线程模式。对的，你发现了，我说的是一小段时间。并不是我没有意志力，而是后面发生的一件事，影响了我一段很长的时间。<br>入冬了，每天清晨起来不易，但我还是从未迟到，我是个守时的人，当然不是那种踏点，我会给自己预留时间。这段时间我的激情又回来了，我开始看我以前买的书，一本本慢慢啃，也手写了很多代码，也在慢慢修改自己的学习方式，虽然到现在，我也还没找到最适合我的，但总会有点进步的。</p>
-<h3 id="2017专业书籍"><a href="#2017专业书籍" class="headerlink" title="2017专业书籍"></a>2017专业书籍</h3><ul>
-<li>[x] Java编程思想</li>
-<li>[x] Java语言程序设计 – 进阶版</li>
-<li>[x] HeadFirst设计模式</li>
-<li>[x] Android源码设计模式</li>
-<li>[x] 图解Java多线程设计模式</li>
-<li>[x] Kotlin极简教程</li>
-<li>[ ] 鸟哥的Linux私房菜</li>
+        <hr>
+<p>接下来我们来解释Response类，这是OkHttp网络架构中的响应类，是我们在发送请求后得到回馈的载体。</p>
+<p>首先，我们来看看Response中的内容</p>
+<h2 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h2><p><strong>属性变量：</strong></p>
+<ul>
+<li>int code：响应码，对应网络的每一种状态，都会对应这一个响应码，我们可以通过响应码去查询响应出现的问题等。</li>
+<li>String message：对响应状态的描述，例如响应成功了，message会返回ok</li>
+<li>ResponseBody body：响应体，我们响应的内容会包含在响应体中返回回来给我们。</li>
 </ul>
-<hr>
-<h2 id="2018年记事"><a href="#2018年记事" class="headerlink" title="2018年记事"></a>2018年记事</h2><p>新年过完，我又开始了懒散的生活，除了看看博客，看看书，其实工作也从年前的忙碌慢慢闲下来。<br>5月2号，我又换了工作，去了一家小公司。公司人不多，所以活特别多，每天回到家都特别累。在第一个月里，又开始了我浑浑噩噩的学习生活。学习，没动力，生活，一团糟。早上挣扎着起床，晚上回来洗澡完就逼着自己赶紧睡觉。<br>是该休息一下了，冷静下来去思考一下，而不是唯唯诺诺，战战兢兢，患得患失地继续下去了。</p>
-<h2 id="2018年计划"><a href="#2018年计划" class="headerlink" title="2018年计划"></a>2018年计划</h2><p>放了3天假，前两天睡到太阳落山，然后就来到了2018年7月1号。<br>起床后摸着头想想，是应该给自己做个计划的。我一直都是个很好的执行者，基本计划的事都会做到，当然我基本没给自己什么计划，所以才能演变到现在这样。但不可否认的是我还有点优点 – 耐心，自控，而刚好这两个优点是我现在急需要到且我认为我能加以利用的。<br>先给个大概的目标吧。</p>
-<p><strong><em>成为一个中级工程师，前往高级工程师的路上。</em></strong></p>
-<h3 id="细致计划"><a href="#细致计划" class="headerlink" title="细致计划"></a>细致计划</h3><p>（可能有补充）</p>
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th style="text-align:right">目标</th>
-<th style="text-align:center">是否完成</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>《鸟哥的Linux私房菜》</td>
-<td style="text-align:right">看完这本基础版，熟练掌握Linux系统，多使用命令</td>
-<td style="text-align:center">否</td>
-</tr>
-<tr>
-<td>编写一个商城类App</td>
-<td style="text-align:right">重点学习架构知识，以及如何更好地使用github上的优质项目</td>
-<td style="text-align:center">否</td>
-</tr>
-<tr>
-<td>每周至少看两篇博文</td>
-<td style="text-align:right">了解其他人如何学习，学习博文内容，了解Android版本的更新情况</td>
-<td style="text-align:center">否</td>
-</tr>
-<tr>
-<td>每周至少去一次书店看书</td>
-<td style="text-align:right">在埋头专业知识之余，不应该放弃修养</td>
-<td style="text-align:center">否</td>
-</tr>
-<tr>
-<td>重新看《Android开发艺术探索》</td>
-<td style="text-align:right">能否无压力理解所有内容，这本书是中级工程师的一个判断点</td>
-<td style="text-align:center">否</td>
-</tr>
-<tr>
-<td>重新学习源码设计模式</td>
-<td style="text-align:right">熟悉Android某些模块源码，整理看源码的技巧和注意事项，前往高级工程师的路上，记得要啃透它</td>
-<td style="text-align:center">否</td>
-</tr>
-<tr>
-<td>购买《Android内核剖析》</td>
-<td style="text-align:right">这本书是高级工程师必看的书，先计划住</td>
-<td style="text-align:center">否</td>
-</tr>
-<tr>
-<td>强化架构思想</td>
-<td style="text-align:right">总结多种架构方式，形成自己的架构思想，例子是最重要的</td>
-<td style="text-align:center">否</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h4 id="初版写于2018-1-1"><a href="#初版写于2018-1-1" class="headerlink" title="初版写于2018.1.1"></a>初版写于2018.1.1</h4><h4 id="二次修改写于2018-7-1"><a href="#二次修改写于2018-7-1" class="headerlink" title="二次修改写于2018.7.1"></a>二次修改写于2018.7.1</h4>
+<p>以上是我们在写例子的时候最常使用到的属性，而还有一些属性：</p>
+<ul>
+<li>Request</li>
+<li>Protocol</li>
+<li>Header<br>这几个我们在需要的时候可以去获取它们，当然在平常的使用中我们还是很少去用它们的。<br>由于Response也是使用Builder模式，所以我们获取以上属性的时候当然是使用Response对象咯：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Request request = mResponse.request();</div><div class="line">int code = mResponse.code();</div><div class="line">...</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这个就不多说了，这是构造者模式的特点。</p>
+<p><strong>方法：</strong><br>我们来看一下常用的方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public boolean isSuccessful() &#123;</div><div class="line">    return code &gt;= 200 &amp;&amp; code &lt; 300;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>判断网络请求是否已经成功响应。我们都知道，网络设定返回码为200~300之间，是成功的标记，所以这里直接使用请求码来判断。这个方法相当重要也相当常见，我们在要发送请求后想对响应进行处理的时候，都要先对这个Response对象是否响应成功进行判断，不然可能会引起各种类似空的问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public @Nullable ResponseBody body() &#123;</div><div class="line">    return body;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个方法我们也常用，我们这里把它放出来是为了强调它相当常用，而它的逻辑，就不说了。</p>
+<p>Response类相对来说比较简单，因为它没有像Request一样会去对很多东西做处理，而是比较纯粹地对数据进行设置和读取。</p>
+<p>接下来我们来看看跟Response关系密切的ResponseBody类</p>
+<h2 id="ResponseBody"><a href="#ResponseBody" class="headerlink" title="ResponseBody"></a>ResponseBody</h2><p>ResponseBody承载着网络给我们响应的内容，例如返回的是一段JSON数据，或是一个网页html等等。</p>
+<p>ResponseBody是一个抽象类，所以我们也是没法去实例化它，但它给我们提供了create()方法来创建这个对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public static ResponseBody create(final @Nullable MediaType contentType,</div><div class="line">      final long contentLength, final BufferedSource content) &#123;</div><div class="line">    if (content == null) throw new NullPointerException(&quot;source == null&quot;);</div><div class="line">    return new ResponseBody() &#123;</div><div class="line">      @Override public @Nullable MediaType contentType() &#123;</div><div class="line">        return contentType;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      @Override public long contentLength() &#123;</div><div class="line">        return contentLength;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      @Override public BufferedSource source() &#123;</div><div class="line">        return content;</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里我们会创建一个匿名的ResponseBody对象并返回，在这个对象中，我们要注意的是它的source()方法，它返回的是一个BufferedSource对象，而这个对象，其实就是网络在响应的时候将内容转换为BufferedSource类型的。（例如String转化为BufferedSource）</p>
+<p>为什么要注意这个方法呢，因为我们在经常使用到的response.body().string()方法中会使用它。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public final String string() throws IOException &#123;</div><div class="line">    BufferedSource source = source();</div><div class="line">    try &#123;</div><div class="line">      Charset charset = Util.bomAwareCharset(source, charset());</div><div class="line">      return source.readString(charset);</div><div class="line">    &#125; finally &#123;</div><div class="line">      Util.closeQuietly(source);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里又会将source转化为String类型返回回去。而我们看到的，一般都是这个String类型。<br>不要觉得很绕，为什么要把String转化为BufferedSource，最后又变回来呢。我们想想这些情况，如果响应是一个图片呢，是一个用String没法描述的呢，当然它会提供这个方法给你。我们都知道，在网络传输中，使用的是流形式，而不管怎样的流，肯定都能转化为byte[]类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public final byte[] bytes() throws IOException &#123;</div><div class="line">    long contentLength = contentLength();</div><div class="line">    if (contentLength &gt; Integer.MAX_VALUE) &#123;</div><div class="line">      throw new IOException(&quot;Cannot buffer entire body for content length: &quot; + contentLength);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    BufferedSource source = source();</div><div class="line">    byte[] bytes;</div><div class="line">    try &#123;</div><div class="line">      bytes = source.readByteArray();</div><div class="line">    &#125; finally &#123;</div><div class="line">      Util.closeQuietly(source);</div><div class="line">    &#125;</div><div class="line">    if (contentLength != -1 &amp;&amp; contentLength != bytes.length) &#123;</div><div class="line">      throw new IOException(&quot;Content-Length (&quot;</div><div class="line">          + contentLength</div><div class="line">          + &quot;) and stream length (&quot;</div><div class="line">          + bytes.length</div><div class="line">          + &quot;) disagree&quot;);</div><div class="line">    &#125;</div><div class="line">    return bytes;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>之后我们想要怎么转化成其他的类型，就都可以转化了。</p>
+<p>当然，除了byte数组，还有流：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public final InputStream byteStream() &#123;</div><div class="line">    return source().inputStream();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
       
     </div>
     
@@ -426,8 +428,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/01/荒上鸿/" rel="next" title="荒上鸿">
-                <i class="fa fa-chevron-left"></i> 荒上鸿
+              <a href="/2018/07/15/OkHttp源码解析-Call/" rel="next" title="OkHttp源码解析--Call">
+                <i class="fa fa-chevron-left"></i> OkHttp源码解析--Call
               </a>
             
           </div>
@@ -435,10 +437,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/03/知识点-Activity/" rel="prev" title="知识点 -- Activity">
-                知识点 -- Activity <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -572,7 +570,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2017年记事"><span class="nav-number">1.</span> <span class="nav-text">2017年记事</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2017专业书籍"><span class="nav-number">1.1.</span> <span class="nav-text">2017专业书籍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2018年记事"><span class="nav-number">2.</span> <span class="nav-text">2018年记事</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2018年计划"><span class="nav-number">3.</span> <span class="nav-text">2018年计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#细致计划"><span class="nav-number">3.1.</span> <span class="nav-text">细致计划</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初版写于2018-1-1"><span class="nav-number">3.1.1.</span> <span class="nav-text">初版写于2018.1.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二次修改写于2018-7-1"><span class="nav-number">3.1.2.</span> <span class="nav-text">二次修改写于2018.7.1</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Response"><span class="nav-number">1.</span> <span class="nav-text">Response</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ResponseBody"><span class="nav-number">2.</span> <span class="nav-text">ResponseBody</span></a></li></ol></div>
             
 
           </div>
