@@ -4,6 +4,23 @@
   
     
     <entry>
+      <title><![CDATA[OkHttp源码解析-OkHttpClient]]></title>
+      <url>http://yoursite.com/2018/07/19/OkHttp%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-OkHttpClient/</url>
+      <content type="html"><![CDATA[<hr>
+<p>现在OkHttp的源码已经贴到只剩下最后一部分了，那就是OkHttpClient。</p>
+<h2 id="OkHttpClient"><a href="#OkHttpClient" class="headerlink" title="OkHttpClient"></a>OkHttpClient</h2><p>可能我们会觉得OkHttp的核心，应该就是OkHttpClient了吧。因为好像我们在进行网络连接的时候，是使用OkHttpClient来联系Rquest和Response的。那么，是不是呢，我们可以去看一下OkHttpClient的源码。<br>（代码我就不贴了，原因你们看下面的分析就好了）<br>OkHttpClient也是构造者模式来设计的，我们在看其Builder内部类的时候，发现它的设置方法，其实也是比较简单的赋值动作而已，基本上没有什么对参数进行二次加工。<br>其中可以值得注意的就是newCall()方法，而这个方法会去创建一个RealCall对象。对了，这就是我们在使用的时候，一般要写到的方法。这里我们可以看出，其实OkHttpClient就是一个设置参数的地方，而请求，获取响应等工作，会委托给RealCall对象去处理。<br>（这里RealCall的内容，可以看看我们前面侃的那篇“<a href="https://zouxiaobang.github.io/2018/07/15/OkHttp%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-Call/" target="_blank" rel="external">OkHttp源码解析–Call</a>”）</p>
+<p>那么这篇总不能就写这么点就结束了吧，当然，我们还需要对整个OkHttp进行总结，不然看了这么多代码，也是云里雾里的，看完连个流程都不知道。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>虽然说网络请求的原理流程基本都一样，就是发送请求，和接收响应。但网络请求在执行中的处理事务还是比较难的，来源于网络层错综复杂的情况。例如我们需要考虑到的功能性和性能，功能上我们需要Socket连接，需要各种文件的传输（流、byte数组等），需要安全（TLS安全–握手协议）等等；性能上我们需要缓存（复用、可用时间），需要一个池结构来管理众多的请求连接。<br>我们想想都觉得复杂，一个个问题堆积在一起，可能我们要做一个完全兼顾的框架出来，也是很难进行维护和管理的。而OkHttp，正好做到了这一点，这就是为什么我们这么推崇他的原因。</p>
+<blockquote>
+<p>OkHttp通过分层的思想，将功能设计为多个拦截器，而将多个拦截器通过链式的形式串联在一次，从而一层一层地解决每一个问题。而这个模式也符合了单一职责原则。</p>
+</blockquote>
+<p>而在拓展性上，OkHttp同样支持我们去做自己的拦截器，来对请求做进一步的处理或拦截。<br>（例如我常用的，在本App上直接拦截请求返回一个测试数据）</p>
+<p>我们对几个重要的类进行解读：<br>首先是Rquest和Response类，这两个类中其实并没有什么进行网络行为的逻辑，我们更多的是把它们看做是一个数据类，用于存储请求和响应中的数据。<br>而OkHttpClient更像一个参数类，主要用于设置一些参数，例如要不要缓存等。它也没有进行网络行为，而是将这些行为委托给Call对象去处理。<br>所以说，Call对象属于行为类，但值得注意的是，Call类中，也只是对请求进行封装，对响应进传递（使用Callback来传递异步请求返回的Response，而同步的就直接返回Response对象）。当然，它是提供进行网络请求的逻辑的（AsyncCall类，继承自NamedRunnable），但在RealCall的enqueue()方法和execute()方法中，并没有直接去调用它，而是在enqueue()方法和execute()方法中去调用Dispatcher的异步或同步方法。<br>那么问题来了，为什么不直接调用呢，而要多此一步呢？<br>我们去看看Dispatcher的代码就知道了，例如异步处理，Dispatcher中会将所有的Call对象保存起来，然后将它们放到线程池中去执行。这就是性能和管理方面上的优点了。</p>
+<h2 id="一个相当粗略的流程图"><a href="#一个相当粗略的流程图" class="headerlink" title="一个相当粗略的流程图"></a>一个相当粗略的流程图</h2><p><img src="/img/okhttp/OkHttp.jpg" alt="OkHttp流程图"></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[OkHttp源码解析--Response]]></title>
       <url>http://yoursite.com/2018/07/16/OkHttp%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-Response/</url>
       <content type="html"><![CDATA[<hr>

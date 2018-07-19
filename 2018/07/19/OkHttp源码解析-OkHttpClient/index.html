@@ -94,49 +94,21 @@
 
 
 
-<meta name="description" content="什么是Service
-是一种可以在后台长时间运行，没有用户交互界面的引用组件。
-
-由于Service和BroadcastReceiver都是在主线程中运行，所以不能执行一些耗时操作。如果要执行耗时操作，则要新启一个子线程。
-Service和Thread的区别
-定义
-
-Thread是相对独立的，是程序执行的最小单位。Service是依附在其所在的主线程上，是由程序进程托管的。
-
-功能：
-
-Thre">
+<meta name="description" content="现在OkHttp的源码已经贴到只剩下最后一部分了，那就是OkHttpClient。
+OkHttpClient可能我们会觉得OkHttp的核心，应该就是OkHttpClient了吧。因为好像我们在进行网络连接的时候，是使用OkHttpClient来联系Rquest和Response的。那么，是不是呢，我们可以去看一下OkHttpClient的源码。（代码我就不贴了，原因你们看下面的分析就好了）Ok">
 <meta property="og:type" content="article">
-<meta property="og:title" content="知识点 -- Service">
-<meta property="og:url" content="http://yoursite.com/2018/07/04/知识点-Service/index.html">
+<meta property="og:title" content="OkHttp源码解析-OkHttpClient">
+<meta property="og:url" content="http://yoursite.com/2018/07/19/OkHttp源码解析-OkHttpClient/index.html">
 <meta property="og:site_name" content="zouxiaobang">
-<meta property="og:description" content="什么是Service
-是一种可以在后台长时间运行，没有用户交互界面的引用组件。
-
-由于Service和BroadcastReceiver都是在主线程中运行，所以不能执行一些耗时操作。如果要执行耗时操作，则要新启一个子线程。
-Service和Thread的区别
-定义
-
-Thread是相对独立的，是程序执行的最小单位。Service是依附在其所在的主线程上，是由程序进程托管的。
-
-功能：
-
-Thre">
-<meta property="og:updated_time" content="2018-07-04T14:22:37.844Z">
+<meta property="og:description" content="现在OkHttp的源码已经贴到只剩下最后一部分了，那就是OkHttpClient。
+OkHttpClient可能我们会觉得OkHttp的核心，应该就是OkHttpClient了吧。因为好像我们在进行网络连接的时候，是使用OkHttpClient来联系Rquest和Response的。那么，是不是呢，我们可以去看一下OkHttpClient的源码。（代码我就不贴了，原因你们看下面的分析就好了）Ok">
+<meta property="og:image" content="http://yoursite.com/img/okhttp/OkHttp.jpg">
+<meta property="og:updated_time" content="2018-07-19T12:03:04.288Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="知识点 -- Service">
-<meta name="twitter:description" content="什么是Service
-是一种可以在后台长时间运行，没有用户交互界面的引用组件。
-
-由于Service和BroadcastReceiver都是在主线程中运行，所以不能执行一些耗时操作。如果要执行耗时操作，则要新启一个子线程。
-Service和Thread的区别
-定义
-
-Thread是相对独立的，是程序执行的最小单位。Service是依附在其所在的主线程上，是由程序进程托管的。
-
-功能：
-
-Thre">
+<meta name="twitter:title" content="OkHttp源码解析-OkHttpClient">
+<meta name="twitter:description" content="现在OkHttp的源码已经贴到只剩下最后一部分了，那就是OkHttpClient。
+OkHttpClient可能我们会觉得OkHttp的核心，应该就是OkHttpClient了吧。因为好像我们在进行网络连接的时候，是使用OkHttpClient来联系Rquest和Response的。那么，是不是呢，我们可以去看一下OkHttpClient的源码。（代码我就不贴了，原因你们看下面的分析就好了）Ok">
+<meta name="twitter:image" content="http://yoursite.com/img/okhttp/OkHttp.jpg">
 
 
 
@@ -166,13 +138,13 @@ Thre">
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/04/知识点-Service/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/19/OkHttp源码解析-OkHttpClient/"/>
 
 
 
 
 
-  <title>知识点 -- Service | zouxiaobang</title>
+  <title>OkHttp源码解析-OkHttpClient | zouxiaobang</title>
   
 
 
@@ -290,7 +262,7 @@ Thre">
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/04/知识点-Service/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/19/OkHttp源码解析-OkHttpClient/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZouxIaobANg">
@@ -307,7 +279,7 @@ Thre">
 
         
         
-          <h1 class="post-title" itemprop="name headline">知识点 -- Service</h1>
+          <h1 class="post-title" itemprop="name headline">OkHttp源码解析-OkHttpClient</h1>
         
 
         <div class="post-meta">
@@ -319,8 +291,8 @@ Thre">
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-04T22:21:50+08:00">
-                2018-07-04
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-19T19:59:58+08:00">
+                2018-07-19
               </time>
             
 
@@ -342,8 +314,8 @@ Thre">
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android知识点/" itemprop="url" rel="index">
-                    <span itemprop="name">Android知识点</span>
+                  <a href="/categories/Android-beginner/" itemprop="url" rel="index">
+                    <span itemprop="name">Android beginner</span>
                   </a>
                 </span>
 
@@ -380,33 +352,16 @@ Thre">
 
       
         <hr>
-<h2 id="什么是Service"><a href="#什么是Service" class="headerlink" title="什么是Service"></a>什么是Service</h2><blockquote>
-<p>是一种可以在后台长时间运行，没有用户交互界面的引用组件。</p>
+<p>现在OkHttp的源码已经贴到只剩下最后一部分了，那就是OkHttpClient。</p>
+<h2 id="OkHttpClient"><a href="#OkHttpClient" class="headerlink" title="OkHttpClient"></a>OkHttpClient</h2><p>可能我们会觉得OkHttp的核心，应该就是OkHttpClient了吧。因为好像我们在进行网络连接的时候，是使用OkHttpClient来联系Rquest和Response的。那么，是不是呢，我们可以去看一下OkHttpClient的源码。<br>（代码我就不贴了，原因你们看下面的分析就好了）<br>OkHttpClient也是构造者模式来设计的，我们在看其Builder内部类的时候，发现它的设置方法，其实也是比较简单的赋值动作而已，基本上没有什么对参数进行二次加工。<br>其中可以值得注意的就是newCall()方法，而这个方法会去创建一个RealCall对象。对了，这就是我们在使用的时候，一般要写到的方法。这里我们可以看出，其实OkHttpClient就是一个设置参数的地方，而请求，获取响应等工作，会委托给RealCall对象去处理。<br>（这里RealCall的内容，可以看看我们前面侃的那篇“<a href="https://zouxiaobang.github.io/2018/07/15/OkHttp%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-Call/" target="_blank" rel="external">OkHttp源码解析–Call</a>”）</p>
+<p>那么这篇总不能就写这么点就结束了吧，当然，我们还需要对整个OkHttp进行总结，不然看了这么多代码，也是云里雾里的，看完连个流程都不知道。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>虽然说网络请求的原理流程基本都一样，就是发送请求，和接收响应。但网络请求在执行中的处理事务还是比较难的，来源于网络层错综复杂的情况。例如我们需要考虑到的功能性和性能，功能上我们需要Socket连接，需要各种文件的传输（流、byte数组等），需要安全（TLS安全–握手协议）等等；性能上我们需要缓存（复用、可用时间），需要一个池结构来管理众多的请求连接。<br>我们想想都觉得复杂，一个个问题堆积在一起，可能我们要做一个完全兼顾的框架出来，也是很难进行维护和管理的。而OkHttp，正好做到了这一点，这就是为什么我们这么推崇他的原因。</p>
+<blockquote>
+<p>OkHttp通过分层的思想，将功能设计为多个拦截器，而将多个拦截器通过链式的形式串联在一次，从而一层一层地解决每一个问题。而这个模式也符合了单一职责原则。</p>
 </blockquote>
-<p>由于Service和BroadcastReceiver都是在主线程中运行，所以不能执行一些耗时操作。如果要执行耗时操作，则要新启一个子线程。</p>
-<h2 id="Service和Thread的区别"><a href="#Service和Thread的区别" class="headerlink" title="Service和Thread的区别"></a>Service和Thread的区别</h2><ul>
-<li><strong>定义</strong></li>
-</ul>
-<p>Thread是相对独立的，是程序执行的最小单位。<br>Service是依附在其所在的主线程上，是由程序进程托管的。</p>
-<ul>
-<li><strong>功能：</strong></li>
-</ul>
-<p>Thread可用于做一些耗时的操作。<br>Service不能执行耗时操作。</p>
-<h3 id="为什么要在Service中去创建子线程去执行耗时操作，而不直接在Activity中创建？"><a href="#为什么要在Service中去创建子线程去执行耗时操作，而不直接在Activity中创建？" class="headerlink" title="为什么要在Service中去创建子线程去执行耗时操作，而不直接在Activity中创建？"></a>为什么要在Service中去创建子线程去执行耗时操作，而不直接在Activity中创建？</h3><p>Activity的生命周期所限制，在Activity销毁之后，很难再去对子线程进行管理。<br>而Service可以长时间存活在后台中，即使其Activity销毁了，也能在后台继续执行，所以它能更好地管理子线程。</p>
-<h3 id="Thread和Service是使用场景区别"><a href="#Thread和Service是使用场景区别" class="headerlink" title="Thread和Service是使用场景区别"></a>Thread和Service是使用场景区别</h3><p>如果是读取数据库数据，连接网络等耗时操作，则应该要开启一个新线程来执行。<br>而Service一般使用在与用户交互无关的逻辑操作，例如在后台播放音乐，时间的更新等。</p>
-<h2 id="Service的启动过程"><a href="#Service的启动过程" class="headerlink" title="Service的启动过程"></a>Service的启动过程</h2><h3 id="1、startService"><a href="#1、startService" class="headerlink" title="1、startService"></a>1、startService</h3><blockquote>
-<p>通过该方式启动的Service，并不依赖于Activity的生命周期。<br>当开启它的Activity销毁后，该Service依然能存活在后台中。</p>
-</blockquote>
-<p><strong>Service的回调方法onStartCommand()，返回一个int类型的sticky值。</strong><br>源码：</p>
-<pre><code>return mStartCommpatibility ? START_STICKY_COMMPATIBILITY : START_STICKY;
-</code></pre><p>如果返回的是START_STICKY，那如果该Service因内存不够被杀死后，当系统内存又充足了，会重新启动该Service，并且调用其onStartCommand()方法，但该方法中的参数Intent为空。</p>
-<h3 id="2、bindService"><a href="#2、bindService" class="headerlink" title="2、bindService"></a>2、bindService</h3><blockquote>
-<p>绑定Activity，这样可以在Activity和Service之间通过Binder来进行通信。（不管是否在同一个进程）</p>
-</blockquote>
-<p>Service中要实现一个Binder继承类，其中返回该Service的对象。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBinder</span> <span class="keyword">extends</span> <span class="title">Binder</span></span>&#123;</div><div class="line">    <span class="function">MyService <span class="title">getService</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> MyService.<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MyBinder();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这时Activity就可以调用Service中的方法。</p>
-<p>在Activity中，要去实现一个ServiceConnection对象。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">ServiceConnection conn = <span class="keyword">new</span> ServiceConnection()&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName name, IBinder service)</span></span>&#123;</div><div class="line">        MyService.MyBinder binder = (MyService.MyBinder) service;</div><div class="line">        mService = service.getService();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="详细的Service介绍及使用"><a href="#详细的Service介绍及使用" class="headerlink" title="详细的Service介绍及使用"></a>详细的Service介绍及使用</h2><p>请前往“<a href="https://zouxiaobang.github.io/2016/09/21/Service%E7%9A%84%E7%90%86%E8%A7%A3/" target="_blank" rel="external">Service的理解</a>”。</p>
+<p>而在拓展性上，OkHttp同样支持我们去做自己的拦截器，来对请求做进一步的处理或拦截。<br>（例如我常用的，在本App上直接拦截请求返回一个测试数据）</p>
+<p>我们对几个重要的类进行解读：<br>首先是Rquest和Response类，这两个类中其实并没有什么进行网络行为的逻辑，我们更多的是把它们看做是一个数据类，用于存储请求和响应中的数据。<br>而OkHttpClient更像一个参数类，主要用于设置一些参数，例如要不要缓存等。它也没有进行网络行为，而是将这些行为委托给Call对象去处理。<br>所以说，Call对象属于行为类，但值得注意的是，Call类中，也只是对请求进行封装，对响应进传递（使用Callback来传递异步请求返回的Response，而同步的就直接返回Response对象）。当然，它是提供进行网络请求的逻辑的（AsyncCall类，继承自NamedRunnable），但在RealCall的enqueue()方法和execute()方法中，并没有直接去调用它，而是在enqueue()方法和execute()方法中去调用Dispatcher的异步或同步方法。<br>那么问题来了，为什么不直接调用呢，而要多此一步呢？<br>我们去看看Dispatcher的代码就知道了，例如异步处理，Dispatcher中会将所有的Call对象保存起来，然后将它们放到线程池中去执行。这就是性能和管理方面上的优点了。</p>
+<h2 id="一个相当粗略的流程图"><a href="#一个相当粗略的流程图" class="headerlink" title="一个相当粗略的流程图"></a>一个相当粗略的流程图</h2><p><img src="/img/okhttp/OkHttp.jpg" alt="OkHttp流程图"></p>
 
       
     </div>
@@ -441,8 +396,8 @@ Thre">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/04/知识点-Fragment/" rel="next" title="知识点 -- Fragment">
-                <i class="fa fa-chevron-left"></i> 知识点 -- Fragment
+              <a href="/2018/07/16/OkHttp源码解析-Response/" rel="next" title="OkHttp源码解析--Response">
+                <i class="fa fa-chevron-left"></i> OkHttp源码解析--Response
               </a>
             
           </div>
@@ -450,10 +405,6 @@ Thre">
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/06/EventBus3-0-源码解析/" rel="prev" title="EventBus3.0 源码解析">
-                EventBus3.0 源码解析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -587,7 +538,7 @@ Thre">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Service"><span class="nav-number">1.</span> <span class="nav-text">什么是Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service和Thread的区别"><span class="nav-number">2.</span> <span class="nav-text">Service和Thread的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要在Service中去创建子线程去执行耗时操作，而不直接在Activity中创建？"><span class="nav-number">2.1.</span> <span class="nav-text">为什么要在Service中去创建子线程去执行耗时操作，而不直接在Activity中创建？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread和Service是使用场景区别"><span class="nav-number">2.2.</span> <span class="nav-text">Thread和Service是使用场景区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service的启动过程"><span class="nav-number">3.</span> <span class="nav-text">Service的启动过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、startService"><span class="nav-number">3.1.</span> <span class="nav-text">1、startService</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、bindService"><span class="nav-number">3.2.</span> <span class="nav-text">2、bindService</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#详细的Service介绍及使用"><span class="nav-number">4.</span> <span class="nav-text">详细的Service介绍及使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OkHttpClient"><span class="nav-number">1.</span> <span class="nav-text">OkHttpClient</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个相当粗略的流程图"><span class="nav-number">3.</span> <span class="nav-text">一个相当粗略的流程图</span></a></li></ol></div>
             
 
           </div>
