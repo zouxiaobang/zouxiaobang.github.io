@@ -4,6 +4,43 @@
   
     
     <entry>
+      <title><![CDATA[Gradle入门篇]]></title>
+      <url>http://yoursite.com/2018/08/05/Gradle%E5%85%A5%E9%97%A8%E7%AF%87/</url>
+      <content type="html"><![CDATA[<hr>
+<h2 id="Gradle的基础"><a href="#Gradle的基础" class="headerlink" title="Gradle的基础"></a>Gradle的基础</h2><h3 id="认识Gradle"><a href="#认识Gradle" class="headerlink" title="认识Gradle"></a>认识Gradle</h3><p>如果你要自己来构建一个Android项目，那么google会更加推荐你使用Gradle来构建。</p>
+<blockquote>
+<p>Gradle是一个构建脚本。</p>
+</blockquote>
+<p>Gradle有约定优于配置的原则，也就是说，它为设置和属性提供了默认值。</p>
+<p>Gradle脚本使用的是Groovy语言（DSL）。由于Groovy是基于Java的，所以我们在看Gradle脚本的时候，其实并不是很费劲，这也是它的好处之一。<br>而正是由于它是基于Java虚拟机的，所以我们可以使用Java或者其他基于Java虚拟机的语言来编写我们的自定义插件。</p>
+<h3 id="项目与任务"><a href="#项目与任务" class="headerlink" title="项目与任务"></a>项目与任务</h3><p>项目也就是我们创建的一个project。<br>任务对象包括一系列的动作对象，这些动作会按顺序执行（不能循环执行）。<br>任务类似于Java中的方法块。</p>
+<p>每一个build.gradle代表着一个项目。而任务定义在构建脚本里。</p>
+<h3 id="构建生命周期"><a href="#构建生命周期" class="headerlink" title="构建生命周期"></a>构建生命周期</h3><p>一个Gradle的构建通常有如下3个阶段：</p>
+<ul>
+<li>初始化：项目实例会在该阶段被创建。如果一个项目有多个模块，而且每个模块都有自己对应的build.gradle文件，则会创建多个项目实例</li>
+<li>配置：在该阶段，构建脚本会被执行，并为每个项目实例创建和配置任务</li>
+<li>执行：Gradle将会决定哪个任务会被执行。是否被执行取决于开始该次构建的参数配置和对应Gradle文件的当前目录</li>
+</ul>
+<h2 id="构建配置文件"><a href="#构建配置文件" class="headerlink" title="构建配置文件"></a>构建配置文件</h2><p>每一个由Gradle构建的项目，都应该<strong>至少</strong>有一个build.gradle文件。</p>
+<p>我们看看Android中一个build.gradle文件的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">buildscript&#123;</div><div class="line">    repositories&#123;</div><div class="line">        jcenter()</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    dependencies&#123;</div><div class="line">        classpath &apos;com.android.tools.build:gradle:1.2.3&apos;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面例子中的元素是必须存在的。<br>repositories中的JCenter库为整个项目构建过程的依赖仓库。<br>Gradle中有很多仓库可供选择，我们可以提供自己本地的或是远程仓库。</p>
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>Android插件提供了构建和测试所需要的一切。<br>每个Android项目都需要申请一个类似以下的插件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apply pulugin: &apos;com.android.application&apos;</div></pre></td></tr></table></figure></p>
+<p>插件用于扩展Gradle构建脚本的能力。在一个项目中应用一个插件，该项目就可以使用该插件预定义一些属性和任务。</p>
+<p>当然，你不能在一个模块中同时定义两个插件。例如你的模块为一个依赖库，那么你定义为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apply plugin: &apos;com.android.library&apos;</div></pre></td></tr></table></figure></p>
+<p>那么你就不能继续申请其他插件，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">apply plugin: &apos;com.android.library&apos;</div><div class="line">apply plugin: &apos;com.android.application&apos;</div></pre></td></tr></table></figure></p>
+<p>这是错误的。</p>
+<p>当你使用Android插件的时候，你不仅可以配置只用于Android的一些约定，还能生成只作用于Android的任务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">android&#123;</div><div class="line">    compileSdkVersion 22</div><div class="line">    buildToolsVersion &apos;22.0.1&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面的例子就是配置Android参数的一个例子。</p>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>一个项目的结构大致如下：<br><img src="/img/gradle/project_picture.png" alt="project结构"><br>在这张图中，我们可以看到有两个build.gradle，外层的build.gradle为整个项目中唯一的Gradle配置文件，而app中的build.gradle为Application模块Gradle的配置文件。<br>Gradle会使用源集来编译代码。</p>
+<blockquote>
+<p>源集就是一组源文件，它们会被一起执行和编译。</p>
+</blockquote>
+<p>在Android项目中，main就是一个源集，它包含了所有的源代码和资源。<br>一般的源集如下图：<br><img src="/img/gradle/app_picture.png" alt="project结构"></p>
+<p>我们在为Android应用编写测试代码的时候，也可以将所有测试相关的源代码放到一个单独的源集中，这个源集叫做“androidTest”。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[内存泄漏的几种情况]]></title>
       <url>http://yoursite.com/2018/08/01/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E5%87%A0%E7%A7%8D%E6%83%85%E5%86%B5/</url>
       <content type="html"><![CDATA[<hr>
