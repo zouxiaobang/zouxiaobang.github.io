@@ -4,6 +4,40 @@
   
     
     <entry>
+      <title><![CDATA[RxJava -- 入门]]></title>
+      <url>http://yoursite.com/2018/08/11/RxJava-%E5%85%A5%E9%97%A8/</url>
+      <content type="html"><![CDATA[<hr>
+<p>前几天买的一本书到了。<br>由于之前在看一个很优秀的APP框架时，里面几乎遍地使用着一个框架，就是RxJava。当然，我半知不懂地粗略看了一遍之后，发现这个RxJava真的好用，方便快捷，而且也好似解决了很多原本需要一长串代码才能实现的内容。在网上看了一大堆的博客之后，感觉看完就忘了，很难真正学懂。所以我买了一本书，写得还是挺优秀的 – 《RxJava2.x 实战》。真的推荐想学习RxJava的伙伴们可以去看看这本书。<br>那么，我现在也开始在博客上更新一下我在读这本书的时候的一些理解吧，算是一种笔记吧。</p>
+<h2 id="函数响应式编程"><a href="#函数响应式编程" class="headerlink" title="函数响应式编程"></a>函数响应式编程</h2><p>可能你会说，我看过函数式编程，但什么是函数响应式编程呢？<br>而RxJava，正是使用了函数响应式编程来实现。其实你可以这么理解RxJava的编程模式：</p>
+<blockquote>
+<p>RxJava编程模式 = 函数式 + 响应式</p>
+</blockquote>
+<h3 id="响应式编程"><a href="#响应式编程" class="headerlink" title="响应式编程"></a>响应式编程</h3><p>例如一个观察者模式，我们在对数据进行处理后，通常会去通知订阅者去再使用数据，这就是响应式。<strong>它是一种面向数据流的，对数据流进行变化和传播的编程范式</strong>。<br>而我们使用响应式编程的最最主要目的当然就是要处理异步的问题。如果是一个同步操作，那我们完全可以让它顺序执行，但在等待数据的处理时就会时常出现阻塞现象，那么我们就需要使用异步来操作。<br>在异步响应中，我们经常会使用Handler、Future、AsyncTask等技术来处理。其实，这也就是响应。</p>
+<h3 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h3><p><strong>函数式编程就是将函数当作一个参数、变量来进行处理。</strong><br>它的特点有以下这些：</p>
+<ul>
+<li>函数的使用位置：我们可以把函数当作是一个变量，把它赋值给其他的变量；我们可以把它作为参数，出入到其他的函数中去；也可以当作一个返回值，在一个函数中返回。</li>
+<li>使用闭包和高阶函数：闭包的特性就像Java中的封装，它是一个函数，但函数中并不能去改变函数外部的变量，也就是说，它不能去改变函数外的任何内容；高阶函数就是可将另外一个函数当作参数传进去处理，也可以将另一个函数当作返回值返回。</li>
+<li>递归：在函数式编程中，并没有跳转、循环等操作，那么当需要使用某些类似求最大值等操作的时候，就需要使用递归来实现。</li>
+</ul>
+<h3 id="函数响应式编程-1"><a href="#函数响应式编程-1" class="headerlink" title="函数响应式编程"></a>函数响应式编程</h3><p>顾名思义，就是函数式和响应式的结合。<br>采取了两者的优点，使用函数式来解决组合和变化的问题，使用响应式来解决回调的问题。</p>
+<h2 id="RxJava编程的好处"><a href="#RxJava编程的好处" class="headerlink" title="RxJava编程的好处"></a>RxJava编程的好处</h2><p>首先，我们来假设一个情景，就是某个APP从服务端获取酒店列表，并将价格大于等于500的房间都罗列出来。（例子来自那本书）<br>那么我们使用普通的写法和RxJava的写法来对比一下：</p>
+<h3 id="使用Iterable写法"><a href="#使用Iterable写法" class="headerlink" title="使用Iterable写法"></a>使用Iterable写法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">new Thread()&#123;</div><div class="line">    @Override</div><div class="line">    public void run()&#123;</div><div class="line">        //从服务器中获取</div><div class="line">        List&lt;Hotel&gt; hotels = getHotelFromServer(); </div><div class="line">        for(Hotel hotel: hotels)&#123;</div><div class="line">            List&lt;Room&gt; rooms = hotel.rooms;</div><div class="line">            for(Room room: rooms)&#123;</div><div class="line">                if(room.price &gt;= 500)&#123;</div><div class="line">                    runOnUiThread(new Runnable()&#123;</div><div class="line">                        @Override</div><div class="line">                        public void run()&#123;</div><div class="line">                            displayUi(room);</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;.start();</div></pre></td></tr></table></figure>
+<p>以上的代码看起来确实是挺繁琐的，因为Iterable，需要使用多多层的循环来获取到价格大于500的房间。我们在代码规范中建议不用使用多层嵌套，因为不仅代码看起来比较乱，维护的时候肯定也是一脸懵逼。</p>
+<h3 id="使用RxJava写法"><a href="#使用RxJava写法" class="headerlink" title="使用RxJava写法"></a>使用RxJava写法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">Observable.fromIterable(getHotelFromServer()) //从服务器中获取</div><div class="line">    .flatMap(new Function&lt;Hotel, Observable&lt;Room&gt;&gt;()&#123;</div><div class="line">        @Override</div><div class="line">        public Observable&lt;Room&gt; apply(Hotel hotel)&#123;</div><div class="line">            return Observable.fromIterable(hotel.rooms);    //获取所有的房间</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">    .filter(new Predicate&lt;Room&gt;()&#123;</div><div class="line">        @Override</div><div class="line">        public boolean test(@NonNull Room room) throws Exception&#123;</div><div class="line">            return room.price &gt;= 500;   //通过过滤得到符合条件的房间</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">    .subscribeOn(Schedulers.io())</div><div class="line">    .observeOn(AndroidSchedulers.mainThread())</div><div class="line">    .subscribe(new Customer&lt;Room&gt;()&#123;</div><div class="line">        @Override</div><div class="line">        public void accept(Room room)&#123;</div><div class="line">            displayUi(room);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p>使用RxJava，所有的处理都在同一层次上，看起来也更有条理。我们先来看看各个方法的作用：</p>
+<ul>
+<li>fromIterable：参数为数据，也就是整个Observable的初始数据的来源</li>
+<li>flatMap：就是将一堆Map中的数据抚平罗列出来，并将得到的数据作为以下步骤操作的数据。</li>
+<li>filter：从传入的数据中过滤出符合条件的某些数据</li>
+<li>subscribeOn：声明异步执行的线程在哪</li>
+<li>observeOn：声明订阅者的线程在哪</li>
+<li>subscribe：订阅者在被推送到数据后的操作</li>
+</ul>
+<h2 id="入门标准-–-HelloWorld"><a href="#入门标准-–-HelloWorld" class="headerlink" title="入门标准 – HelloWorld"></a>入门标准 – HelloWorld</h2><p>Ok，我们必须来写一个HelloWorld来证明我们准备入门了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Observable.create(new ObservableOnSubscribe&lt;String&gt;()&#123;</div><div class="line">    @Override</div><div class="line">    public void subscribe(@NonNull ObservableEmitter&lt;String&gt; e) throws Exception&#123;</div><div class="line">        e.onNext(&quot;Hello World&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line">.subscribe(new Consumer&lt;String&gt;()&#123;</div><div class="line">    @Override</div><div class="line">    public void accept(@NonNull String s) throws Exception&#123;</div><div class="line">        System.out.println(s);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Gradle入门篇]]></title>
       <url>http://yoursite.com/2018/08/05/Gradle%E5%85%A5%E9%97%A8%E7%AF%87/</url>
       <content type="html"><![CDATA[<hr>
