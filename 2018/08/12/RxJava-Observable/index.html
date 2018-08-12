@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在RxJava的编程中，有三个要素是必须的：
+
+RxJava = 被观察者 + 观察者 + 订阅方法subscribe
+
+在RxJava中，观察者模式有很多种，这里我们先来看最为普遍的观察者模式 – Observable。
+Observable使用步骤首先，要使用RxJava，我们通常需要以下3个步骤：
+（1）创建ObservableObservable就是被观察的意思，以它来作为被观察者，那么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJava -- Observable">
+<meta property="og:url" content="http://yoursite.com/2018/08/12/RxJava-Observable/index.html">
+<meta property="og:site_name" content="zouxiaobang">
+<meta property="og:description" content="在RxJava的编程中，有三个要素是必须的：
+
+RxJava = 被观察者 + 观察者 + 订阅方法subscribe
+
+在RxJava中，观察者模式有很多种，这里我们先来看最为普遍的观察者模式 – Observable。
+Observable使用步骤首先，要使用RxJava，我们通常需要以下3个步骤：
+（1）创建ObservableObservable就是被观察的意思，以它来作为被观察者，那么">
+<meta property="og:updated_time" content="2018-08-12T13:10:04.154Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RxJava -- Observable">
+<meta name="twitter:description" content="在RxJava的编程中，有三个要素是必须的：
+
+RxJava = 被观察者 + 观察者 + 订阅方法subscribe
+
+在RxJava中，观察者模式有很多种，这里我们先来看最为普遍的观察者模式 – Observable。
+Observable使用步骤首先，要使用RxJava，我们通常需要以下3个步骤：
+（1）创建ObservableObservable就是被观察的意思，以它来作为被观察者，那么">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/12/RxJava-Observable/"/>
+
+
+
+
+
+  <title>RxJava -- Observable | zouxiaobang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/zouxiaobang" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zouxiaobang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/12/RxJava-Observable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZouxIaobANg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zouxiaobang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RxJava -- Observable</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-12T21:09:35+08:00">
+                2018-08-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RxJava/" itemprop="url" rel="index">
+                    <span itemprop="name">RxJava</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<p>在RxJava的编程中，有三个要素是必须的：</p>
+<blockquote>
+<p>RxJava = 被观察者 + 观察者 + 订阅方法subscribe</p>
+</blockquote>
+<p>在RxJava中，观察者模式有很多种，这里我们先来看最为普遍的观察者模式 – Observable。</p>
+<h2 id="Observable"><a href="#Observable" class="headerlink" title="Observable"></a>Observable</h2><h3 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h3><p>首先，要使用RxJava，我们通常需要以下3个步骤：</p>
+<p>（1）创建Observable<br>Observable就是被观察的意思，以它来作为被观察者，那么它的作用就是决定了触发的事件以及时间。<br>例如我们在观察一个气象台的天气情况，那么这个Observable就相当于气象台，它提供了天气的具体情况，以及决定什么时候告诉所有人今天的天气。</p>
+<p>（2）创建Observer<br>Observer是观察者的意思，它的作用是在得到被观察者数据推送的时候，要对这些数据进行怎样的响应，而且它并不需要阻塞所有的工作来等待Observable给它发送数据。</p>
+<p>（3）进行订阅subscribe<br>subscribe是一个订阅的方法，它将被观察者和观察者给关联起来，从而实现了链式结构。</p>
+<h3 id="使用例子"><a href="#使用例子" class="headerlink" title="使用例子"></a>使用例子</h3><p>这里，我们一样使用Hello World来作为例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Observable.just(&quot;Hello World!&quot;)</div><div class="line">    .subscribe(new Consumer&lt;String&gt; ()&#123;</div><div class="line">        @Override</div><div class="line">        public void accept(String s) throws Exception&#123;</div><div class="line">            System.out.println(s);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure></p>
+<p>上面的例子是一个简化的Observable使用流程，其中just()方法用于创建一个Observable，而new Consumer()则创建了一个Observer对象，然后使用subscribe()方法来关联这两个对象。<br>其中，Observer中的数据正是从Observable中获取到的，这么说可能不是很准确，但容易理解。（正确的说法是：Observer中的数据是由Observable推送过来的）</p>
+<p>对于上面的例子，可能我们还无法很直观地看出Observable和Observer的联系，那么我们换一种写法，将它们拆分了来看：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">Observable.just(&quot;Hello World!&quot;)</div><div class="line">    .subscribe(observer);</div><div class="line">    </div><div class="line">Observer observer = new Observer&lt;String&gt;()&#123;</div><div class="line">    @Override</div><div class="line">    public void onSubscribe(Disposable d)&#123;</div><div class="line">        System.out.println(&quot;&quot; + d.isDisposed());</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @Override</div><div class="line">    public void onNext(String s)&#123;</div><div class="line">        System.out.println(s);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @Override</div><div class="line">    public void onError(Throwable t)&#123;</div><div class="line">        System.out.println(t.getMessage());</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @Override</div><div class="line">    public void onComplete()&#123;</div><div class="line">        System.out.println(&quot;onComplete&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里我们就可以很清晰地看出，Observer订阅了Observable。<br>我们先不管Observer中的各个方法，这个等下我们会来讨论。这个例子主要的目的就是帮我们更好地理解Observer和Observable之间的关系。</p>
+<h3 id="subscribe的重载方法"><a href="#subscribe的重载方法" class="headerlink" title="subscribe的重载方法"></a>subscribe的重载方法</h3><p>从上面的两个例子，我们也可以看到了，subscribe并不是只有一个方法，它有很多不同形参的重载方法：</p>
+<ul>
+<li>subscribe(onNext)</li>
+<li>subscribe(onNext, onError)</li>
+<li>subscribe(onNext, onError, onComplete)</li>
+<li>subscribe(onNext, onError, onComplete, onSubscribe)</li>
+</ul>
+<p>(先不讨论形参为Observer的情况)<br>我们先对上一个例子以第4个重载方法的方式写出来看看：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">Observable.just(&quot;Hello World!&quot;)</div><div class="line">    .subscribe(</div><div class="line">        new Consumer&lt;String&gt;()&#123;</div><div class="line">            @Override</div><div class="line">            public void accept(String s) throws Exception&#123;       </div><div class="line">                //注：以后的System.out.println简写为print</div><div class="line">                print(s);  </div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        </div><div class="line">        new Consumer&lt;Throwable&gt;() throws Exception&#123;</div><div class="line">            @Override</div><div class="line">            public void accept(Throwable t)&#123;</div><div class="line">                print(&quot;&quot; + t.getMessage());</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        </div><div class="line">        new Action()&#123;</div><div class="line">            @Override</div><div class="line">            public void run() throws Exception&#123;</div><div class="line">                print(&quot;onComplete&quot;);</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        </div><div class="line">        new Consumer&lt;Disposable&gt;()&#123;</div><div class="line">            @Override</div><div class="line">            public void accept(Disposable d) throws Exception&#123;</div><div class="line">                print(&quot;subscribe&quot;);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    );</div></pre></td></tr></table></figure></p>
+<p>在这里，我们可以看到，其实它是使用了多个Consumer和Action来代替Observer中的各个回调方法，从而省去对Observer对象的创建。<br>但是，你可能会觉得使用Consumer和Action会比较乱，我们应该什么时候使用Consumer，什么时候使用Action呢？<br>我们来看看两者的区别：</p>
+<ul>
+<li>Consumer：单一参数类型</li>
+<li>Action：无参数类型</li>
+</ul>
+<p>例如上面的onComplete()方法，它是没有参数的，那么它就可以使用Action来代替，而想onNext()方法，它是需要传入一个形参的，所以它可以使用Consumer来代替。</p>
+<p>那么我们来看看它输出的结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">subscribe</div><div class="line">Hello World!</div><div class="line">onComplete</div></pre></td></tr></table></figure></p>
+<p>既然有执行的结果顺序，那么它就是有生命周期。</p>
+<h3 id="Observable的生命周期"><a href="#Observable的生命周期" class="headerlink" title="Observable的生命周期"></a>Observable的生命周期</h3><p>这里我们先来看Observable的do操作符。</p>
+<blockquote>
+<p>do操作符为Observable的生命周期的各个阶段加上一系列的回调监听。</p>
+</blockquote>
+<p>在RxJava中，是包含了很多的doXXX的方法，我们来看一段代码，从其打印出的内容来理解其生命周期。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">Observable.just(&quot;Hello World&quot;)</div><div class="line">    .doOnSubscribe(new Consumer&lt;Disposable d&gt;()&#123;</div><div class="line">        @Override</div><div class="line">        public void accept(Disposable d) throws Exception&#123;</div><div class="line">            print(&quot;doOnSubscribe&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">    .doOnLifecycle(new Consumer&lt;Disposable&gt;()&#123;</div><div class="line">        @Overrid</div><div class="line">        public void accept(Disposable d) throws Exception&#123;</div><div class="line">            print(&quot;doOnLifecycle: &quot; + d.isDisposed());</div><div class="line">        &#125;</div><div class="line">    &#125;, new Action()&#123;</div><div class="line">        @Override</div><div class="line">        public void run() throws Exception&#123;</div><div class="line">            print(&quot;doOnLifecycle: run&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">    .doOnEach(new Consumer&lt;Notification&lt;String&gt;&gt;()&#123;</div><div class="line">        @Override</div><div class="line">        public void accept(Notification&lt;String&gt; stringNotificaion)</div><div class="line">                                            throws Exception&#123;</div><div class="line">            print(stringNotification.isOnNext()?</div><div class="line">                    &quot;isOnNext&quot; : stringNotification.isOnComplete()?</div><div class="line">                    &quot;isComplete&quot; : &quot;isError&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">    .doOnNext(new Consumer&lt;String&gt;() throws Exception&#123;</div><div class="line">        @Override</div><div class="line">        public void accept(String s) throws Exception&#123;</div><div class="line">            print(&quot;doOnNext: &quot; + s);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">    .doAfterNext(new Consumer&lt;String&gt;()&#123;</div><div class="line">        @Override</div><div class="line">        public void accept(String s) throws Exception&#123;</div><div class="line">            print(&quot;doAfterNext: &quot; + s);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">    .doOnComplete(new Action()&#123;</div><div class="line">        @Override</div><div class="line">        public void run() throws Exception&#123;</div><div class="line">            print(&quot;doOnComplete: run&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">    .doFinally(new Action()&#123;</div><div class="line">        @Override</div><div class="line">        public void run() throws Exception&#123;</div><div class="line">            print(&quot;doFinally&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">    .doAfterTerminate(new Action()&#123;</div><div class="line">        @Override</div><div class="line">        public void run() throws Exception&#123;</div><div class="line">            print(&quot;doAfterTerminate&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">    .subscribe(new Consumer&lt;String&gt;()&#123;</div><div class="line">        @Override</div><div class="line">        public void accept(String s)&#123;</div><div class="line">            print(&quot;onNext: &quot; + s);</div><div class="line">        &#125;</div><div class="line">    &#125;, new Consumer&lt;Throwable&gt;()&#123;</div><div class="line">        @Override</div><div class="line">        public void accept(Throwable t) throws Exception&#123;</div><div class="line">            print(&quot;onError: &quot; + t.getMessage());</div><div class="line">        &#125;</div><div class="line">    &#125;, new Action()&#123;</div><div class="line">        @Override</div><div class="line">        public void run() throws Exception&#123;</div><div class="line">            print(&quot;onComplete&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure></p>
+<p>这个程序有点长而且无聊，但它通过do操作符给出了RxJava中Observable的整个生命周期方法。<br>我们来看看输出结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">doOnSubscribe</div><div class="line">doOnLifecycle: false</div><div class="line">doOnNext: Hello</div><div class="line">doOnEach</div><div class="line">onNext: Hello</div><div class="line">doAfterNext: Hello</div><div class="line">doOnComplete</div><div class="line">doOnEach</div><div class="line">onComplete</div><div class="line">doFinally</div><div class="line">doAfterTerminate</div></pre></td></tr></table></figure></p>
+<p>Observable的生命周期由doOnSubscribe开始，由doAfterTerminate结束。</p>
+<table>
+<thead>
+<tr>
+<th>操作方法</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>doOnSubscribe</td>
+<td>当观察者订阅Observable时，也就是subscribe()方法出现时，就会调用该方法</td>
+</tr>
+<tr>
+<td>doOnLifecycle</td>
+<td>在观察者订阅了Observable之后，设置是否取消该订阅</td>
+</tr>
+<tr>
+<td>doOnNext</td>
+<td>在onNext()调用之前会回调它，通常使用于在执行onNext()之前的数据的处理</td>
+</tr>
+<tr>
+<td>doOnEach</td>
+<td>当onNext、onComplete、onError被调用时，都会回调该方法</td>
+</tr>
+<tr>
+<td>doAfterNext</td>
+<td>在onNext调用之后会去回调该方法</td>
+</tr>
+<tr>
+<td>doOnComplete</td>
+<td>当Observable正常终止时会回调它</td>
+</tr>
+<tr>
+<td>doFinally</td>
+<td>Observable不管是正常终止还是由于异常才终止的，都会回调该方法</td>
+</tr>
+<tr>
+<td>doAfterTerminate</td>
+<td>当onComplete或onError被调用时都会回调它，但它比doFinally更慢执行。</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color:#ccc;font-size:14px;">----------------本文结束 <i class="fa fa-paw"></i>感想您的阅读-----------------</div>
+  
+</div>
+      
+    </div>
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/11/RxJava-入门/" rel="next" title="RxJava -- 入门">
+                <i class="fa fa-chevron-left"></i> RxJava -- 入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODAzNi8xNDU2Ng=="></div>
+    </div>
+
+  
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="ZouxIaobANg" />
+            
+              <p class="site-author-name" itemprop="name">ZouxIaobANg</p>
+              <p class="site-description motion-element" itemprop="description">若无烟雨任平生，不做龙首，游在九州，凭他归去落愁</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Observable"><span class="nav-number">1.</span> <span class="nav-text">Observable</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用步骤"><span class="nav-number">1.1.</span> <span class="nav-text">使用步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用例子"><span class="nav-number">1.2.</span> <span class="nav-text">使用例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#subscribe的重载方法"><span class="nav-number">1.3.</span> <span class="nav-text">subscribe的重载方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Observable的生命周期"><span class="nav-number">1.4.</span> <span class="nav-text">Observable的生命周期</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZouxIaobANg</span>
+
+  
+</div>
+
+<div class="powered-by">
+<span id="busuanzi_container_page_pv">
+  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</span>
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
