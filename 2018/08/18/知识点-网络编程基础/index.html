@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="网络编程的基础认知ip地址和端口号IP地址就像寄信时的地址一样，有发送方的地址对应的源地址，有接收方的地址对应的目的地址，在网络传输中，每一个数据包都必须包含有源IP地址和目的IP地址。而端口号就像双方约定的一个窗口，接收方必须和发送方拥有同样的端口号，才能接收到数据包。其中需要注意的是，一个应用或进程对应着一个端口号，不能不同进程占用同一个端口号。
+tcp/udp协议tcp和udp协议之间最大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="知识点 -- 网络编程基础">
+<meta property="og:url" content="http://yoursite.com/2018/08/18/知识点-网络编程基础/index.html">
+<meta property="og:site_name" content="zouxiaobang">
+<meta property="og:description" content="网络编程的基础认知ip地址和端口号IP地址就像寄信时的地址一样，有发送方的地址对应的源地址，有接收方的地址对应的目的地址，在网络传输中，每一个数据包都必须包含有源IP地址和目的IP地址。而端口号就像双方约定的一个窗口，接收方必须和发送方拥有同样的端口号，才能接收到数据包。其中需要注意的是，一个应用或进程对应着一个端口号，不能不同进程占用同一个端口号。
+tcp/udp协议tcp和udp协议之间最大">
+<meta property="og:updated_time" content="2018-08-18T15:26:25.035Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="知识点 -- 网络编程基础">
+<meta name="twitter:description" content="网络编程的基础认知ip地址和端口号IP地址就像寄信时的地址一样，有发送方的地址对应的源地址，有接收方的地址对应的目的地址，在网络传输中，每一个数据包都必须包含有源IP地址和目的IP地址。而端口号就像双方约定的一个窗口，接收方必须和发送方拥有同样的端口号，才能接收到数据包。其中需要注意的是，一个应用或进程对应着一个端口号，不能不同进程占用同一个端口号。
+tcp/udp协议tcp和udp协议之间最大">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/18/知识点-网络编程基础/"/>
+
+
+
+
+
+  <title>知识点 -- 网络编程基础 | zouxiaobang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/zouxiaobang" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zouxiaobang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/18/知识点-网络编程基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZouxIaobANg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zouxiaobang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">知识点 -- 网络编程基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-18T23:25:49+08:00">
+                2018-08-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-beginner/" itemprop="url" rel="index">
+                    <span itemprop="name">Android beginner</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<h2 id="网络编程的基础认知"><a href="#网络编程的基础认知" class="headerlink" title="网络编程的基础认知"></a>网络编程的基础认知</h2><h3 id="ip地址和端口号"><a href="#ip地址和端口号" class="headerlink" title="ip地址和端口号"></a>ip地址和端口号</h3><p>IP地址就像寄信时的地址一样，有发送方的地址对应的源地址，有接收方的地址对应的目的地址，在网络传输中，每一个数据包都必须包含有源IP地址和目的IP地址。<br>而端口号就像双方约定的一个窗口，接收方必须和发送方拥有同样的端口号，才能接收到数据包。其中需要注意的是，一个应用或进程对应着一个端口号，不能不同进程占用同一个端口号。</p>
+<h3 id="tcp-udp协议"><a href="#tcp-udp协议" class="headerlink" title="tcp/udp协议"></a>tcp/udp协议</h3><p>tcp和udp协议之间最大的区别在于tcp是有连接的协议，而udp是一个无连接的协议。<br>在使用tcp协议进行传输的时候，需要进行三次握手进行连接，和四次挥手进行断开连接，通过客户端和服务端不断地确认和通信，来保证通信时传输的可靠性。<br>而使用udp是不需要对方确认是否已经连接或送达的，所以它是一个不可靠的连接。<br>但是并不是所有的通信都使用tcp协议，因为tcp协议的可靠性是建立在牺牲时间上的，因为tcp协议连接时需要握手，这些操作都是需要花费一定的时间，而udp协议并没有这些操作，它会更加节省时间，所以在一些不太需要确保数据是否传达，且对实时要求较高的操作，会选择udp，例如我们视频聊天等。</p>
+<h3 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h3><p>统一的资源定位器，URL中会包含协议、IP地址、路径、文件名等，我们通过它来得到资源的位置和对资源的访问方法。<br>例如在Android中，我们会通过URL的openStream()来获取资源的一个输入流InputStream，然后通过该流去获取到互联网中的资源内容。</p>
+<h2 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h2><h3 id="什么是Socket"><a href="#什么是Socket" class="headerlink" title="什么是Socket"></a>什么是Socket</h3><p>计算机之间完成通信的一个抽象的功能。<br>就像是一个在端与端之间的载体，通过它就能进行通信。<br>同样，由于Socket普通使用的是TCP/IP协议进行通信，所以它能够通过ip地址、端口号来和服务端进行连接通信。</p>
+<h3 id="客户端的连接"><a href="#客户端的连接" class="headerlink" title="客户端的连接"></a>客户端的连接</h3><h4 id="创建Socket对象"><a href="#创建Socket对象" class="headerlink" title="创建Socket对象"></a>创建Socket对象</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//其中localhost为服务端的ip地址，而1234是客户端和服务端约定的一个端口号</div><div class="line">Socket clientSocket = new Socket(&quot;localhost&quot;, 1234);</div></pre></td></tr></table></figure>
+<h4 id="建立连接后通过输出流向服务端发送数据"><a href="#建立连接后通过输出流向服务端发送数据" class="headerlink" title="建立连接后通过输出流向服务端发送数据"></a>建立连接后通过输出流向服务端发送数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//通过Socket连接能够获取到输出流，通过该输出流我们可以向服务端发送信息</div><div class="line">OutputStream os = clientSocket.getOutputStream();</div><div class="line">//封装输出流，方便我们的操作</div><div class="line">PrintWriter pw = new PrintWriter(os);</div><div class="line">pw.write(&quot;开始发送信息了。。。。&quot;);</div><div class="line">pw.flush();</div><div class="line">//Socket关闭输出流</div><div class="line">clientSocket.shutdownOutput();</div></pre></td></tr></table></figure>
+<h4 id="通过输入流获取服务端的返回信息"><a href="#通过输入流获取服务端的返回信息" class="headerlink" title="通过输入流获取服务端的返回信息"></a>通过输入流获取服务端的返回信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">InputStream is = clientSocket.getInputStream();</div><div class="line">BufferedReader br = new BufferedReader(new InputStreamReader(is));</div><div class="line">String line = null;</div><div class="line">while((line = br.readLine()) != null)&#123;</div><div class="line">    Log.d(TAG, &quot;From Server: &quot; + line);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="关闭响应的资源和断开连接"><a href="#关闭响应的资源和断开连接" class="headerlink" title="关闭响应的资源和断开连接"></a>关闭响应的资源和断开连接</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">br.close();</div><div class="line">is.close();</div><div class="line">pw.close();</div><div class="line">os.close();</div><div class="line">clientSocket.close();</div></pre></td></tr></table></figure>
+<h3 id="服务端的连接"><a href="#服务端的连接" class="headerlink" title="服务端的连接"></a>服务端的连接</h3><h4 id="创建ServerSocket-–-用于监听端口"><a href="#创建ServerSocket-–-用于监听端口" class="headerlink" title="创建ServerSocket – 用于监听端口"></a>创建ServerSocket – 用于监听端口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//创建ServerSocket时需要注意，它需要绑定一个端口号，这个端口号是和客户端约定的</div><div class="line">ServerSocket ss = new ServerSocket(1234);</div></pre></td></tr></table></figure>
+<h4 id="通过accept-阻塞监听来着客户端的请求-–-用于监听客户端的请求"><a href="#通过accept-阻塞监听来着客户端的请求-–-用于监听客户端的请求" class="headerlink" title="通过accept()阻塞监听来着客户端的请求 – 用于监听客户端的请求"></a>通过accept()阻塞监听来着客户端的请求 – 用于监听客户端的请求</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//通过调用ServerSocket的accept()方法来监听来自客户端的请求，它会返回一个Socket</div><div class="line">//服务端就可以通过该Socket来和客户端进行通信</div><div class="line">Socket socket = ss.accept();</div></pre></td></tr></table></figure>
+<h4 id="建立连接后通过输入流来获取客户端的发送信息"><a href="#建立连接后通过输入流来获取客户端的发送信息" class="headerlink" title="建立连接后通过输入流来获取客户端的发送信息"></a>建立连接后通过输入流来获取客户端的发送信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">InputStream is = socket.getInputStream();</div><div class="line">BufferedReader br = new BufferedReader(new InputStreamReader(is));</div><div class="line">String line = null;</div><div class="line">while((line = br.readLine()) != null)&#123;</div><div class="line">    Log.d(&quot;From Client: &quot; + line);</div><div class="line">&#125;</div><div class="line">//Socket关闭输入流</div><div class="line">socket.shutdownInput();</div></pre></td></tr></table></figure>
+<h4 id="通过输出流向客户端发送返回信息"><a href="#通过输出流向客户端发送返回信息" class="headerlink" title="通过输出流向客户端发送返回信息"></a>通过输出流向客户端发送返回信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">OutputStream os  = socket.getOutputStream();</div><div class="line">PrintWriter pw = new PrintWriter(os);</div><div class="line">pw.write(&quot;我已经接收到信息了。。。&quot;);</div></pre></td></tr></table></figure>
+<h4 id="关闭资源"><a href="#关闭资源" class="headerlink" title="关闭资源"></a>关闭资源</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">pw.close();</div><div class="line">os.close();</div><div class="line">br.close();</div><div class="line">is.close();</div><div class="line">ss.close();</div><div class="line">socket.close();</div></pre></td></tr></table></figure>
+<h2 id="阻塞IO"><a href="#阻塞IO" class="headerlink" title="阻塞IO"></a>阻塞IO</h2><h3 id="Java的I-O接口"><a href="#Java的I-O接口" class="headerlink" title="Java的I/O接口"></a>Java的I/O接口</h3><h4 id="IO接口的类型"><a href="#IO接口的类型" class="headerlink" title="IO接口的类型"></a>IO接口的类型</h4><ul>
+<li>基于字节操作的I/O接口：InputStream、OutputStream</li>
+<li>基于字符操作的I/O接口：Reader、Writer</li>
+<li>基于磁盘操作的I/O接口：FileInputStream、FileOutputStrem</li>
+<li>基于网络操作的I/O接口：Socket</li>
+</ul>
+<p>I/O接口要么是基于传输数据的类型来进行操作，要么就是基于传输的方式来进行操作。</p>
+<h3 id="阻塞IO的通信模型-–-BIO"><a href="#阻塞IO的通信模型-–-BIO" class="headerlink" title="阻塞IO的通信模型 – BIO"></a>阻塞IO的通信模型 – BIO</h3><p>阻塞IO会一直处于阻塞状态，直到数据到达为止。<br>就像ServerSocket一样，在客户端未连接之前一直处于阻塞状态，当客户连接之后，服务端就会启动一个新的线程去处理客户端的请求。</p>
+<p>弊端：</p>
+<ul>
+<li>当客户端太多时，会启动过多的线程去处理客户端的请求，而每一个线程需要占用一定的空间和CPU的时间。</li>
+<li>阻塞会带来大量的上下文切换，而大部分上下文的切换是无意义的，这就加重了CPU的负担。</li>
+</ul>
+<ul>
+<li>不管在从OutputStream中写出数据或通过InputStream读取数据时都有可能发生阻塞（一旦有线程阻塞，将会失去CPU的调用权）</li>
+<li>当前需要大量的HTTP长连接的情况（例如微信、qq等的服务端，它需要保证成千上百万的长连接，而这些连接并不一定都在传输数据中，这时是无法通过创建这么多的线程且设置线程的优先级就能解决的）</li>
+</ul>
+<h2 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h2><h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><ol>
+<li>使用一个线程来处理所有的IO事件（而非在连接时就启动线程处理）</li>
+<li>当事件来临时会去触发，而不是同步监听着事件（事件驱动机制）</li>
+<li>线程间的通信方式（wait/notify），保证了每一次上下文的切换都是有意义的</li>
+</ol>
+<h3 id="通信模型"><a href="#通信模型" class="headerlink" title="通信模型"></a>通信模型</h3><p>使用双向通道进行数据的传输。<br>在客户端和服务端都有一个管理通道（Channel）的对象Selector，该Selector用于注册事件。例如在服务端中，我们会在Selector中注册客户端的连接事件，然后服务端的线程会一直轮询Selector中的所有事件，但发现有连接事件的时候，就会去处理这个事件。同样的在客户中的Selector的功能也是一样的。<br>这就是NIO的做法，而BIO就会通过阻塞线程，一直等待，等到有连接事件的时候，才继续执行事件。</p>
+<p>这里Selector能注册的为4大事件：</p>
+<ul>
+<li>客户端的连接事件</li>
+<li>服务端的连接事件</li>
+<li>读事件</li>
+<li>写事件</li>
+</ul>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><h4 id="客户端代码"><a href="#客户端代码" class="headerlink" title="客户端代码"></a>客户端代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">//获取一个Socket通道</div><div class="line">SocketChannel channel = SocketChannel.open();</div><div class="line">//设置该通道为非阻塞</div><div class="line">channel.configureBlocking(false);</div><div class="line">//获得通道管理器</div><div class="line">mSelector = Selector.open();</div><div class="line"></div><div class="line">//绑定通道管理器和通道，这样通道管理器才能开始监听通道</div><div class="line">channel.register(mSelector, Selection.OP_CONNECT);</div><div class="line"></div><div class="line">//开始连接服务端，这里会调用listen方法，需要在listen中调用channel.finishConnect()才能真正连接</div><div class="line">channel.connect(new InnetSocketAddress(ip, port));</div><div class="line"></div><div class="line">//开始监听</div><div class="line">listen();</div><div class="line"></div><div class="line">// -------------------------------------------------------------</div><div class="line">public void listen() throws IOException&#123;</div><div class="line">    //循环不断轮询</div><div class="line">    while(true)&#123;</div><div class="line">        mSelector.select();</div><div class="line">        //获取选择项的key的迭代器</div><div class="line">        Iterator it = mSelector.selectedKeys().iterator();</div><div class="line">        </div><div class="line">        while(it.hasNext())&#123;</div><div class="line">            SelectionKey key = (SelectionKey) it.next();</div><div class="line">            //去掉已选的key，防止重复处理</div><div class="line">            it.remove();</div><div class="line">            </div><div class="line">            //该事件为连接事件</div><div class="line">            if(key.isConnectable())&#123;</div><div class="line">                SocketChannel channel = (SocketChannel) key.channel();</div><div class="line">                //如果正在连接，就完成连接</div><div class="line">                if(channel.isConnectionPending())&#123;</div><div class="line">                    channel.finishConnect();</div><div class="line">                &#125;</div><div class="line">                </div><div class="line">                //设置为非阻塞通道</div><div class="line">                channel.configureBlocking(false);</div><div class="line">                </div><div class="line">                //已经连接，此时可以向服务端发送信息</div><div class="line">                channel.write(ByteBuffer.wrap(new String(&quot;开始传输数据了。。。&quot;).getBytes()));</div><div class="line">                //为了能读取到服务端的信息，需要注册读事件</div><div class="line">                channel.register(mSelector, SelectionKey.OP_READ);</div><div class="line">                //开始读取服务端的数据...</div><div class="line">                // ...</div><div class="line">                read(key);</div><div class="line">            &#125; else if(key.isReadable)&#123;</div><div class="line">                //启动一个线程去处理IO事件</div><div class="line">                read(key);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="服务端代码"><a href="#服务端代码" class="headerlink" title="服务端代码"></a>服务端代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">//获取一个服务端Socket的通道</div><div class="line">ServerSocketChannel channel = ServerSockerChannel.open();</div><div class="line">//将通道设置为非阻塞</div><div class="line">channel.configureBlocking(false);</div><div class="line">//获取管理通道器</div><div class="line">mSelector = Selector.open();</div><div class="line"></div><div class="line">//将服务端通道绑定到约定的端口号</div><div class="line">channel.socket().bind(new InnetSocketAddress(port));</div><div class="line"></div><div class="line">//注册accept事件，即客户端连接事件</div><div class="line">//当该事件到达时，mSelector.select()会返回</div><div class="line">//如果未到达，则mSelector.select()会一直阻塞等待事件</div><div class="line">channel.register(mSelector, SelectionKey.OP_ACCEPT);</div><div class="line"></div><div class="line">//开始监听</div><div class="line">listen();</div><div class="line"></div><div class="line">// ---------------------------------------------------------</div><div class="line">public void listen() throws IOException&#123;</div><div class="line">    //循环不断轮询</div><div class="line">    while(true)&#123;</div><div class="line">        mSelector.select();</div><div class="line">        //获取选择项的key的迭代器</div><div class="line">        Iterator it = mSelector.selectedKeys().iterator();</div><div class="line">        </div><div class="line">        while(it.hasNext())&#123;</div><div class="line">            SelectionKey key = (SelectionKey) it.next();</div><div class="line">            //去掉已选的key，防止重复处理</div><div class="line">            it.remove();</div><div class="line">            </div><div class="line">            //该事件为连接事件</div><div class="line">            if(key.isAcceptable())&#123;</div><div class="line">                ServerSocketChannel channel = (ServerSocketChannel) key.channel();</div><div class="line">                //连接之后返回SocketChannel</div><div class="line">                SocketChannel clientChannel = channel.accept();</div><div class="line">                </div><div class="line">                //设置为非阻塞通道</div><div class="line">                channel.configureBlocking(false);</div><div class="line">                </div><div class="line">                //为了能读取到客户端的信息，需要注册读事件</div><div class="line">                channel.register(mSelector, SelectionKey.OP_READ);</div><div class="line">                //开始读取服务端的数据...</div><div class="line">                // ...</div><div class="line">                read(key);</div><div class="line">                </div><div class="line">                //此时可以向客户端发送信息</div><div class="line">                channel.write(ByteBuffer.wrap(new String(&quot;我已经收到，回复信息给你&quot;).getBytes()));</div><div class="line">            &#125; else if(key.isReadable)&#123;</div><div class="line">                read(key);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color:#ccc;font-size:14px;">----------------本文结束 <i class="fa fa-paw"></i>感想您的阅读-----------------</div>
+  
+</div>
+      
+    </div>
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/18/知识点-多线程/" rel="next" title="知识点 -- 多线程">
+                <i class="fa fa-chevron-left"></i> 知识点 -- 多线程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODAzNi8xNDU2Ng=="></div>
+    </div>
+
+  
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="ZouxIaobANg" />
+            
+              <p class="site-author-name" itemprop="name">ZouxIaobANg</p>
+              <p class="site-description motion-element" itemprop="description">若无烟雨任平生，不做龙首，游在九州，凭他归去落愁</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络编程的基础认知"><span class="nav-number">1.</span> <span class="nav-text">网络编程的基础认知</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ip地址和端口号"><span class="nav-number">1.1.</span> <span class="nav-text">ip地址和端口号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-udp协议"><span class="nav-number">1.2.</span> <span class="nav-text">tcp/udp协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#URL"><span class="nav-number">1.3.</span> <span class="nav-text">URL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Socket"><span class="nav-number">2.</span> <span class="nav-text">Socket</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Socket"><span class="nav-number">2.1.</span> <span class="nav-text">什么是Socket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端的连接"><span class="nav-number">2.2.</span> <span class="nav-text">客户端的连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建Socket对象"><span class="nav-number">2.2.1.</span> <span class="nav-text">创建Socket对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#建立连接后通过输出流向服务端发送数据"><span class="nav-number">2.2.2.</span> <span class="nav-text">建立连接后通过输出流向服务端发送数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过输入流获取服务端的返回信息"><span class="nav-number">2.2.3.</span> <span class="nav-text">通过输入流获取服务端的返回信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭响应的资源和断开连接"><span class="nav-number">2.2.4.</span> <span class="nav-text">关闭响应的资源和断开连接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端的连接"><span class="nav-number">2.3.</span> <span class="nav-text">服务端的连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建ServerSocket-–-用于监听端口"><span class="nav-number">2.3.1.</span> <span class="nav-text">创建ServerSocket – 用于监听端口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过accept-阻塞监听来着客户端的请求-–-用于监听客户端的请求"><span class="nav-number">2.3.2.</span> <span class="nav-text">通过accept()阻塞监听来着客户端的请求 – 用于监听客户端的请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#建立连接后通过输入流来获取客户端的发送信息"><span class="nav-number">2.3.3.</span> <span class="nav-text">建立连接后通过输入流来获取客户端的发送信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过输出流向客户端发送返回信息"><span class="nav-number">2.3.4.</span> <span class="nav-text">通过输出流向客户端发送返回信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭资源"><span class="nav-number">2.3.5.</span> <span class="nav-text">关闭资源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阻塞IO"><span class="nav-number">3.</span> <span class="nav-text">阻塞IO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java的I-O接口"><span class="nav-number">3.1.</span> <span class="nav-text">Java的I/O接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IO接口的类型"><span class="nav-number">3.1.1.</span> <span class="nav-text">IO接口的类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阻塞IO的通信模型-–-BIO"><span class="nav-number">3.2.</span> <span class="nav-text">阻塞IO的通信模型 – BIO</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NIO"><span class="nav-number">4.</span> <span class="nav-text">NIO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工作原理"><span class="nav-number">4.1.</span> <span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通信模型"><span class="nav-number">4.2.</span> <span class="nav-text">通信模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">4.3.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端代码"><span class="nav-number">4.3.1.</span> <span class="nav-text">客户端代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务端代码"><span class="nav-number">4.3.2.</span> <span class="nav-text">服务端代码</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZouxIaobANg</span>
+
+  
+</div>
+
+<div class="powered-by">
+<span id="busuanzi_container_page_pv">
+  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</span>
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
