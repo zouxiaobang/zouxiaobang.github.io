@@ -94,28 +94,22 @@
 
 
 
-<meta name="description" content="多线程的创建thread和runnable
-继承Thread的方式来实现一个线程
-实现Runnable接口，然后将该实现类作为参数传入到Thread中注意的一点是，当调用Thread的start()方法之后，线程是进入了一个可运行的状态，而不是一个正在执行的状态。
-
-两种启动线程方法的区别共同点：不管是通过继承Thread类，或是实现Runnable接口，最后都需要调用Thread的start(">
+<meta name="description" content="异常的体系异常的类都是继承自Throwable这个父类，主要有Error和Exception这两个表示错误的类。
+ErrorError表示的是程序本身的一个错误，说明这个由于程序引起的错误是一个程序无法处理的错误，例如OutOfMemory、ANR、ThreadDead等等的错误。当Error发生的时候，JVM虚拟机会选择线程终止。
+ExceptionException表示的是一个异常，它是能够">
 <meta property="og:type" content="article">
 <meta property="og:title" content="知识点 -- 异常">
 <meta property="og:url" content="http://yoursite.com/2018/08/19/知识点-异常/index.html">
 <meta property="og:site_name" content="zouxiaobang">
-<meta property="og:description" content="多线程的创建thread和runnable
-继承Thread的方式来实现一个线程
-实现Runnable接口，然后将该实现类作为参数传入到Thread中注意的一点是，当调用Thread的start()方法之后，线程是进入了一个可运行的状态，而不是一个正在执行的状态。
-
-两种启动线程方法的区别共同点：不管是通过继承Thread类，或是实现Runnable接口，最后都需要调用Thread的start(">
-<meta property="og:updated_time" content="2018-08-19T13:32:26.635Z">
+<meta property="og:description" content="异常的体系异常的类都是继承自Throwable这个父类，主要有Error和Exception这两个表示错误的类。
+ErrorError表示的是程序本身的一个错误，说明这个由于程序引起的错误是一个程序无法处理的错误，例如OutOfMemory、ANR、ThreadDead等等的错误。当Error发生的时候，JVM虚拟机会选择线程终止。
+ExceptionException表示的是一个异常，它是能够">
+<meta property="og:updated_time" content="2018-08-22T13:26:36.828Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="知识点 -- 异常">
-<meta name="twitter:description" content="多线程的创建thread和runnable
-继承Thread的方式来实现一个线程
-实现Runnable接口，然后将该实现类作为参数传入到Thread中注意的一点是，当调用Thread的start()方法之后，线程是进入了一个可运行的状态，而不是一个正在执行的状态。
-
-两种启动线程方法的区别共同点：不管是通过继承Thread类，或是实现Runnable接口，最后都需要调用Thread的start(">
+<meta name="twitter:description" content="异常的体系异常的类都是继承自Throwable这个父类，主要有Error和Exception这两个表示错误的类。
+ErrorError表示的是程序本身的一个错误，说明这个由于程序引起的错误是一个程序无法处理的错误，例如OutOfMemory、ANR、ThreadDead等等的错误。当Error发生的时候，JVM虚拟机会选择线程终止。
+ExceptionException表示的是一个异常，它是能够">
 
 
 
@@ -359,52 +353,23 @@
 
       
         <hr>
-<h2 id="多线程的创建"><a href="#多线程的创建" class="headerlink" title="多线程的创建"></a>多线程的创建</h2><h3 id="thread和runnable"><a href="#thread和runnable" class="headerlink" title="thread和runnable"></a>thread和runnable</h3><ul>
-<li>继承Thread的方式来实现一个线程</li>
-<li>实现Runnable接口，然后将该实现类作为参数传入到Thread中<br><strong>注意的一点是，当调用Thread的start()方法之后，线程是进入了一个可运行的状态，而不是一个正在执行的状态。</strong></li>
-</ul>
-<h3 id="两种启动线程方法的区别"><a href="#两种启动线程方法的区别" class="headerlink" title="两种启动线程方法的区别"></a>两种启动线程方法的区别</h3><h4 id="共同点："><a href="#共同点：" class="headerlink" title="共同点："></a>共同点：</h4><p>不管是通过继承Thread类，或是实现Runnable接口，最后都需要调用Thread的start()方法来让线程进入一个可执行的状态，而是否执行则由系统来决定。</p>
-<p>不同点：</p>
-<ol>
-<li>Thread是使用继承，而Runnable是使用实现的方式，在Java中，由于继承是单继承的方式，所以在灵活性上，是不如实现的方式的</li>
-<li>如果是使用继承，则每次创建一个线程，都需要去创建一个新的Thread对象；而如果使用的是实现Runnable的方式，则我们可以直接创建一个Runnable对象，而多个线程可以使用同样的代码。</li>
-</ol>
-<p>###start方法和run方法的区别</p>
+<h2 id="异常的体系"><a href="#异常的体系" class="headerlink" title="异常的体系"></a>异常的体系</h2><p>异常的类都是继承自Throwable这个父类，主要有Error和Exception这两个表示错误的类。</p>
+<h3 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h3><p>Error表示的是程序本身的一个错误，说明这个由于程序引起的错误是一个程序无法处理的错误，例如OutOfMemory、ANR、ThreadDead等等的错误。当Error发生的时候，JVM虚拟机会选择线程终止。</p>
+<h3 id="Exception"><a href="#Exception" class="headerlink" title="Exception"></a>Exception</h3><p>Exception表示的是一个异常，它是能够被程序处理掉的。<br>Exception分为运行时异常和非运行时异常。</p>
 <ul>
-<li>start：在调用了start()方法之后，线程会进入可运行状态，由系统去决定是否开始执行这个线程的run()方法中的逻辑</li>
-<li>run：在调用run()方法之后，会直接开始执行run()方法中的逻辑，但这时只是当做是调用一个普通的方法。</li>
+<li>运行时异常为RuntimeException，以及它的所有子类。例如空指针异常、数组越界异常等等。这种异常为不检测异常，也就是可能在程序中进行try-catch处理，也可以不做任何处理。因为这种异常一般为逻辑出错所引起的，所以编辑器是不会提醒你去做处理的。</li>
+<li>从语法角度上就需要进行处理的异常，也就是如果不做处理，就会编译不通过，这种异常一般编辑器会有提示，例如IOException、SqlException以及我们自定义的一些Exception。</li>
 </ul>
-<h2 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h2><h3 id="synchronized-关键字"><a href="#synchronized-关键字" class="headerlink" title="synchronized 关键字"></a>synchronized 关键字</h3><ol>
-<li>synchronized对象锁：其一般使用在方法的声明上面，或者在方法体中包括整个方法的逻辑内容，它锁住的是这个类的对象。</li>
-<li>多线程间使用synchronized：多个线程去调用这个对象的synchronized修饰的方法时，这些线程并不能异步地同时去执行这些方法，而是需要等待某个线程执行完之后，其他线程才能去继续执行这个方法。</li>
-<li>volatile：由于普通的变量，线程在访问和操作这些变量的时候，会从主内存中拷贝到自己线程的空间里面去，所以在该线程修改了变量之后，有可能还没来得及将变量的值传回主内存，那么其他的线程访问到的变量就不会和改线程的变量的值一样。而volatile关键字会限制线程从主内存中拷贝变量，这样就能让线程在改变值的时候是直接修改主内存中的值。（但是volatile因为是限制必须直接在主内存中修改变量，所以它的性能肯定是会有所损耗的）</li>
-<li>synchronized关键字：它和volatile关键字的不同之处在于，synchronized是将一段代码锁住，在该代码未完成执行完成之前，其他线程不能进入执行这段代码，它在处理变量的时候是跟处理普通变量一样的，是拷贝主内存中的变量来进行处理，只是它会直到将变量的值传回主内存后才释放锁。而volatile是通过直接改变主内存的变量的值来实现这个变量在所有线程中的一致性。</li>
-<li>synchronized和lock的区别：在使用上，synchronized可以使用在方法上，也可以使用在指定的方法块上，而lock需要指定一个起始位置和终止位置（就是通过lock和unlock方法）。在锁的状态上面，synchronized当一个线程在执行一段代码的时候，其他线程运行到这里会进行阻塞直到当前线程释放了这个锁；而lock是执行到这里的时候如果进入失败，就会一直重新尝试再次进入。</li>
+<h2 id="异常的处理"><a href="#异常的处理" class="headerlink" title="异常的处理"></a>异常的处理</h2><h3 id="运用Java异常处理机制"><a href="#运用Java异常处理机制" class="headerlink" title="运用Java异常处理机制"></a>运用Java异常处理机制</h3><p>1） try - catch 语句<br>代码在try中如果遇到异常，则不会再继续往下执行，而是直接跳到catch中去执行catch中的代码块。<br>2） finally语句<br>由于try - catch在出现异常的时候，会直接执行catch中的代码，而不会继续执行try中的其他代码，如果此时有一些必须执行的代码，那么就需要一个finally代码块来保证这段代码会被执行到。<br>3） throws 语句<br>在方法声明的地方，通过throws语句来表明这个方法中的代码可能会出现的异常，而且这个方法并没有去处理这个异常，而是让调用者自己去处理这个异常。<br>4） throw 语句<br>throw 语句可以在代码的任何地方抛出异常，而不像throws一样只能在方法的声明处抛出。</p>
+<h3 id="异常处理的原理"><a href="#异常处理的原理" class="headerlink" title="异常处理的原理"></a>异常处理的原理</h3><ol>
+<li>Java虚拟机会使用方法调用栈（Method invocation stack）来存储线程中的所有方法，并跟踪每个线程中的一系列方法的调用过程（即一个方法被谁调用）。</li>
+<li>当在执行方法的时候抛出异常，则会去寻找处理这个异常的catch代码块，如果在当前方法中没有找到，则会去回溯这个方法的整个调用链。</li>
+<li>但虚拟机回溯到方法调用栈的底部，还没有找到该处理异常的catch代码块时，就会打印出异常的信息，并判断该线程是否是主线程，如果不是主线程，就终止该线程，其他线程继续运行，如果是在主线程中，就停止整个程序。</li>
 </ol>
-<h3 id="sleep-wait的区别"><a href="#sleep-wait的区别" class="headerlink" title="sleep/wait的区别"></a>sleep/wait的区别</h3><p>sleep可以设置等待的时间，线程阻塞直到时间到达后进行执行。<br>而wait是进行锁住不再继续往下执行，直到有notify或notifyAll的调用，才会继续往下执行。</p>
-<h3 id="wait-notify机制"><a href="#wait-notify机制" class="headerlink" title="wait/notify机制"></a>wait/notify机制</h3><p>wait/notify机制必须和synchronized配合使用，在synchronized方法块中，表示已经持有了该对象的锁，此时进行逻辑执行后调用wait()方法来释放该锁，此时该线程进入休眠状态，直到有其他的线程调用notify或notifyAll来唤醒这个线程，才能够继续获取该锁并继续执行。</p>
-<h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><h3 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h3><ul>
-<li>复用：降低资源的消耗，因为线程的创建和销毁都需要销毁资源，通过复用可以解决资源消耗的问题。</li>
-<li>易于管理：例如设置线程池最大的线程量，在没有任务执行时所能存在的时长等等的功能。</li>
-</ul>
-<h3 id="new-ThreadPoolExecutor"><a href="#new-ThreadPoolExecutor" class="headerlink" title="new ThreadPoolExecutor"></a>new ThreadPoolExecutor</h3><p>这是线程池的类，用于创建一个新的线程池。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">new ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue&lt;Runnable&gt; queue, ThreadFactory factory, RejectedExecutionHandler handler)</div></pre></td></tr></table></figure></p>
-<ul>
-<li>corePoolSize：核心线程的个数</li>
-<li>maximumPoolSize：最大的线程个数</li>
-<li>keepAliveTime：没有任务执行时所能存在的时长</li>
-<li>unit：该时长的单位</li>
-<li>queue：阻塞队列，用于存储正在等待的任务</li>
-<li>factory：线程工厂，用于创建线程</li>
-<li>handler：线程池满的时候使用的策略</li>
-</ul>
-<p>创建只有需要调用execute()方法来提交任务。</p>
-<h3 id="执行execute的时候可能发生的情况"><a href="#执行execute的时候可能发生的情况" class="headerlink" title="执行execute的时候可能发生的情况"></a>执行execute的时候可能发生的情况</h3><ul>
-<li>未达到核心线程数的时候，会创建核心线程并进行处理</li>
-<li>达到核心线程数的时候，会创建任务并存储到任务队列中</li>
-<li>任务队列已经满时，会创建非核心线程并存储到线程池中</li>
-<li>但达到最大线程数时，会使用饱和策略</li>
-</ul>
-<h3 id="Java提供的线程池种类："><a href="#Java提供的线程池种类：" class="headerlink" title="Java提供的线程池种类："></a>Java提供的线程池种类：</h3><p>FixedThreadPool：可重用固定线程数的线程池<br>CachedThreadPool：可灵活回收空闲线程，若没有空闲的线程，则新建线程<br>SingleThreadPool：定长的线程池，用唯一的线程来处理任务，保证所有任务按一定的顺序执行<br>ScheduleTreadPool：定长的线程池，支持定时及周期性处理任务</p>
+<h3 id="异常流程的运行过程"><a href="#异常流程的运行过程" class="headerlink" title="异常流程的运行过程"></a>异常流程的运行过程</h3><p>1） finally在一种情况下不会被运行到，那就是在执行finally之前，已经执行了System.exit(0)。例如在try中执行了，或是在try中抛出异常后在catch中运行了。<br>2） return语句的使用。例如在try代码块中使用了return语句退出方法，此时的finally也会执行，而且是在return之前被执行到。<br>3） try中使用了return语句，但在finally中为该变量重新赋值。这种情况下，变量的值或所指向的对象，即返回的内容不会变。也就是说，finally不能通过重新为变量赋值的方式来改变return语句的返回值。<br>4） 不用在finally代码块中使用return语句，因为该return语句会覆盖try - catch中的return。</p>
+<h2 id="一些关于异常相关的问答"><a href="#一些关于异常相关的问答" class="headerlink" title="一些关于异常相关的问答"></a>一些关于异常相关的问答</h2><h3 id="Java中的检查型异常和非检查型异常的区别？"><a href="#Java中的检查型异常和非检查型异常的区别？" class="headerlink" title="Java中的检查型异常和非检查型异常的区别？"></a>Java中的检查型异常和非检查型异常的区别？</h3><p>检查型异常是有Java虚拟机进行验证，对于所有声明抛出异常的方法，编译器都会强行进行处理，即在编辑时通知你必须进行处理，不然编译不通过。<br>而非检查型异常，并不一定需要对他们进行处理，不影响程序的编译，虚拟机不会去验证是否已经处理了该异常。这种异常主要有RuntimeException和Error。（Error是因为不确定出错的时间，所以也是非检查型的异常）</p>
+<h3 id="throw和throws这两个关键字在Java中有什么不同？"><a href="#throw和throws这两个关键字在Java中有什么不同？" class="headerlink" title="throw和throws这两个关键字在Java中有什么不同？"></a>throw和throws这两个关键字在Java中有什么不同？</h3><p>throw使用于代码块中，表示执行到某个条件下，需要抛出某种具体的异常，这个异常需要调用者自己去捕获处理。<br>而throws使用在方法的声明上面，表示这个方法可能会出现的异常，而且这个方法并没有能力去处理这个异常，需要由其调用链上的某个方法去处理。</p>
+<h3 id="如果执行了finally代码块之前返回了结果，或JVM退出了，那么finally中的代码还会执行吗？"><a href="#如果执行了finally代码块之前返回了结果，或JVM退出了，那么finally中的代码还会执行吗？" class="headerlink" title="如果执行了finally代码块之前返回了结果，或JVM退出了，那么finally中的代码还会执行吗？"></a>如果执行了finally代码块之前返回了结果，或JVM退出了，那么finally中的代码还会执行吗？</h3><p>如果是返回了结果，那么finally还是会被执行的，而且是在return之前会先执行finally中的代码，然后才会执行return语句。<br>而如果在执行finally之前退出了JVM，则finally将不会被执行。</p>
 
       
     </div>
@@ -585,7 +550,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程的创建"><span class="nav-number">1.</span> <span class="nav-text">多线程的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#thread和runnable"><span class="nav-number">1.1.</span> <span class="nav-text">thread和runnable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两种启动线程方法的区别"><span class="nav-number">1.2.</span> <span class="nav-text">两种启动线程方法的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#共同点："><span class="nav-number">1.2.1.</span> <span class="nav-text">共同点：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程间通信"><span class="nav-number">2.</span> <span class="nav-text">线程间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#synchronized-关键字"><span class="nav-number">2.1.</span> <span class="nav-text">synchronized 关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sleep-wait的区别"><span class="nav-number">2.2.</span> <span class="nav-text">sleep/wait的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wait-notify机制"><span class="nav-number">2.3.</span> <span class="nav-text">wait/notify机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池"><span class="nav-number">3.</span> <span class="nav-text">线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#好处"><span class="nav-number">3.1.</span> <span class="nav-text">好处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new-ThreadPoolExecutor"><span class="nav-number">3.2.</span> <span class="nav-text">new ThreadPoolExecutor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行execute的时候可能发生的情况"><span class="nav-number">3.3.</span> <span class="nav-text">执行execute的时候可能发生的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java提供的线程池种类："><span class="nav-number">3.4.</span> <span class="nav-text">Java提供的线程池种类：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#异常的体系"><span class="nav-number">1.</span> <span class="nav-text">异常的体系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Error"><span class="nav-number">1.1.</span> <span class="nav-text">Error</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exception"><span class="nav-number">1.2.</span> <span class="nav-text">Exception</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常的处理"><span class="nav-number">2.</span> <span class="nav-text">异常的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运用Java异常处理机制"><span class="nav-number">2.1.</span> <span class="nav-text">运用Java异常处理机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常处理的原理"><span class="nav-number">2.2.</span> <span class="nav-text">异常处理的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常流程的运行过程"><span class="nav-number">2.3.</span> <span class="nav-text">异常流程的运行过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些关于异常相关的问答"><span class="nav-number">3.</span> <span class="nav-text">一些关于异常相关的问答</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java中的检查型异常和非检查型异常的区别？"><span class="nav-number">3.1.</span> <span class="nav-text">Java中的检查型异常和非检查型异常的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#throw和throws这两个关键字在Java中有什么不同？"><span class="nav-number">3.2.</span> <span class="nav-text">throw和throws这两个关键字在Java中有什么不同？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如果执行了finally代码块之前返回了结果，或JVM退出了，那么finally中的代码还会执行吗？"><span class="nav-number">3.3.</span> <span class="nav-text">如果执行了finally代码块之前返回了结果，或JVM退出了，那么finally中的代码还会执行吗？</span></a></li></ol></li></ol></div>
             
 
           </div>
