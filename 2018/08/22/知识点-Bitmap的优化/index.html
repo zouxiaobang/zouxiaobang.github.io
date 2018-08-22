@@ -94,16 +94,19 @@
 
 
 
-<meta name="description" content="勉强的自我介绍话该从何说起，自伟人出生？自盘古开天？路已漫漫，期亦遥遥。从意外踏入这个深坑至今也有4载，风风雨雨里我很平静，不知不觉中我还是码奴。我在敞亮的巷口迷茫，兜兜转转又回到电脑前，敲敲打打吵醒所有人。从无知到粗知，从懵懵懂懂到自以为是，从厌烦打字到喜爱代码。这四年的时光改变了一个人，不知好坏。只是昨日的频频被拒，我依然向往阳光。我总是希望，总是满怀希望">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta name="description" content="recycle回收由于Bitmap存储的时候，是存储在Java内存和native内存中的，所以在对Bitmap进行回收的时候，会做两部分的回收，一部分为Java内存中的回收，一部分为native中的回收。
+在对Bitmap进行回收的时候，一般会调用它的recycle()方法，该方法会清除这个Bitmap的引用，让GC在回收的时候可以将它进行回收，也就是说，当调用recycle()方法的时候，并没">
+<meta property="og:type" content="article">
+<meta property="og:title" content="知识点 -- Bitmap的优化">
+<meta property="og:url" content="http://yoursite.com/2018/08/22/知识点-Bitmap的优化/index.html">
 <meta property="og:site_name" content="zouxiaobang">
-<meta property="og:description" content="勉强的自我介绍话该从何说起，自伟人出生？自盘古开天？路已漫漫，期亦遥遥。从意外踏入这个深坑至今也有4载，风风雨雨里我很平静，不知不觉中我还是码奴。我在敞亮的巷口迷茫，兜兜转转又回到电脑前，敲敲打打吵醒所有人。从无知到粗知，从懵懵懂懂到自以为是，从厌烦打字到喜爱代码。这四年的时光改变了一个人，不知好坏。只是昨日的频频被拒，我依然向往阳光。我总是希望，总是满怀希望">
-<meta property="og:updated_time" content="2016-09-26T03:55:48.000Z">
+<meta property="og:description" content="recycle回收由于Bitmap存储的时候，是存储在Java内存和native内存中的，所以在对Bitmap进行回收的时候，会做两部分的回收，一部分为Java内存中的回收，一部分为native中的回收。
+在对Bitmap进行回收的时候，一般会调用它的recycle()方法，该方法会清除这个Bitmap的引用，让GC在回收的时候可以将它进行回收，也就是说，当调用recycle()方法的时候，并没">
+<meta property="og:updated_time" content="2018-08-22T14:32:31.242Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="勉强的自我介绍话该从何说起，自伟人出生？自盘古开天？路已漫漫，期亦遥遥。从意外踏入这个深坑至今也有4载，风风雨雨里我很平静，不知不觉中我还是码奴。我在敞亮的巷口迷茫，兜兜转转又回到电脑前，敲敲打打吵醒所有人。从无知到粗知，从懵懵懂懂到自以为是，从厌烦打字到喜爱代码。这四年的时光改变了一个人，不知好坏。只是昨日的频频被拒，我依然向往阳光。我总是希望，总是满怀希望">
+<meta name="twitter:title" content="知识点 -- Bitmap的优化">
+<meta name="twitter:description" content="recycle回收由于Bitmap存储的时候，是存储在Java内存和native内存中的，所以在对Bitmap进行回收的时候，会做两部分的回收，一部分为Java内存中的回收，一部分为native中的回收。
+在对Bitmap进行回收的时候，一般会调用它的recycle()方法，该方法会清除这个Bitmap的引用，让GC在回收的时候可以将它进行回收，也就是说，当调用recycle()方法的时候，并没">
 
 
 
@@ -133,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/about/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/22/知识点-Bitmap的优化/"/>
 
 
 
 
 
-  <title>about | zouxiaobang</title>
+  <title>知识点 -- Bitmap的优化 | zouxiaobang</title>
   
 
 
@@ -245,34 +248,178 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/22/知识点-Bitmap的优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZouxIaobANg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zouxiaobang">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h3 id="勉强的自我介绍"><a href="#勉强的自我介绍" class="headerlink" title="勉强的自我介绍"></a>勉强的自我介绍</h3><p>话该从何说起，自伟人出生？自盘古开天？<br>路已漫漫，期亦遥遥。<br>从意外踏入这个深坑至今也有4载，风风雨雨里我很平静，不知不觉中我还是码奴。<br>我在敞亮的巷口迷茫，兜兜转转又回到电脑前，敲敲打打吵醒所有人。<br>从无知到粗知，从懵懵懂懂到自以为是，从厌烦打字到喜爱代码。这四年的时光改变了一个人，不知好坏。<br>只是昨日的频频被拒，我依然向往阳光。<br>我总是希望，总是满怀希望</p>
-
+          <h1 class="post-title" itemprop="name headline">知识点 -- Bitmap的优化</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-22T22:32:11+08:00">
+                2018-08-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-beginner/" itemprop="url" rel="index">
+                    <span itemprop="name">Android beginner</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <hr>
+<h2 id="recycle回收"><a href="#recycle回收" class="headerlink" title="recycle回收"></a>recycle回收</h2><p>由于Bitmap存储的时候，是存储在Java内存和native内存中的，所以在对Bitmap进行回收的时候，会做两部分的回收，一部分为Java内存中的回收，一部分为native中的回收。</p>
+<p>在对Bitmap进行回收的时候，一般会调用它的recycle()方法，该方法会清除这个Bitmap的引用，让GC在回收的时候可以将它进行回收，也就是说，当调用recycle()方法的时候，并没有立即被回收掉，而是等待gc。但它会将该Btimap对象标为DEAD状态，再使用该Bitmap对象去调用方法就会抛出异常。</p>
+<h2 id="LRU算法"><a href="#LRU算法" class="headerlink" title="LRU算法"></a>LRU算法</h2><p>最近最少使用的策略。<br>该算法主要用于对Bitmap的缓存。 – LruCache</p>
+<p>LruCache内存使用了一个LinkedHashMap来进行存储。其中当这个缓存满的时候，trimToSize()方法会remove掉最早的那个元素，然后加入最新的元素。</p>
+<h2 id="inSampleSize"><a href="#inSampleSize" class="headerlink" title="inSampleSize"></a>inSampleSize</h2><p>在BitmapFactory.Options中提供了一个属性inSampleSize来控制图片的压缩比例。<br>我们可以自己计算一个比较合适的inSampleSize，再设置进去Options中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//opts为图片的Options对象，reqWidth和reqHeight为希望图片压缩后的大小</div><div class="line">public static int caculateInSamleSize(BitmapFactory.Options opts, int reqWidth, int reqHeight)&#123;</div><div class="line">    final int height = opts.outHeight;</div><div class="line">    final int width = opts.outWidth;</div><div class="line">    int inSampleSize = 1;</div><div class="line">    </div><div class="line">    if(width &gt; reqWidth || height &gt; reqHeight)&#123;</div><div class="line">        if(width &gt; height)&#123;</div><div class="line">            inSampleSize = Math.round((float)height/(float)reqHeight);</div><div class="line">        &#125; else &#123;</div><div class="line">            inSampleSize = Math.round((float)width/(float)reqWidth);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return inSampleSize;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>之后我们就可以来设置进Options中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//设置缩略图</div><div class="line">public static Bitmap thumbnail(String path, int maxWidth, int maxHeight, boolean autoRotate)&#123;</div><div class="line">    BitmapFactory.Options opts = new BitmapFactory.Options();</div><div class="line">    //这里设置为true后，下面的操作只是获取bitmap的宽和高保存到opts中，而其Bitmap对象为空</div><div class="line">    opts.inJustDecodeBounds = true;</div><div class="line">    Bitmap btm = BitmapFactory.decodeFile(file, opts);</div><div class="line">    opts.inJustDecodeBounds = false;</div><div class="line">    </div><div class="line">    int inSampleSize = caculateInSampleSize(opts, maxWidht, maxHeight);</div><div class="line">    opts.inSampleSize = inSampleSize;</div><div class="line">    opts.inPreferredConfig = Bitmap.Config.RGB_565;</div><div class="line">    </div><div class="line">    btm = BitmapFactory.decodeFile(path, opts);</div><div class="line">    </div><div class="line">    return btm;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="三级缓存"><a href="#三级缓存" class="headerlink" title="三级缓存"></a>三级缓存</h2><p>网络 -&gt; SD卡等内存 -&gt; 手机内存</p>
+<p>打开App的时候，会先到内存中搜索是否拥有图片，如果有，则直接使用，如果没有，再到本地SD卡中去寻找，如果还是没有缓存，再去进行网络请求。因为在内存加载是最快的，其次是SD卡，最后是网络请求。而在网络请求获取到图片后，会把该图片存储到内存和本地当中，方便下次的使用。</p>
+
       
     </div>
     
     
     
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color:#ccc;font-size:14px;">----------------本文结束 <i class="fa fa-paw"></i>感想您的阅读-----------------</div>
+  
+</div>
+      
+    </div>
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/21/知识点-ANR和OOM/" rel="next" title="知识点 -- ANR和OOM">
+                <i class="fa fa-chevron-left"></i> 知识点 -- ANR和OOM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -387,7 +534,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#勉强的自我介绍"><span class="nav-number">1.</span> <span class="nav-text">勉强的自我介绍</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#recycle回收"><span class="nav-number">1.</span> <span class="nav-text">recycle回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LRU算法"><span class="nav-number">2.</span> <span class="nav-text">LRU算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inSampleSize"><span class="nav-number">3.</span> <span class="nav-text">inSampleSize</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三级缓存"><span class="nav-number">4.</span> <span class="nav-text">三级缓存</span></a></li></ol></div>
             
 
           </div>
